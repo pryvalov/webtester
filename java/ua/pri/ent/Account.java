@@ -1,6 +1,5 @@
 package ua.pri.ent;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -18,7 +17,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-public class Account implements Serializable {
+public class Account extends AbstractEntity {
 
 	private static final long serialVersionUID = 1L;
 

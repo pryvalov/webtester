@@ -6,44 +6,32 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
     	<jsp:include page="../templates/header.jsp" />
-	<div id="status-student" class="status">
-
-	<table>
-		<thead>
-			<tr>
-				<th colspan="2">Tutor home</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<td colspan="2">Hello, ${account.firstName} ${account.lastName}</td>
-			</tr>
-			<tr>
-			<tr>
-				<td>Logged as:</td>
-				<td>${account.login}</td>
-			</tr>
-			<tr>
-				<td>
-					<form action="/wtapp/logout">
-						<input type="submit" value="Logout">
-					</form>
-				</td>
-				<td></td>
-			</tr>
-
-			<tr>
-				<td>
-					<form action="">
-						<input type="submit" value="My profile">
-					</form>
-				</td>
-				<td></td>
-			</tr>
-		</tbody>
-	</table>
-
-
-</div>
-editor
+	<jsp:include page="../templates/status.jsp" />
+	<c:if test="${test!=null}">
+	<div class="inline-class" id="test-preview">
+	${test.idTest}<br>
+	${test.author.firstName} ${test.author.lastName}<br>
+	${test.subject}<br>
+	${test.name}<br>
+	${test.created}<br>
+	${test.time}<br>
+	<c:forEach items="${test.questions}" var="question">
+	<div class="question">
+		${question.questionText}<br>
+		<c:forEach items="${question.answers}" var="answer">
+		${answer.answerText}, ${answer.correct}<br>
+		</c:forEach>
+		</div>
+	</c:forEach>
+	</div>
+	</c:if>
+	<div class="editor-block">
+	<form action="submit" id="editor_form" method="post">
+	<input type="submit" value="send"><input type="button" onclick="addFields();" value="Add"><br>
+	<b>Name of test</b> <input type="text" name="name"/> <br> 
+	<b>Subject </b><input type="text" name="subj"/><br>
+		Question 1<input type="text" name="question1"/><br>
+	</form>
+	</div>
+	 
  	<jsp:include page="../templates/footer.jsp" />

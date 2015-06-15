@@ -33,8 +33,8 @@
 						Administrator</td>
 				</tr>
 				<tr>
-					<td><input type="reset" style="color: black;" value="Reset" /></td>
-					<td><input type="submit" style="color: black;" value="Login" /></td>
+					<td></td>
+					<td><input type="submit" value="Login" /></td>
 
 				</tr>
 				<tr>

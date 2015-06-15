@@ -11,8 +11,13 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-public class TestResult {
+public class TestResult extends AbstractEntity{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6207380518564895046L;
+
 	@Id
 	@SequenceGenerator(sequenceName="test_result_seq", name="test_result_gen")
 	@GeneratedValue(generator="test_result_gen")

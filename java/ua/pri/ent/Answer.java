@@ -10,7 +10,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 
 @Entity
-public class Answer {
+public class Answer extends AbstractEntity{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8171661773875321733L;
+
 	@Id
 	@SequenceGenerator(sequenceName="answer_seq", name="answer_gen")
 	@GeneratedValue(generator="answer_gen")

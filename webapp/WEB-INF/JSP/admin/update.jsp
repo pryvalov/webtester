@@ -6,7 +6,7 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
 <jsp:include page="../templates/header.jsp" />
-You logged as administrator.
+<jsp:include page="../templates/status.jsp" />
 		<div id="updateuser">
 		<form action="update" method="post" >
 		<table>

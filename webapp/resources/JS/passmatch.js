@@ -43,5 +43,24 @@ function checkFields(){
 		return false;
 	}
 
+}
+var iterator = 2;
+function addFields(){
+	var container = document.getElementById("editor_form").firstChild;
+	var input = document.createElement("input");
+	var br = document.createElement("br");
+	
+	input.setAttribute('type','text');
+	input.setAttribute('name','question'+iterator); // set the CSS clas
+	var label = document.createTextNode("Question "+iterator);
+	iterator++;
+	container.parentNode.appendChild(label);
+	container.parentNode.appendChild(input);
+	container.parentNode.appendChild(br);
+	
+	
+
+
+	
 
 }

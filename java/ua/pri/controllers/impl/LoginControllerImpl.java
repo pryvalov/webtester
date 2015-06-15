@@ -46,6 +46,7 @@ public class LoginControllerImpl {
 		try{
 		acc = loginService.login(loginForm.getEmail(), loginForm.getPassword(), loginForm.getRole());
 		session.setAttribute("account", acc);
+		session.setAttribute("role", rolesHome.get(loginForm.getRole()));
 		return "redirect:"+rolesHome.get(loginForm.getRole());
 		}catch(Exception e){
 			session.setAttribute("error", e.getMessage());

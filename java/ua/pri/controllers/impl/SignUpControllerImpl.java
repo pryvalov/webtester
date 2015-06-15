@@ -2,7 +2,7 @@ package ua.pri.controllers.impl;
 
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.mail.EmailException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import ua.pri.ent.Account;
-import ua.pri.exceptions.InvalidUserInputException;
+
 import ua.pri.exceptions.RegistrationException;
 import ua.pri.services.EmailVerificationService;
 import ua.pri.services.RegistrationService;

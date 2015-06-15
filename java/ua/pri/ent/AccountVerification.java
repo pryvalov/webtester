@@ -1,6 +1,5 @@
 package ua.pri.ent;
 
-import java.io.Serializable;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -10,7 +9,7 @@ import javax.persistence.OneToOne;
 
 @Entity(name = "account_verification")
 @IdClass(value = Account.class)
-public class AccountVerification implements Serializable {
+public class AccountVerification extends AbstractEntity {
 
 	private static final long serialVersionUID = 1L;
 

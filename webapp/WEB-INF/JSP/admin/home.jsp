@@ -7,44 +7,7 @@
 
 <jsp:include page="../templates/header.jsp" />
 
-	<div id="status-student" class="status">
-
-		<table>
-			<thead>
-				<tr>
-					<th colspan="2">Admin home</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td colspan="2">Hello, ${account.firstName}
-						${account.lastName}</td>
-				</tr>
-				<tr>
-				<tr>
-					<td>Logged as:</td>
-					<td>${account.login}</td>
-				</tr>
-				<tr>
-					<td>
-						<form action="/wtapp/logout">
-							<input type="submit" value="Logout">
-						</form>
-					</td>
-					<td></td>
-				</tr>
-
-				<tr>
-					<td>
-						<form action="">
-							<input type="submit" value="My profile">
-						</form>
-					</td>
-					<td></td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
+<jsp:include page="../templates/status.jsp" />
 
 	<!--  start table-content  -->
 	<div id="table-content">
@@ -72,7 +35,7 @@
 				<c:forEach items="${accounts}" var="account" varStatus="status">
 					<tr>
 						<td>
-							<%-- ${account.idAccount} --%>
+							${account.accountId} 
 						</td>
 						<td>${account.login}</td>
 						<td>${account.email}</td>
@@ -99,13 +62,13 @@
 
 			</table>
 
-			
+			<div class="mybutton">
+			<a href="../signup">Create user</a>
+			</div>
 
 
 	</div>
-		<div class="mybutton">
-			<a href="../signup">Create user</a>
-		</div>
+		
 	
 
 <jsp:include page="../templates/footer.jsp" />

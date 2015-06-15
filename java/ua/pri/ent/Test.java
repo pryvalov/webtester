@@ -17,7 +17,12 @@ import javax.persistence.TemporalType;
 
 
 @Entity
-public class Test {
+public class Test extends AbstractEntity{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8679351437759501570L;
+
 	@Id
 	@SequenceGenerator(sequenceName="test_seq", name="test_gen")
 	@GeneratedValue(generator="test_gen")
@@ -29,13 +34,6 @@ public class Test {
 	@ManyToOne
 	private Account author;
 	
-	public Account getAuthor() {
-		return author;
-	}
-
-	public void setAuthor(Account author) {
-		this.author = author;
-	}
 
 	private String subject;
 	
@@ -47,10 +45,26 @@ public class Test {
 	@Temporal(TemporalType.DATE)
 	private Date updated;
 	
+	@Column(name="time")
+	private String time;
+	
 	private boolean active;
 
 	@OneToMany(mappedBy="test", cascade={CascadeType.PERSIST, CascadeType.MERGE}, fetch=FetchType.LAZY)
 	private Collection<Question> questions = new ArrayList<>();
+	
+	
+	
+	
+	public Account getAuthor() {
+		return author;
+	}
+
+	public void setAuthor(Account author) {
+		this.author = author;
+	}
+
+	
 	
 	
 	public Collection<Question> getQuestions() {
@@ -108,6 +122,13 @@ public class Test {
 
 	public void setActive(boolean active) {
 		this.active = active;
+	}
+	public String getTime() {
+		return time;
+	}
+
+	public void setTime(String time) {
+		this.time = time;
 	}
 
 }

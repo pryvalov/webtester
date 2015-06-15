@@ -1,6 +1,7 @@
 package ua.pri.services;
 
 import java.util.List;
+import java.util.Map;
 
 import ua.pri.ent.Account;
 import ua.pri.ent.Test;
@@ -26,5 +27,7 @@ public interface TutorService {
 	public abstract void persistTest(Test test);
 
 	public abstract void mergeTest(Test test);
+	
+	public abstract void updateTest(Map<String, String> params, Account author);
 
 }

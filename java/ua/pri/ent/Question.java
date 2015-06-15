@@ -18,8 +18,14 @@ import javax.persistence.SequenceGenerator;
 
 
 @Entity
-public class Question {
+public class Question extends AbstractEntity {
 	
+/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7753624271482332225L;
+
+
 @Id
 @SequenceGenerator(sequenceName="question_seq", name="question_gen")
 @GeneratedValue(generator="question_gen")

@@ -15,10 +15,15 @@
 <link rel="stylesheet" type="text/css"
 	href="${context}/resources/css/styles.css?v=${CSS_JS_VERSION}" />
 <%-- <link rel="stylesheet" href="${context}/resources/css/screen.css" type="text/css" media="screen" title="default" /> --%>
+<spring:url value="/resources/JS/passmatch.js" var="script" />
+<script type="text/javascript" src="${script}"></script>
 </head>
 
 <body class="style1">
 
 	<div id="wrap">
-		<div id="headdiv">head div</div>
+		<div id="headdiv">
+		<a href="" class="navbutton">Test</a><a href="" class="navbutton">Test</a><a href="" class="navbutton">Test</a><a href="" class="navbutton">Test</a>
+		
+		</div>
 		<div id="content">

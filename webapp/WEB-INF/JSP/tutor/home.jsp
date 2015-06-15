@@ -6,45 +6,8 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
     	<jsp:include page="../templates/header.jsp" />
-	<div id="status-student" class="status">
+    	<jsp:include page="../templates/status.jsp" />
 
-	<table>
-		<thead>
-			<tr>
-				<th colspan="2">Tutor home</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<td colspan="2">Hello, ${account.firstName} ${account.lastName}</td>
-			</tr>
-			<tr>
-			<tr>
-				<td>Logged as:</td>
-				<td>${account.login}</td>
-			</tr>
-			<tr>
-				<td>
-					<form action="/wtapp/logout">
-						<input type="submit" value="Logout">
-					</form>
-				</td>
-				<td></td>
-			</tr>
-
-			<tr>
-				<td>
-					<form action="">
-						<input type="submit" value="My profile">
-					</form>
-				</td>
-				<td></td>
-			</tr>
-		</tbody>
-	</table>
-
-
-</div>
 
 
 
@@ -63,6 +26,8 @@
 						href="">Subject</a></th>
 					<th class="table-header-repeat line-left"><a
 						href="">Created</a></th>
+						<th class="table-header-repeat line-left"><a
+						href="">Time p question</a></th>
 					<th class="table-header-repeat line-left"><a
 						href="">Active</a></th>
 					<th class="table-header-options line-left"><a href="">Options</a></th>
@@ -75,10 +40,11 @@
 						<td>${test.name}</td>
 						<td>${test.subject}</td>
 						<td>${test.created}</td>
+						<td>${test.time} sec.</td>
 						<td>${test.active}</td>
 
 						<td class="options-width"><a
-							href="" title="Update"
+							href="edit?testId=${test.idTest}" title="Update"
 							class="icon-3 info-tooltip"></a> <a
 							href="" title="Delete"
 							class="icon-2 info-tooltip"></a> <a
@@ -91,12 +57,12 @@
 
 			</table>
 
-			
+			<div class="mybutton">
+			<a href="edit">Create test</a>
+			</div>
 
 
 	</div>
-		<div class="mybutton">
-			<a href="edit">Create test</a>
-		</div>
+		
 
  	<jsp:include page="../templates/footer.jsp" />

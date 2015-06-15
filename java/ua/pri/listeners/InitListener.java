@@ -8,7 +8,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.web.context.WebApplicationContext;
 
-import ua.pri.controllers.impl.LoginControllerImpl;
+
 import ua.pri.services.ConfigApplicationService;
 
 
@@ -30,9 +30,7 @@ public class InitListener implements ServletContextListener {
 		context.setAttribute("CSS_JS_VERSION", configAppService.getCssJsVersion());
 		
 		LOGGER.info("context started");
-		LoginControllerImpl login = (LoginControllerImpl) getWebApplicationContext(event).getBean("loginController");
-		
-		LOGGER.info(login.toString());
+	
 
 	}
 
