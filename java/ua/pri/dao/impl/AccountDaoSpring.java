@@ -2,6 +2,8 @@ package ua.pri.dao.impl;
 
 import java.util.List;
 
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,6 +37,16 @@ public class AccountDaoSpring extends AbstractDaoSpring<Account> implements
 	@Override
 	public void setEmailVerified(int id) {
 		((Account)getSession().get(Account.class, id)).setEmailVerified(true);
+	}
+	
+	
+	@Override
+	@SuppressWarnings("unchecked")
+	public List<Account> getList() {
+		Criteria c = getSession().createCriteria(entityClass());
+		c.addOrder(Order.asc("accountId"));
+		c.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		return (List<Account>) c.list();
 	}
 
 	@SuppressWarnings("unchecked")

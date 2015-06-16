@@ -36,9 +36,8 @@ public class LoginControllerImpl {
 	
 	
 	@RequestMapping(value="/login", method=RequestMethod.GET)
-	public ModelAndView getLoginForm(){
-		ModelAndView mav = new ModelAndView("login");
-		return mav;
+	public String getLoginForm(){
+		return "login";
 	}
 	@RequestMapping(value="/login", method=RequestMethod.POST)
 	public String proceedLogin(@ModelAttribute("loginForm") LoginForm loginForm, Model model, HttpSession session) throws InvalidUserInputException{
@@ -61,6 +60,9 @@ public class LoginControllerImpl {
 		session.setAttribute("account", null);
 		return "redirect:login";
 	}
-	
+	@RequestMapping(value="/home", method=RequestMethod.GET)
+	public String homeLoginButton(){
+		return "login";
+	}
 
 }

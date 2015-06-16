@@ -44,13 +44,13 @@
 						<td>${test.active}</td>
 
 						<td class="options-width"><a
-							href="edit?testId=${test.idTest}" title="Update"
+							href="edit?action=update&testId=${test.idTest}" title="Update"
 							class="icon-3 info-tooltip"></a> <a
-							href="" title="Delete"
+							href="edit?action=delete&testId=${test.idTest}" title="Delete"
 							class="icon-2 info-tooltip"></a> <a
-							href=""
+							href="edit?action=deactivate&testId=${test.idTest}"
 							title="Deactivate" class="icon-1 info-tooltip"></a>
-							<a href=""
+							<a href="edit?action=activate&testId=${test.idTest}"
 							title="Activate" class="icon-5 info-tooltip"></a></td>
 					</tr>
 				</c:forEach>
@@ -58,7 +58,7 @@
 			</table>
 
 			<div class="mybutton">
-			<a href="edit">Create test</a>
+			<a href="create">Create test</a>
 			</div>
 
 

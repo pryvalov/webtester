@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -40,6 +41,7 @@ public class TestDaoSpring extends AbstractDaoSpring<Test> implements TestDao {
 	public List<Test> getList(Account author){
 		Criteria c = getSession().createCriteria(entityClass());
 		c.add(Restrictions.eq("author", author));
+		c.addOrder(Order.asc("idTest"));
 		c.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		return (List<Test>) c.list();
  	}

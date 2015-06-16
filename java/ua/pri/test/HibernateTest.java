@@ -52,11 +52,15 @@ public class HibernateTest {
 			EmailVerificationService emailService = (EmailVerificationService) context.getBean("emailVerificationService");
 			AdminService adminka = (AdminService) context.getBean("adminService");
 			TutorService tutorka = (TutorService) context.getBean("tutorService");
-						List<Test> tests = td.getList(adao.findById(1));
-			System.out.println(tests.size());
-			for(Test t : tests)
-				System.out.println(t.getIdTest()+" hui "+t.getName()+" "+t.getSubject());
-
+	
+			//AccountDao ad2 = new AccountDaoImpl();
+			Test t = new Test();
+			Question q = new Question();
+			q.setQuestionText("testet234234tet 2342343");
+			q.getAnswers().add(new Answer());
+			t.getQuestions().add(q);
+			tutorka.persistTest(t);
+			
 			
 			
 

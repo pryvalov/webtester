@@ -18,7 +18,7 @@ import org.hibernate.criterion.Restrictions;
 import ua.pri.dao.AbstractDao;
 import ua.pri.utils.SFactory;
 
-public abstract class AbstractDaoLambda<T> implements AbstractDao<T> {
+public abstract class AbstractDaoLambda<T> {
 	protected static final Logger logger = LogManager.getLogger(AbstractDaoLambda.class);
 	protected final SessionFactory SF = SFactory.getSessionFactory();
 
@@ -57,10 +57,11 @@ public abstract class AbstractDaoLambda<T> implements AbstractDao<T> {
 		}
 	}
 
-	protected final Object select(Callback c) {
+	protected final Object select(Consumer<Session> cons) {
 		Session s = SF.openSession();
 		try {
-			return c.invoke(s);
+			cons.accept(s);
+			return null;
 		} finally {
 			if (s != null) {
 				try {
@@ -74,96 +75,48 @@ public abstract class AbstractDaoLambda<T> implements AbstractDao<T> {
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see sourceit.dao.impl.AbstractDaoInterface#save(T)
-	 */
-	@Override
+
+
 	public void save(T e) {
 
 		transaction(s -> s.save(e));
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see sourceit.dao.impl.AbstractDaoInterface#update(T)
-	 */
-	@Override
+
+
 	public void update(T e) {
 		transaction(s -> s.update(e));
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see sourceit.dao.impl.AbstractDaoInterface#delete(T)
-	 */
-	@Override
+
 	public void delete(T e) {
 		transaction(s -> s.delete(e));
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * sourceit.dao.impl.AbstractDaoInterface#findById(java.io.Serializable)
-	 */
-	@Override
+
+	
+	protected Object obj ;
+
+
 	@SuppressWarnings("unchecked")
 	public T findById(Serializable id) {
-		// Session s = SF.openSession();
-		// s.beginTransaction();
-		// Criteria c = s.createCriteria(entityClass());
-		// c.add(Restrictions.idEq(id));
-		// Object o = c.uniqueResult();
-		// s.flush();
-		// s.close();
-		// return (T) o;
-		return (T) select(new Callback() {
+		
+		
+		select(s -> obj=s.createCriteria(entityClass()).add(Restrictions.idEq(id)).uniqueResult());
+	
+		return (T)obj; 
 
-			@Override
-			public Object invoke(Session s) {
-				Criteria c = s.createCriteria(entityClass());
-				c.add(Restrictions.idEq(id));
-				Object o = c.uniqueResult();
-				return o;
-			}
-		});
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see sourceit.dao.impl.AbstractDaoInterface#getList()
-	 */
-	@Override
+
 	@SuppressWarnings("unchecked")
 	public List<T> getList() {
-		// List<T> list = new ArrayList<>();
-		// Session s = SF.openSession();
-		//
-		// s.beginTransaction();
-		// Query q = s.createQuery("from " + entityClass().getName());
-		// list = (List<T>) q.list();
-		// s.getTransaction().commit();
-		// s.close();
-		// return list;
-		return (List<T>) select(new Callback() {
 
-			@Override
-			public Object invoke(Session s) {
-				List<T> list = new ArrayList<>();
-				Query q = s.createQuery("from " + entityClass().getName());
-				list = q.list();
-				return list;
+		select(s -> obj=s.createQuery("from " + entityClass().getName()).list());
+		return (List<T>) obj;
 
-			}
-		});
 
 	}
 

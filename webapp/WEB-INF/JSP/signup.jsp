@@ -3,42 +3,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<%@ page import="ua.pri.ent.Account"%>
-<!DOCTYPE html>
-<html class="no-js">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Web tester ${role}</title>
-<link rel="stylesheet" type="text/css"
-	href="${context}/resources/css/normalize.css?v=${CSS_JS_VERSION}" />
-<link rel="stylesheet" type="text/css"
-	href="${context}/resources/css/styles.css?v=${CSS_JS_VERSION}" />
-<spring:url value="/resources/JS/passmatch.js" var="script" />
-<script type="text/javascript" src="${script}"></script>
-</head>
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
-<body class="style1">
-
-
-	<div id="wrap">
-		<div id="headdiv">
-
-			<% if(session.getAttribute("account")!=null){
-		Account a = (Account)session.getAttribute("account");
-	out.print("Hello, "+a.getFirstName()+" "+a.getLastName()
-	/* "<br>Your mail: "+a.getEmail()+ */
-	+"<br><br><br>Logged as: "+a.getLogin()+ " <a href=\"/wtapp/logout\"> Log out </a> "
-	/* +"<br>You joined since: "+a.getCreated() */);
-	}else{
-		out.print("<br><br><br><br>");
-	}
-	%>
-		</div>
-		<div id="content">
-
-			<section class="main">
-
+    	<jsp:include page="templates/header.jsp" />
 
 
 				<div id="signup">
@@ -94,8 +61,8 @@
 
 
 								<tr>
-									<td align="left"><input type="reset" value="Reset" /></td>
-									<td align="left"><input type="submit" value="Submit"
+									<td align="left"></td>
+									<td align="left"><input type="submit" class="common-button" value="Submit"
 										id="subm" /></td>
 
 								</tr>

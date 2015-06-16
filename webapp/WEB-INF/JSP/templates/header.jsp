@@ -14,16 +14,19 @@
 	href="${context}/resources/css/normalize.css?v=${CSS_JS_VERSION}" />
 <link rel="stylesheet" type="text/css"
 	href="${context}/resources/css/styles.css?v=${CSS_JS_VERSION}" />
+	<link rel="stylesheet" type="text/css"
+	href="${context}/resources/css/styles-plus.css?v=${CSS_JS_VERSION}" />
 <%-- <link rel="stylesheet" href="${context}/resources/css/screen.css" type="text/css" media="screen" title="default" /> --%>
 <spring:url value="/resources/JS/passmatch.js" var="script" />
 <script type="text/javascript" src="${script}"></script>
 </head>
 
-<body class="style1">
+<body>
 
 	<div id="wrap">
 		<div id="headdiv">
-		<a href="" class="navbutton">Test</a><a href="" class="navbutton">Test</a><a href="" class="navbutton">Test</a><a href="" class="navbutton">Test</a>
-		
+		<img class="inline-class" src="${context}/resources/images/wtlogo1.png" style="{float: left; position: absolute; top: 0;}" alt="logo"/>
+		<a href="home" class="navbutton">Home</a><a href="" class="navbutton">Profile</a>
+		<div id="overhead">Open source online testing platform.</div>
 		</div>
 		<div id="content">

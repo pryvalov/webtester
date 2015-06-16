@@ -62,9 +62,8 @@
 
 			</table>
 
-			<div class="mybutton">
-			<a href="../signup">Create user</a>
-			</div>
+			<a class="mybutton" href="../signup">Create user</a>
+			
 
 
 	</div>

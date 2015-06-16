@@ -59,7 +59,7 @@
 		
 		<tr>
 		<td></td>
-		<td><input type="submit" value="update"></td>
+		<td><input type="submit" class="common-button" value="update"></td>
 		</tr>
 		
 		

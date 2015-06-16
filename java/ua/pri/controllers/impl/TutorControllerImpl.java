@@ -5,7 +5,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
-import org.apache.catalina.tribes.tipis.AbstractReplicatedMap.MapEntry;
+//import org.apache.catalina.tribes.tipis.AbstractReplicatedMap.MapEntry;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,21 +35,38 @@ public class TutorControllerImpl {
 			}
 		List<Test> tests = tutorService.getUserTests(a);
 		session.setAttribute("tests", tests);
+		session.setAttribute("test", null);
 
 		
 		return "tutor/home";
 	}
 	@RequestMapping(value="/edit", method=RequestMethod.GET)
-	public String editTest(@RequestParam(required=false) String testId, HttpSession session){
+	public String editTest(@RequestParam(required=false) String action, @RequestParam(required=false) String testId, HttpSession session){
 		if (testId==null)
 		return "tutor/editor";
 		try{
-		Test test = tutorService.loadTest(Integer.valueOf(testId));
+			switch (action){
+			case "update": 
+				Test test = tutorService.loadTest(Integer.valueOf(testId));
+				session.setAttribute("test", test);
+				return "tutor/editor";
+			case "delete":	
+				tutorService.delete(Integer.valueOf(testId));
+				break;
+			case "activate":
+				tutorService.activate(Integer.valueOf(testId));
+				break;
+			case "deactivate":
+				tutorService.deActivate(Integer.valueOf(testId));
+				break;
+			}
 
-		session.setAttribute("test", test);
-		return "tutor/editor";
+			return "redirect:home";	
+		
+		
 		}catch(Exception e){
 			session.setAttribute("error", "Error loading test, contact administrator in order to slove this issue.");
+			LOGGER.info("Test loading crash"+e.getMessage());
 			return "error";
 		}
 		
@@ -63,6 +80,55 @@ public class TutorControllerImpl {
 		return "tutor/home";
 		}
 		session.setAttribute("error", "403: You are not authorized");
+		return "error";
+	}
+	
+	@RequestMapping(value="/create", method=RequestMethod.GET)
+	public String createTest(HttpSession session){
+		Test test = tutorService.createTest();
+		session.setAttribute("test", test);
+		return "tutor/create";
+	}
+	
+	@RequestMapping(value="/add", method=RequestMethod.POST)
+	public String createTest(@RequestParam Map<String, String> params, HttpSession session){
+		
+		for(Map.Entry<String, String> entry : params.entrySet())
+			LOGGER.info(entry.getKey()+ " "+entry.getValue());
+		Test test = (Test) session.getAttribute("test");
+		test = tutorService.updateTest(params, test);
+		session.setAttribute("test", test);
+		return "tutor/editor";
+	}
+	
+	@RequestMapping(value="/create", method=RequestMethod.POST)
+	public String addQuestions(@RequestParam() Map<String, String> params, HttpSession session){
+		if(session.getAttribute("account")!=null)
+		{
+		Test test = tutorService.createTest(params.get("name"), params.get("subj"), params.get("time"), (Account)session.getAttribute("account"));
+		session.setAttribute("test", test);
+		return "tutor/editor";
+		}
+		session.setAttribute("error", "You are not logged in, <a href=\"/wtapp/login\">log in</a> in order to create test.");
+		return "error";
+	}
+	
+	@RequestMapping(value="/save", method=RequestMethod.POST)
+	public String saveTest(@RequestParam() Map<String, String> params, HttpSession session){
+		for(Map.Entry<String, String> entry : params.entrySet())
+			LOGGER.info(entry.getKey()+" "+ entry.getValue());
+		
+		if(session.getAttribute("account")!=null){
+
+		Test test = (Test)session.getAttribute("test");
+
+		LOGGER.info(test.getQuestions().size()+ " < questions,  "+params.get("name") +" "+ params.get("subj")+" "+ params.get("time"));
+		test = tutorService.createTest(test, params.get("name"), params.get("subj"), params.get("time"), (Account)session.getAttribute("account"));
+		LOGGER.info(test.getQuestions().size()+ " < questions,  "+test.getAuthor().getFirstName() +" "+ test.getName());
+		tutorService.persistTest(test);
+		return "tutor/home";
+		}
+		session.setAttribute("error", "You are not logged in, <a href=\"/wtapp/login\">log in</a> in order to create test.");
 		return "error";
 	}
 
