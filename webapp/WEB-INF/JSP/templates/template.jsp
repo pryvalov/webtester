@@ -3,7 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<%@ page import="ua.pri.ent.Account"%>
+<%@ taglib prefix="decorator" uri="http://www.opensymphony.com/sitemesh/decorator"%>
+
 <!DOCTYPE html>
 <html class="no-js">
 <head>
@@ -32,3 +33,17 @@
 		<div id="overhead">Open source online testing platform.</div>
 		</div>
 		<div id="content">
+		<c:if test=""></c:if>
+		<c:if test="${account!=null}"><jsp:include page="../templates/status.jsp" /></c:if>
+		<decorator:body />
+<!-- </div> -->
+
+</div>
+<!-- <div id="footdiv">Copyright &copy;</div> -->
+
+</div>
+
+
+</body>
+
+</html>

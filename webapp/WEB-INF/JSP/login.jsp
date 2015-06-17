@@ -1,12 +1,14 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%-- <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
-<jsp:include page="templates/header.jsp" />
-<div class="frontpage-block"> 
+<jsp:include page="templates/header.jsp" /> --%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!-- <div class="frontpage-block">  -->
+<c:if test="${account==null}">
 	<div id="divlogin">
 		<form method="post" action="login">
 
@@ -49,6 +51,7 @@
 
 		</form>
 	</div>
+	</c:if>
 	<div id="textbody" class="inline-class">
 		<div class="article">
 		<div class="article-header">Pushing the footer down
@@ -93,5 +96,5 @@
 		</div>
 
 	</div>
-</div>
-<jsp:include page="templates/footer.jsp" />
+
+<%-- <jsp:include page="templates/footer.jsp" /> --%>

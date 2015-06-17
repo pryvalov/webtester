@@ -54,14 +54,44 @@ public class HibernateTest {
 			TutorService tutorka = (TutorService) context.getBean("tutorService");
 	
 			//AccountDao ad2 = new AccountDaoImpl();
-			Test t = new Test();
+	/*		Test t = new Test();
+			t.setName("testing new dao");
 			Question q = new Question();
-			q.setQuestionText("testet234234tet 2342343");
-			q.getAnswers().add(new Answer());
+			q.setQuestionText("question text test");
+			q.setTest(t);
+			Answer a = new Answer();
+			a.setAnswerText("answer text test");
+			a.setQuestion(q);
+			q.getAnswers().add(a);
 			t.getQuestions().add(q);
-			tutorka.persistTest(t);
+			tutorka.saveTest(t);*/
+			
+			/*for(Test t1 : tutorka.getAllTests())
+				System.out.println(t1.getName()+" "+t1.getIdTest());*/
+			
+			Test opTest = tutorka.loadTest(37);
+			System.out.println(opTest.getName());
+			for(Question que : opTest.getQuestions()){
+				System.out.println(que.getQuestionText());
+//				que.setQuestionText(">>>>>>>>>SOME NEW UPDATED QUESTION<<<<<<<<<<<<");
+				for(Answer ans : que.getAnswers()){
+					System.out.println("      "+ans.getAnswerText());
+//					ans.setAnswerText("SUPER UPDATED ANSWER");
+				}
+			}
 			
 			
+			
+		/*	Question q = new Question();
+			q.setQuestionText("question saved ++");
+			q.setTest(opTest);
+			Answer a = new Answer();
+			a.setAnswerText("answer saved ++");
+			a.setQuestion(q);
+			q.getAnswers().add(a);
+			opTest.getQuestions().add(q);
+			
+			tutorka.updateTest(opTest);*/
 			
 
 		} finally {

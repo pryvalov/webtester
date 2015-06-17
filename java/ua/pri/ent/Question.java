@@ -1,6 +1,6 @@
 package ua.pri.ent;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -41,7 +41,7 @@ private Test test;
 private String questionText;
 
 @OneToMany(mappedBy="question", cascade={CascadeType.PERSIST, CascadeType.MERGE}, fetch=FetchType.EAGER)
-private Collection<Answer> answers = new ArrayList<>();
+private List<Answer> answers = new ArrayList<>();
 
 
 
@@ -66,12 +66,39 @@ public String getQuestionText() {
 public void setQuestionText(String questionText) {
 	this.questionText = questionText;
 }
-public Collection<Answer> getAnswers() {
+
+
+
+public List<Answer> getAnswers() {
 	return answers;
 }
-public void setAnswers(Collection<Answer> answers) {
+public void setAnswers(List<Answer> answers) {
 	this.answers = answers;
 }
+@Override
+public int hashCode() {
+	final int prime = 31;
+	int result = 1;
+	result = prime * result + idQuestion;
+	return result;
+}
+@Override
+public boolean equals(Object obj) {
+	if (this == obj)
+		return true;
+	if (obj == null)
+		return false;
+	if (getClass() != obj.getClass())
+		return false;
+	Question other = (Question) obj;
+	if (idQuestion != other.idQuestion)
+		return false;
+	return true;
+}
+
+
+
+
 
 
 }

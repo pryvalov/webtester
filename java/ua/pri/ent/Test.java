@@ -1,7 +1,7 @@
 package ua.pri.ent;
 import java.util.Date;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -51,7 +51,7 @@ public class Test extends AbstractEntity{
 	private boolean active;
 
 	@OneToMany(mappedBy="test", cascade={CascadeType.PERSIST, CascadeType.MERGE}, fetch=FetchType.LAZY)
-	private Collection<Question> questions = new ArrayList<>();
+	private List<Question> questions = new ArrayList<>();
 	
 	
 	
@@ -67,11 +67,11 @@ public class Test extends AbstractEntity{
 	
 	
 	
-	public Collection<Question> getQuestions() {
+	public List<Question> getQuestions() {
 		return questions;
 	}
 
-	public void setQuestions(Collection<Question> questions) {
+	public void setQuestions(List<Question> questions) {
 		this.questions = questions;
 	}
 

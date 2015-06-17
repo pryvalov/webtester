@@ -1,11 +1,4 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
-    	<jsp:include page="templates/header.jsp" />
     	<div id="recovery">
         <form method="post" action="recovery">
        
@@ -22,7 +15,7 @@
                     </tr>    
                     <tr>
                     	<td></td>
-                        <td><input type="submit" style="color: black;" value="Send email" /></td>
+                        <td><input type="submit" style="color: black;" class="common-button" value="Send email" /></td>
                         
                     </tr>
                     <tr>
@@ -33,4 +26,4 @@
       
         </form>
         </div>
-        <jsp:include page="templates/footer.jsp" />
+   

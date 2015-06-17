@@ -125,7 +125,11 @@ public class TutorControllerImpl {
 		LOGGER.info(test.getQuestions().size()+ " < questions,  "+params.get("name") +" "+ params.get("subj")+" "+ params.get("time"));
 		test = tutorService.createTest(test, params.get("name"), params.get("subj"), params.get("time"), (Account)session.getAttribute("account"));
 		LOGGER.info(test.getQuestions().size()+ " < questions,  "+test.getAuthor().getFirstName() +" "+ test.getName());
-		tutorService.persistTest(test);
+		int id = test.getIdTest();
+		if(id == 0)
+		tutorService.saveTest(test);
+		else
+		tutorService.mergeTest(test);
 		return "tutor/home";
 		}
 		session.setAttribute("error", "You are not logged in, <a href=\"/wtapp/login\">log in</a> in order to create test.");

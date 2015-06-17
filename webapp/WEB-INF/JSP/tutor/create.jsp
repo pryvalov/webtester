@@ -1,13 +1,6 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
-<jsp:include page="../templates/header.jsp" />
 <div id="create-form-wrapper">
-<jsp:include page="../templates/status.jsp" />
+
 
 <form action="create" id="editor_form" method="post">
 	<div id="create-form" class="inline-class">
@@ -35,4 +28,3 @@
 
 
 
-<jsp:include page="../templates/footer.jsp" />
