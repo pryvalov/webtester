@@ -6,6 +6,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ua.pri.dao.AnswerDao;
 import ua.pri.ent.Answer;
+
+
 @Repository("answerDao")
 @Transactional(readOnly=false)
 public class AnswerDaoSpring extends AbstractDaoSpring<Answer> implements
@@ -17,5 +19,10 @@ public class AnswerDaoSpring extends AbstractDaoSpring<Answer> implements
 		// TODO Auto-generated method stub
 		return Answer.class;
 	}
+	
+	
+	public void merge(Answer a) {
+		getSession().merge(a);
+		}
 
 }

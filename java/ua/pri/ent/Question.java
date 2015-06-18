@@ -40,7 +40,7 @@ private Test test;
 @Column(name="question_text")
 private String questionText;
 
-@OneToMany(mappedBy="question", cascade={CascadeType.PERSIST, CascadeType.MERGE}, fetch=FetchType.EAGER)
+@OneToMany(mappedBy="question", /*cascade={CascadeType.PERSIST, CascadeType.MERGE},*/ fetch=FetchType.EAGER)
 private List<Answer> answers = new ArrayList<>();
 
 

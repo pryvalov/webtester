@@ -3,7 +3,7 @@ import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -50,7 +50,7 @@ public class Test extends AbstractEntity{
 	
 	private boolean active;
 
-	@OneToMany(mappedBy="test", cascade={CascadeType.PERSIST, CascadeType.MERGE}, fetch=FetchType.LAZY)
+	@OneToMany(mappedBy="test", /*cascade={CascadeType.PERSIST, CascadeType.MERGE},*/ fetch=FetchType.LAZY)
 	private List<Question> questions = new ArrayList<>();
 	
 	

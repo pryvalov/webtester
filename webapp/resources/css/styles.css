@@ -9,6 +9,7 @@ body {
 	align: center;
 	margin: 0 auto;
 	float: none;
+	background: #eee;
 }
 
 input[type=submit] {
@@ -17,18 +18,19 @@ input[type=submit] {
 }
 
 input{
-	color:black;
+	color:#111;;
 }
 
 a {
-	color: #ffffff;
+	color: #bffff8;
 	text-decoration: none;
 }
 
 a:HOVER {
-	text-decoration: blink;
+	text-decoration: none;
 	color: #a5aeda;
 }
+
 
 #wrap {
 	min-height: 100%;
@@ -50,7 +52,7 @@ a:HOVER {
 	bottom: 0;
 	width: 100%;
 	height: 45px;
-	/*color: #fff580;
+	/*color: #d8d8d8;
 	width:100%;
 	position: absolute;
  	 z-index: 101;
@@ -60,18 +62,17 @@ a:HOVER {
 }
 
 #headdiv {
-	background-image: url(../images/header1.jpg);
+	/* background-color: #224e6b; */
+	background-color: #224e6b;
 	/* background-color: #808080; */
-	/*position: absolute;
-	height: 50px;
-	width: 100%;*/
-		border-radius: 10px 10px 10px 10px;
-	margin-left: 15px;
-	margin-right: 15px;
+	position: absolute;
+	height: 100px;
+	width: 1366px;
+	border-radius: 10px 10px 10px 10px;
 	margin-top: 3px;
 	height: 100px;
 	padding: 10px;
-	color: #fff580;
+	color: #d8d8d8;
 }
 
 #overhead {
@@ -83,19 +84,18 @@ a:HOVER {
 /* status div */
 .status {
 	/* margin-top: 3px; */
-	margin-left: 5px;
 	display: inline-block;
-	vertical-align: top; padding 3px;
-	background-image: url(../images/header1.jpg);
+	background-color: #224e6b;
 	width: 240px;
 	height: 150px;
 	border-radius: 10px 10px 10px 10px;
-	color: #fff580;
-	position: relative;
+	color: #d8d8d8;
+	position: absolute;
+	top: 130px;
 }
 
 .status input {
-	color: black;
+	color: #111;;
 }
 
 .status table {
@@ -112,60 +112,31 @@ a:HOVER {
 /* end status div */
 #textbody {
 	border-radius: 10px 10px 10px 10px;
-	display: inline-block;
 	position: absolute; 
+	top: 130px;
+	left: 350px;
 	background: #dfdfdf;
 	padding: 3px 3px 3px 10px;
-	margin-right: 15px;
 	/* margin-top: 20px;  */
 	/* width: 800px; */
 }
 
 .inline-class {
 	display: inline-block;
-	margin-left: 15px;
-}
-
-.question {
-	color: black;
-	background: #d3d3d3;
-	width: auto;
-	padding: 10px 10px 10px 10px;
-	border-radius: 10px 10px 10px 10px;
-	margin-top: 5px;
 }
 
 
-
-#test-preview {
-	/* color: #fff580;
-	background-image: url(../images/header1.jpg);
-	width: 220px;
-	padding: 10px 10px 10px 10px;
-	border-radius: 10px 10px 10px 10px;
-	margin-top: 20px; */
-	margin-top: 20px;
-	margin-left: 5px;
-	/* display: inline-block; */
-	vertical-align: top; padding 3px;
-	background-image: url(../images/header1.jpg);
-	width: 240px;
-	height: auto;
-	border-radius: 10px 10px 10px 10px;
-	color: #fff580;
-	padding: 10px 10px 10px 10px;
-	position: relative;
-}
 
 #divlogin {
 	display: inline-table;
-	background-image: url(../images/header1.jpg);
+	background-color: #224e6b;
 	width: 330px;
 	height: 295px;
 	border-radius: 10px 10px 10px 10px;
-	color: #fff580;
-	margin-left: 5px;
-	/*  position: relative;  */
+	color: #d8d8d8;
+/* 	margin-left: 5px; */
+	position: absolute;
+	top: 130px;  
 }
 
 #divlogin table {
@@ -179,23 +150,25 @@ a:HOVER {
 }
 
 #divlogin input {
-	color: black;
+	color: #111;;
 }
 
 #signup {
-	background-image: url(../images/header1.jpg);
+	background-color: #224e6b;
 	border-radius: 10px 10px 10px 10px;
 	width: 580px;
 	height: 380px;
-	color: #fff580;
-	position: relative;
+	color: #d8d8d8;
+	position: absolute;
+	top: 130px;
+	left: 400px;
 	/* margin-top: 15px; */
 	/* margin-left: 15px; */
 	padding: 3px;
 }
 
 #signup input {
-	color: black;
+	color: #111;;
 }
 
 #signup table {
@@ -217,20 +190,20 @@ a:HOVER {
 }
 
 #updateuser {
-	display: inline-block;
-	background-image: url(../images/header1.jpg);
+	background-color: #224e6b;
 	border-radius: 10px 10px 10px 10px;
 	width: 370px;
 	height: 360px;
-	color: #fff580;
-	position: relative;
+	color: #d8d8d8;
+	position: absolute;
+	top: 130px;
+	left: 270px;
 	/* margin-top: 4px; */
-	margin-left: 4px;
 /* 	padding: 3px; */
 }
 
 #updateuser input {
-	color: black;
+	color: #111;;
 }
 
 #updateuser table {
@@ -243,61 +216,20 @@ a:HOVER {
 	padding: 6px;
 }
 
-#test-editor{
-	display: inline-block;
-	margin-top: 20px;
-}
 
-.editor-header {
-	/* display: inline-table; */
-	padding: 10px 10px 10px 10px;
-	background-image: url(../images/header1.jpg);
-	border-radius: 10px 10px 10px 10px;
-	width: auto;
-	position: relative;
-/* 	margin-left: 15px;
-	margin-top: 4px; */
-	color: #fff580;
-}
 
-.editor-header td{
-	padding: 3px;
-	border-collapse: collapse;
-}
 
-.editor-block {
-	/* display: inline-block; */
-	padding: 10px 10px 10px 10px;
-	background-image: url(../images/header1.jpg);
-	border-radius: 10px 10px 10px 10px;
-	width: auto;
-	position: absolute;
-/* 	margin-left: 15px; */
-	margin-top: 15px; 
-	color: #fff580;
-}
-
-.editor-block input {
-	margin-top: 4px;
-	margin-left: 4px;
-}
-
-.editor-block td{
-	padding: 3px;
-	border-collapse: collapse;
-}
 
 #recovery {
 	padding: 3px;
-	margin-left: 15px;
-	margin-top: 15px;
-	background-image: url(../images/header1.jpg);
+	background-color: #224e6b;
 	width: 300px;
 	height: 160px;
 	border-radius: 10px 10px 10px 10px;
-	color: #fff580;
-	position: relative;
-	left: 0;
+	color: #d8d8d8;
+	position: absolute;
+	top: 130px;
+	left: 15px;
 }
 
 #recovery table {
@@ -316,7 +248,6 @@ a:HOVER {
 }
 
 .mybg {
-	/* background-image: url(../images/header1.jpg); */
 	
 }
 /* .mybg:HOVER{color: #ffff80;} */
@@ -327,7 +258,7 @@ a:HOVER {
 
 .mybutton {
 	display: inline-block;
-	background-color: #808080;
+	background-color: #318cb8;
 	width: 100px;
 	height: 40px;
 	line-height: 40px;
@@ -336,19 +267,19 @@ a:HOVER {
 	font-weight: 700;
 	text-align: center;
 	margin-top: 15px;
-	color: #fff580;
+	color: #d8d8d8;
 	text-decoration: none;
 	/* 	padding: 8px 0 0 0; */
 }
 
 .mybutton:hover {
-	background-color: #515151;
-	color: #fff580;
+	background-color: #224e6b;
+	color: #d8d8d8;
 	text-decoration: none;
 }
 
 .mybutton a {
-	color: #fff580;
+	color: #d8d8d8;
 	text-decoration: none;
 	text-align: center;
 }
@@ -356,8 +287,8 @@ a:HOVER {
 .navbutton {
 	/* vertical-align: middle; */
 	display: inline-block;
-	background-color: #464646;
-	color: #fff580;
+	background-color: #318cb8;
+	color: #d8d8d8;
 	float: right;
 	width: 100px;
 	height: 40px;
@@ -374,12 +305,12 @@ a:HOVER {
 }
 
 .navbutton:hover {
-	background-color: #888888;
-	color: #fff580;
+	background-color: #d8d8d8;
+	color: #111;
 }
 
 .navbutton a {
-	color: #fff580;
+	color: #d8d8d8;
 	text-decoration: none;
 	text-align: center;
 }
@@ -388,8 +319,8 @@ a:HOVER {
 	/* vertical-align: middle; */
 	display: inline-block;
 	
-	background-color: #3f3f3f;
-	color: #fff580;
+	background-color: #318cb8;
+	color: #d8d8d8;
 	width: 90px;
 	height: 30px;
 	line-height: 30px;
@@ -399,18 +330,26 @@ a:HOVER {
 	text-align: center;
 	text-decoration: none;
 	/* 	margin-top: 7 px; */
-	margin-bottom: 10px;
+	/* margin-bottom: 10px; */
+	margin: auto;
 	 	padding: 0 0 0 0; 
 }
 
 .common-button:HOVER {
 	cursor: pointer;
-	color: #fff580;
-	background-color: #6c6c00;
+	color: #111;
+	background-color: #d8d8d8;
+	text-decoration: none;
 }
 
 .common-button a {
-	color: #fff580;
+	color: #d8d8d8;
+	text-decoration: none;
+	text-align: center;
+}
+
+.common-button a:HOVER {
+	color: #d8d8d8;
 	text-decoration: none;
 	text-align: center;
 }

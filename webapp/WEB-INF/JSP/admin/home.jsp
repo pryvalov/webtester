@@ -3,8 +3,9 @@
 
 
 	<!--  start table-content  -->
-	<div id="table-content">
-	<table id="product-table">
+	<div class="inline-class" id="admin-notifications" ></div>
+	<div id="table-content" class="margin-top-15">
+	<table class="common-table" id="admin-table">
 				<tr>
 					<th class="table-header-check">id</th>
 					<th class="table-header-repeat line-left minwidth-1"><a
@@ -55,7 +56,7 @@
 
 			</table>
 
-			<a class="mybutton" href="../signup">Create user</a>
+			
 			
 
 

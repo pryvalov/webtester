@@ -5,6 +5,9 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+
+
+
 //import org.apache.catalina.tribes.tipis.AbstractReplicatedMap.MapEntry;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import ua.pri.ent.Account;
+import ua.pri.ent.Answer;
+import ua.pri.ent.Question;
 import ua.pri.ent.Test;
 import ua.pri.services.TutorService;
 @Controller
@@ -26,6 +31,7 @@ public class TutorControllerImpl {
 	@Autowired
 	TutorService tutorService;
 	
+	
 	@RequestMapping(value="/home", method=RequestMethod.GET)
 	public String getTutorHome(HttpSession session){
 		Account a = (Account) session.getAttribute("account");
@@ -36,12 +42,15 @@ public class TutorControllerImpl {
 		List<Test> tests = tutorService.getUserTests(a);
 		session.setAttribute("tests", tests);
 		session.setAttribute("test", null);
+		session.setAttribute("question", null);
+		session.setAttribute("answer", null);
 
 		
 		return "tutor/home";
 	}
 	@RequestMapping(value="/edit", method=RequestMethod.GET)
-	public String editTest(@RequestParam(required=false) String action, @RequestParam(required=false) String testId, HttpSession session){
+	public String editTest(@RequestParam(required=false) String action, @RequestParam(required=false) String testId,
+			@RequestParam(required=false) String idQuestion, HttpSession session){
 		if (testId==null)
 		return "tutor/editor";
 		try{
@@ -49,7 +58,15 @@ public class TutorControllerImpl {
 			case "update": 
 				Test test = tutorService.loadTest(Integer.valueOf(testId));
 				session.setAttribute("test", test);
+				if(idQuestion==null)
 				return "tutor/editor";
+				else
+				{
+					Question toEdit = test.getQuestions().get(test.getQuestions().indexOf(tutorService.findQuestion(idQuestion)));
+					//LOGGER.info(" loaded question:  " + toEdit.getQuestionText() + " ");
+					session.setAttribute("question", toEdit);
+					return "tutor/editor";
+				}
 			case "delete":	
 				tutorService.delete(Integer.valueOf(testId));
 				break;
@@ -93,8 +110,8 @@ public class TutorControllerImpl {
 	@RequestMapping(value="/add", method=RequestMethod.POST)
 	public String createTest(@RequestParam Map<String, String> params, HttpSession session){
 		
-		for(Map.Entry<String, String> entry : params.entrySet())
-			LOGGER.info(entry.getKey()+ " "+entry.getValue());
+	/*	for(Map.Entry<String, String> entry : params.entrySet())
+			LOGGER.info(entry.getKey()+ " "+entry.getValue());*/
 		Test test = (Test) session.getAttribute("test");
 		test = tutorService.updateTest(params, test);
 		session.setAttribute("test", test);
@@ -129,12 +146,38 @@ public class TutorControllerImpl {
 		if(id == 0)
 		tutorService.saveTest(test);
 		else
-		tutorService.mergeTest(test);
+		tutorService.updateTest(test); ///////////////////TEST METHOD///////////////////////////
 		return "tutor/home";
 		}
 		session.setAttribute("error", "You are not logged in, <a href=\"/wtapp/login\">log in</a> in order to create test.");
 		return "error";
 	}
-
+	
+	@RequestMapping(value="savequestion", method=RequestMethod.POST)
+	public String saveQuestion(@RequestParam Map<String, String> params, HttpSession session){
+/*		for(Map.Entry<String, String> entry: params.entrySet())
+			LOGGER.info(entry.getKey()+" ====== "+entry.getValue());
+*/		Question question = (Question) session.getAttribute("question");
+		Test test = (Test) session.getAttribute("test");
+		question = tutorService.updateQuestion(question, params);
+		LOGGER.info("changed text of question = "+question.getQuestionText());
+			for(Answer ans : question.getAnswers())
+				LOGGER.info("answer id: "+ans.getIdAnswer()+"  answer text: "+ans.getAnswerText()+" correct" + ans.isCorrect() );
+		test.getQuestions().remove(question);
+		test.getQuestions().add(question);
+		session.setAttribute("test", test);
+		session.setAttribute("question", null);
+		return "tutor/editor";
+		
+	}
+	@RequestMapping(value="delete", method=RequestMethod.GET)
+	public String removeQuestion(@RequestParam("idQuestion")String idQuestion, HttpSession session){
+		Test test = (Test) session.getAttribute("test");
+		test.getQuestions().remove(tutorService.findQuestion(idQuestion));
+		session.setAttribute("test", test);
+		return "tutor/editor";
+		
+	}
+	
 
 }

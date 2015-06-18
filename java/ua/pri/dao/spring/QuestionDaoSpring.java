@@ -16,5 +16,9 @@ public class QuestionDaoSpring extends AbstractDaoSpring<Question> implements Qu
 
 		return Question.class;
 	}
+	
+	public void merge(Question q) {
+		getSession().merge(q);
+		}
 
 }

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import ua.pri.ent.Account;
+import ua.pri.ent.Question;
 import ua.pri.ent.Test;
 
 public interface TutorService {
@@ -41,5 +42,10 @@ public interface TutorService {
 	public abstract void mergeTest(Test test);
 	
 	public abstract void updateTest(Map<String, String> params, Account author);
+	
+	public abstract Question updateQuestion(Question question, Map<String, String> params);
+	
+	public abstract Question findQuestion(String id_question);
+	
 
 }

@@ -1,10 +1,25 @@
-.article{
+.margin-top-15{
+	margin-top: 15px;
+}
+
+.div-link {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	/* edit: added z-index */
+	z-index: 1;
+	background-image: url('../images/empty.gif');
+}
+
+.article {
 	margin-top: 10px;
 	margin-right: 10px;
 	border-radius: 10px 10px 10px 10px;
 }
 
-.article-header{
+.article-header {
 	background: #444;
 	border-radius: 10px 10px 10px 10px;
 	padding: 8px 8px 8px 8px;
@@ -12,84 +27,241 @@
 	font-weight: bold;
 }
 
-.article-date{
+.article-date {
 	float: right;
 }
 
-
-#create-form{
-	width: 530px;
+#error-block{
+	position: absolute;
+	top: 200px;
+	left: 400px;
 	padding: 10px 10px 10px 10px;
-	background-image: url(../images/header1.jpg);
+	background-color: #5399c8;
+	color: #d8d8d8;
+	width: auto;
+	border-radius: 10px 10px 10px 10px;
+	
+}
+#student-print{
+	padding: 10px 10px 10px 10px;
+	background-color: #bbd7ea;
 	border-radius: 10px 10px 10px 10px;
 	position: absolute;
-	top: 135px;
+	top: 130px;
 	left: 260px;
-	margin-top: 15px; 
-	color: #fff580;
-}
-
-#create-form table{
-	border-collapse: collapse;
-}
-
-#create-form td{
-	padding: 3px;
+	margin-top: 0px;
+	color: #111;
 	
 }
 
-#create-form-wrapper{
+#create-form {
+	width: 530px;
+	padding: 10px 10px 10px 10px;
+	background-color: #224e6b;
+	border-radius: 10px 10px 10px 10px;
+	position: absolute;
+	top: 130px;
+	left: 260px;
+	margin-top: 0px;
+	color: #d8d8d8;
+}
 
+#create-form table {
+	border-collapse: collapse;
+}
+
+#create-form td {
+	padding: 3px;
+}
+
+#create-form-wrapper {
+	
+}
+
+#test-editor {
+	display: inline-block;
+	margin-top: 0px;
+}
+
+.editor-header {
+	/* display: inline-table; */
+	padding: 10px 10px 10px 10px;
+	background-color: #224e6b;
+	border-radius: 10px 10px 10px 10px;
+	width: 570px;
+	position: absolute;
+	top: 130px;
+	left: 750px;
+/* 	margin-left: 15px;
+	margin-top: 4px; */
+	color: #d8d8d8;
+}
+
+.editor-header td{
+	padding: 3px;
+	border-collapse: collapse;
+}
+
+.editor-block {
+	/* display: inline-block; */
+	padding: 10px 10px 10px 10px;
+	background-color: #224e6b;
+	border-radius: 10px 10px 10px 10px;
+	width: 570px;
+	position: absolute;
+	top: 270px;
+	left: 750px;
+/* 	margin-left: 15px; */
+	margin-top: 15px; 
+	color: #d8d8d8;
+	
 }
 
 
 
 
+.editor-block input {
+	margin-top: 4px;
+	margin-left: 4px;
+	float: right;
+}
+
+.editor-block table{
+	width: 550px;
+}
+
+.editor-block td{
+	padding: 3px;
+	border-collapse: collapse;
+}
+
+.question {
+	color: #111;
+	background-color: #224e6b;
+	width: auto;
+	padding: 10px 10px 10px 10px;
+	border-radius: 10px 10px 10px 10px;
+	margin-top: 5px;
+}
+
+.question-body {
+	padding: 10px 10px 10px 10px;
+	position: relative;
+	color: #d8d8d8;
+}
+
+.answer {
+	margin-top: 3px; margin-left : 3px;
+	/* padding: 10px 10px 10px 10px; */
+	color: #eee;
+	/* background: #d8d8d8; */
+	width: 350px;
+	height: auto;
+	border-radius: 10px 10px 10px 10px;
+	margin-left: 3px;
+
+}
+
+#test-preview {
+	/* color: #d8d8d8;
+	background-color: #224e6b;
+	width: 220px;
+	padding: 10px 10px 10px 10px;
+	border-radius: 10px 10px 10px 10px;
+	margin-top: 20px; */
+	margin-top: 0px;
+	margin-left: 5px;
+	/* display: inline-block; */
+	vertical-align: top; padding 3px;
+	width: 450px;
+	height: auto;
+	position: absolute;
+	top: 120px;
+	left: 250px;
+	border-radius: 10px 10px 10px 10px;
+	color: #111;
+	padding: 10px 10px 10px 10px;
+	position: relative;
+	background: #eee;
+}
+
+#answer-tabe{
+	border-spacing: 5px;
+	border-collapse: collapse;
+	width: 100%;
+}
+
+#answer-table tr{
+	vertical-align: middle;
+}
+
+#answer-tabe td {
+	padding: 3px;
+	vertical-align: middle;
+}
 
 
+#admin-notifications{
+	border-radius: 10px 10px 10px 10px;
+	background: #c9c9c9; 
+	width: 1113px; 
+	height: 150px; 
+	position: absolute;
+	top: 130px;
+	left: 260px;
+}
 
-
-
-
-
-
-
-
-
-
-
+#admin-table{
+	position: absolute;
+	top: 280px;
+	width: 1346px;
+}
 
 /* TABLE FROM TEMPLATE STYLE */
-#product-table {
+.common-table {
 	/* 	display: inline-block; */
-	margin-bottom: 20px;
-	margin-top: 20px;
 	font-size: 14px;
+/* 	border-radius: 10px 10px 10px 10px;
+	position: absolute;
+	top: 400px; */
+}
+#table-content{
+	
+	
+}
+#tutor-table{
+	font-size: 14px;
+	position: absolute;
+	left: 270px;
+	top: 130px;
+	
 }
 
-#product-table	td a {
+
+
+.common-table	td a {
 	color: #393939;
 }
 
-#product-table	td a:hover {
+.common-table	td a:hover {
 	text-decoration: underline;
 }
 
-#product-table	th {
+.common-table	th {
 	height: 50px;
 	text-align: left;
 }
 
-#product-table	.minwidth-1 {
+.common-table	.minwidth-1 {
 	min-width: 70px;
 }
 
-#product-table td {
+.common-table td {
 	border: 1px solid #d2d2d2;
 	padding: 10px 10px 10px 10px;
 }
 
-#product-table tr.alternate-row {
+.common-table tr.alternate-row {
 	background: #ececec;
 }
 
@@ -104,7 +276,7 @@ td.checkbox-width {
 
 .table-header-check {
 	/* background: url(../images/table/table_header_checkbox.jpg) no-repeat; */
-	background-image: url(../images/header1.jpg);
+	background-color: #318cb8;
 	border: none;
 	min-width: 29px;
 	padding: 0px 0 0 10px;
@@ -113,16 +285,16 @@ td.checkbox-width {
 
 .table-header-options {
 	/* background: url(../images/table/table_header_options.jpg) no-repeat; */
-	background-image: url(../images/header1.jpg);
+	background-color: #318cb8;
 	border: none;
-	min-width: 221px;
+	/* min-width: 170px; */
 	padding: 0px 0 0 0;
-	width: 221px;
+	width: 150px;
 }
 
 .table-header-repeat {
 	/* background: url(../images/table/table_header_repeat.jpg) ; */
-	background-image: url(../images/header1.jpg);
+	background-color: #318cb8;
 	border: none;
 	font-size: 0px;
 	line-height: 0;
@@ -131,7 +303,7 @@ td.checkbox-width {
 
 .table-header-options a, .table-header-repeat a {
 	/* background: url(../images/table/table_sort_arrow.gif) right no-repeat; */
-	color: #fff580;
+	color: #d8d8d8;
 	font-family: Tahoma;
 	font-size: 13px;
 	font-weight: bold;
@@ -145,10 +317,10 @@ td.checkbox-width {
 }
 
 th.line-left {
-	border-left: 1px solid #373737;
+	border-left: 1px solid #d8d8d8;
 }
 
-#product-table	tr.activity-blue {
+.common-table	tr.activity-blue {
 	background: #e3eceb;
 }
 

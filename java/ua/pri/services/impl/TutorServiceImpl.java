@@ -2,11 +2,13 @@ package ua.pri.services.impl;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -116,7 +118,6 @@ public class TutorServiceImpl implements TutorService {
 		return null;
 	}
 
-
 	@Override
 	public void saveTest(Test test) {
 		LOGGER.info("save service");
@@ -128,35 +129,89 @@ public class TutorServiceImpl implements TutorService {
 		}
 	}
 
-	
 	@Override
 	public void updateTest(Test test) {
-		LOGGER.info("update service");
+		/*
+		 * LOGGER.info("update service"); Test oldTest =
+		 * testDao.loadTest(test.getIdTest()); List<Question> oldQuestionsList =
+		 * oldTest.getQuestions(); int index = 0; Question oldQuestion; for
+		 * (Question question : test.getQuestions()) { if
+		 * (oldQuestionsList.contains(question)) { questionDao.update(question);
+		 * index = oldQuestionsList.indexOf(question); oldQuestion =
+		 * oldQuestionsList.get(index); for (Answer answer :
+		 * question.getAnswers()){ if(oldQuestion.getAnswers().contains(answer))
+		 * answerDao.update(answer); else answerDao.save(answer); } }
+		 * 
+		 * 
+		 * else { questionDao.save(question); for(Answer answer :
+		 * question.getAnswers()) answerDao.save(answer); } }
+		 * testDao.update(test);
+		 */
+
 		Test oldTest = testDao.loadTest(test.getIdTest());
-		List<Question> oldQuestionsList = oldTest.getQuestions();
-		int index = 0;
-		Question oldQuestion;
-		for (Question question : test.getQuestions()) {
-			if (oldQuestionsList.contains(question)) {
-				questionDao.update(question);
-				index = oldQuestionsList.indexOf(question);
-				oldQuestion = oldQuestionsList.get(index);
-				for (Answer answer : question.getAnswers()){
-						if(oldQuestion.getAnswers().contains(answer))
-							answerDao.update(answer);
-						else
-							answerDao.save(answer);
-					}
-				}
+
+		List<Question> questions = test.getQuestions();
+
+		List<Question> oldQuestions = oldTest.getQuestions();
+
+		List<Question> toUpdate = (List<Question>) CollectionUtils.retainAll(
+				questions, oldQuestions);
+
+		List<Question> toDelete = (List<Question>) CollectionUtils.removeAll(
+				oldQuestions, toUpdate);
+
+		List<Question> toSave = (List<Question>) CollectionUtils.removeAll(
+				questions, toUpdate);
+
+		List<Question> beforeUpdate = (List<Question>) CollectionUtils
+				.retainAll(oldQuestions, questions);
+
+		for (Question questionToUpdate : toUpdate) {
 			
-			
-			else {
-				questionDao.save(question);
-					for(Answer answer : question.getAnswers())
-						answerDao.save(answer);
-			}
+			List<Answer> oldAnswers = beforeUpdate.get(
+					beforeUpdate.indexOf(questionToUpdate)).getAnswers();
+
+			List<Answer> answersToUpdate = (List<Answer>) CollectionUtils
+					.retainAll(questionToUpdate.getAnswers(), oldAnswers);
+
+			List<Answer> answersToDelete = (List<Answer>) CollectionUtils
+					.removeAll(oldAnswers, answersToUpdate);
+
+			List<Answer> answersToSave = (List<Answer>) CollectionUtils
+					.removeAll(questionToUpdate.getAnswers(), answersToUpdate);
+			for (Answer answer : answersToDelete)
+				answerDao.delete(answer);
+			for (Answer answer : answersToSave)
+				answerDao.save(answer);
+
 		}
-		testDao.update(test);
+
+		for (Question questionToDelete : toDelete) {
+
+			for (Answer answer : questionToDelete.getAnswers())
+				answerDao.delete(answer);
+
+			questionDao.delete(questionToDelete);
+
+		}
+
+		for (Question questionToSave : toSave) {
+			questionDao.save(questionToSave);
+			for (Answer answer : questionToSave.getAnswers())
+				answerDao.save(answer);
+
+		}
+		try{
+			
+			oldTest.setName(test.getName());
+			oldTest.setSubject(test.getSubject());
+			oldTest.setTime(test.getTime());
+
+			testDao.update(oldTest);
+		}catch(Exception e){
+			LOGGER.error(e.getMessage()+" ID TEST: "+ test.getIdTest());
+		}
+
 	}
 
 	@Override
@@ -219,6 +274,47 @@ public class TutorServiceImpl implements TutorService {
 		test.setQuestions(questions);
 		/* persistTest(test); */
 		saveTest(test);
+	}
+	
+	public Question updateQuestion(Question question, Map<String, String> params){
+		question.setQuestionText(params.get("question"));
+		
+		List<String> correct = new ArrayList<>();
+		Map<String, Boolean> ansmap = new HashMap<>();
+		List<Answer> answers = new ArrayList<>();
+		
+		for(Map.Entry<String, String> entry : params.entrySet())
+			if(entry.getKey().startsWith("cbox"))
+				correct.add(entry.getValue().replaceAll("[^0-9]", ""));
+				
+			
+			
+		
+		
+		
+		for(Map.Entry<String, String> entry : params.entrySet())
+			if(entry.getKey().startsWith("answer"))
+				ansmap.put(entry.getValue(), correct.contains(entry.getKey().replaceAll("[^0-9]", "")));
+				
+			
+		
+		
+		
+		for(Map.Entry<String, Boolean> entry : ansmap.entrySet()){
+			Answer answer = new Answer();
+			answer.setAnswerText(entry.getKey());
+			answer.setCorrect(entry.getValue());
+			answer.setQuestion(question);
+			answers.add(answer);
+		}
+		question.setAnswers(answers);	
+		
+		return question;
+		
+	}
+	
+	public Question findQuestion(String id_question){
+		return questionDao.findById(Integer.valueOf(id_question));
 	}
 
 }

@@ -18,7 +18,7 @@
 	<link rel="stylesheet" type="text/css"
 	href="${context}/resources/css/styles-plus.css?v=${CSS_JS_VERSION}" />
 <%-- <link rel="stylesheet" href="${context}/resources/css/screen.css" type="text/css" media="screen" title="default" /> --%>
-<spring:url value="/resources/JS/passmatch.js" var="script" />
+<spring:url value="/resources/JS/scripts.js" var="script" />
 <script type="text/javascript" src="${script}"></script>
 </head>
 
@@ -27,14 +27,52 @@
 	<div id="wrap">
 		<div id="headdiv">
 		<a href="/wtapp/login">
-		<img class="inline-class" src="${context}/resources/images/wtlogo1.png" style="{float: left; position: absolute; top: 0;}" alt="logo"/>
+		<img class="inline-class" src="${context}/resources/images/wtlogo3.png" style="{float: left; position: absolute; top: 0;}" alt="logo"/>
 		</a>
-		<a href="/wtapp/${role}" class="navbutton">Home</a><a href="" class="navbutton">Profile</a>
+		<a href="/wtapp/${role}" class="navbutton">Home</a>
+		<a href="" class="navbutton">Profile</a>
+		<c:if test="${role=='tutor/home'}"><a class="navbutton" href="create">Create test</a></c:if>
+		<c:if test="${role=='admin/home'}"><a class="navbutton" href="/wtapp/signup">Create user</a></c:if>
 		<div id="overhead">Open source online testing platform.</div>
 		</div>
 		<div id="content">
 		<c:if test=""></c:if>
-		<c:if test="${account!=null}"><jsp:include page="../templates/status.jsp" /></c:if>
+		<c:if test="${account!=null}">	<div class="status">
+
+		<table>
+			<thead>
+				<tr>
+					<th colspan="2">${role}</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td colspan="2">Hello, ${account.firstName}
+						${account.lastName}</td>
+				</tr>
+				<tr>
+				<tr>
+					<td>Logged as:</td>
+					<td>${account.login}</td>
+				</tr>
+				<tr>
+					<td>
+						<!-- <form action="/wtapp/logout">
+							<input type="submit" value="Logout">
+						</form> -->
+						<a href="/wtapp/logout" class="common-button">Logout</a>
+					</td>
+					<td>
+						<!-- <form action="">
+							<input type="submit" value="My profile">
+						</form> -->
+						<a href="" class="common-button">My profile</a>
+					</td>
+				</tr>
+
+			</tbody>
+		</table>
+	</div></c:if>
 		<decorator:body />
 <!-- </div> -->
 
