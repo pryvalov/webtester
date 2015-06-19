@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import ua.pri.ent.Account;
-import ua.pri.services.impl.ERoles;
+
 
 public interface AdminService {
 
@@ -15,10 +15,6 @@ public interface AdminService {
 	public abstract void deactivate(String login);
 
 	public abstract void activate(String login);
-
-	public abstract void addRoles(String login, ERoles role);
-
-	public abstract void removeRoles(String login, ERoles role);
 
 	public abstract void updateUser(Account a);
 	

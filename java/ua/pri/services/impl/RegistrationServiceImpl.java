@@ -5,19 +5,6 @@ import java.util.regex.Pattern;
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 import org.apache.commons.mail.EmailException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -26,10 +13,12 @@ import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
+
 import ua.pri.dao.AccountDao;
 import ua.pri.ent.Account;
 import ua.pri.exceptions.InvalidUserInputException;
 import ua.pri.exceptions.RegistrationException;
+import ua.pri.forms.SignUpForm;
 import ua.pri.services.EmailVerificationService;
 import ua.pri.services.IAccountFactory;
 import ua.pri.services.MailingService;
@@ -107,19 +96,28 @@ public class RegistrationServiceImpl implements RegistrationService {
 	}
 
 	@Override
-	public Account signUpForm(Account account) throws RegistrationException {
-		Account a = null;
+	public Account signUpForm(SignUpForm form) throws RegistrationException {
+		
+		Account newUser = null;
 		try {
-			if (validateInput(account.getLogin(), account.getPassword(), account.getEmail())){
-			a = accountFactory.saveForm(account);
-			sendVerificationEmail(a);
+			if (validateInput(form.getLogin(), form.getPassword(), form.getEmail())){
+				newUser = accountFactory.newAccount();
+		
+				newUser.setEmail(form.getEmail());
+				newUser.setLogin(form.getLogin());
+				newUser.setFirstName(form.getFirstName());
+				newUser.setLastName(form.getLastName());
+				newUser.setMiddleName(form.getMiddleName());
+				newUser.setPassword(form.getPassword());
+				accountDao.save(newUser);
+			sendVerificationEmail(newUser);
 			}
 		} catch (Exception e) {
 			LOGGER.warn(e.getMessage());
 			throw new RegistrationException(e);
 		}
-		LOGGER.info("sign up success for "+account.getLogin()+" "+account.getEmail());
-		return a;
+		LOGGER.info("sign up success for "+newUser.getLogin()+" "+newUser.getEmail());
+		return newUser;
 	}
 	
 	public void passwordRecovery(String email) throws InvalidUserInputException, EmailException{

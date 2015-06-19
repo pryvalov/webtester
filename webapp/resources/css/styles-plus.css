@@ -16,12 +16,12 @@
 .article {
 	margin-top: 10px;
 	margin-right: 10px;
-	border-radius: 10px 10px 10px 10px;
+	border-radius: 5px 5px 5px 5px;
 }
 
 .article-header {
 	background: #444;
-	border-radius: 10px 10px 10px 10px;
+	border-radius: 5px 5px 5px 5px;
 	padding: 8px 8px 8px 8px;
 	color: #c9c9c9;
 	font-weight: bold;
@@ -39,13 +39,13 @@
 	background-color: #5399c8;
 	color: #d8d8d8;
 	width: auto;
-	border-radius: 10px 10px 10px 10px;
+	border-radius: 5px 5px 5px 5px;
 	
 }
 #student-print{
 	padding: 10px 10px 10px 10px;
 	background-color: #bbd7ea;
-	border-radius: 10px 10px 10px 10px;
+	border-radius: 5px 5px 5px 5px;
 	position: absolute;
 	top: 130px;
 	left: 260px;
@@ -58,7 +58,7 @@
 	width: 530px;
 	padding: 10px 10px 10px 10px;
 	background-color: #224e6b;
-	border-radius: 10px 10px 10px 10px;
+	border-radius: 5px 5px 5px 5px;
 	position: absolute;
 	top: 130px;
 	left: 260px;
@@ -87,7 +87,7 @@
 	/* display: inline-table; */
 	padding: 10px 10px 10px 10px;
 	background-color: #224e6b;
-	border-radius: 10px 10px 10px 10px;
+	border-radius: 5px 5px 5px 5px;
 	width: 570px;
 	position: absolute;
 	top: 130px;
@@ -106,7 +106,7 @@
 	/* display: inline-block; */
 	padding: 10px 10px 10px 10px;
 	background-color: #224e6b;
-	border-radius: 10px 10px 10px 10px;
+	border-radius: 5px 5px 5px 5px;
 	width: 570px;
 	position: absolute;
 	top: 270px;
@@ -140,7 +140,7 @@
 	background-color: #224e6b;
 	width: auto;
 	padding: 10px 10px 10px 10px;
-	border-radius: 10px 10px 10px 10px;
+	border-radius: 5px 5px 5px 5px;
 	margin-top: 5px;
 }
 
@@ -157,7 +157,7 @@
 	/* background: #d8d8d8; */
 	width: 350px;
 	height: auto;
-	border-radius: 10px 10px 10px 10px;
+	border-radius: 5px 5px 5px 5px;
 	margin-left: 3px;
 
 }
@@ -167,7 +167,7 @@
 	background-color: #224e6b;
 	width: 220px;
 	padding: 10px 10px 10px 10px;
-	border-radius: 10px 10px 10px 10px;
+	border-radius: 5px 5px 5px 5px;
 	margin-top: 20px; */
 	margin-top: 0px;
 	margin-left: 5px;
@@ -178,7 +178,7 @@
 	position: absolute;
 	top: 120px;
 	left: 250px;
-	border-radius: 10px 10px 10px 10px;
+	border-radius: 5px 5px 5px 5px;
 	color: #111;
 	padding: 10px 10px 10px 10px;
 	position: relative;
@@ -202,8 +202,8 @@
 
 
 #admin-notifications{
-	border-radius: 10px 10px 10px 10px;
-	background: #c9c9c9; 
+	border-radius: 5px 5px 5px 5px;
+	background: #d3d3d3; 
 	width: 1113px; 
 	height: 150px; 
 	position: absolute;
@@ -221,7 +221,7 @@
 .common-table {
 	/* 	display: inline-block; */
 	font-size: 14px;
-/* 	border-radius: 10px 10px 10px 10px;
+/* 	border-radius: 5px 5px 5px 5px;
 	position: absolute;
 	top: 400px; */
 }
@@ -238,7 +238,42 @@
 }
 
 
+.quiz{
+	border-radius: 5px 5px 5px 5px;
+	background: #dddddd;
+}
 
+#quiz-result{
+	position: absolute; 
+	top: 130px; 
+	left: 260px; 
+	background: #dddddd;
+	border-radius: 5px 5px 5px 5px;
+}
+
+#quiz-result table{
+	border-collapse: collapse;
+	border-spacing: 3px;
+}
+
+#quiz-result td{
+	padding: 3px;
+}
+
+#quiz-question{
+	min-width: 600px;
+	min-height: 250px;
+	padding: 5px;
+}
+
+#quiz-question table {
+	width: 100%;
+	border-collapse: collapse;
+	border-spacing: 5px;
+}
+#quiz-question td {
+	padding: 5px;
+}
 .common-table	td a {
 	color: #393939;
 }

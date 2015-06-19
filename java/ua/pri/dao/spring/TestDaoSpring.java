@@ -8,14 +8,13 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import ua.pri.dao.TestDao;
 import ua.pri.ent.Account;
 import ua.pri.ent.Test;
 
 @Repository("testDao")
-@Transactional(readOnly=false)
+//@Transactional(readOnly=false)
 public class TestDaoSpring extends AbstractDaoSpring<Test> implements TestDao {
 	
 /*	@Autowired

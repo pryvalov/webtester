@@ -40,7 +40,6 @@ public class AccountFactory implements IAccountFactory {
 	@Transactional
 	public Account newAccount(String login, String password,
 			String email, String firstName) {
-		System.out.println(accountDao);
 		account = new Account();
 		account.setLogin(login);
 		account.setPassword(password);
@@ -74,6 +73,15 @@ public class AccountFactory implements IAccountFactory {
 		account.getAccountRoles().add(roleDao.student());
 		accountDao.save(account);
 		return accountDao.findByLogin(account.getLogin());
+	}
+	
+	public Account newAccount() {
+		account = new Account();
+		account.setEmailVerified(false);
+		account.setActive(true);
+		account.setCreated(new Date());
+		account.getAccountRoles().add(roleDao.student());
+		return account;
 	}
 	
 }

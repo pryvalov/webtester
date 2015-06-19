@@ -17,8 +17,8 @@ import ua.pri.dao.RoleDao;
 import ua.pri.ent.Account;
 import ua.pri.ent.Role;
 import ua.pri.exceptions.InvalidUserInputException;
+import ua.pri.forms.LoginForm.Roles;
 import ua.pri.listeners.TestEvent;
-
 import ua.pri.services.LoginService;
 @Service("loginService")
 public class LoginServiceImpl implements  LoginService, ApplicationEventPublisherAware {
@@ -32,9 +32,17 @@ public class LoginServiceImpl implements  LoginService, ApplicationEventPublishe
 	private ApplicationEventPublisher publisher;
 	
 	@Override
-	public Account login(String email, String password, int _role)
+	public Account login(String email, String password, Roles _role)
 			throws InvalidUserInputException {
-		Role role = roleDao.findById(_role);
+		int idRole = 1;
+		switch(_role){
+		case Administrator : idRole=0; break;
+		case Student : idRole=1; break;
+		case Tutor : idRole=2; break;
+		case Advanced_tutor : idRole=3; break;
+		}
+		
+		Role role = roleDao.findById(idRole);
 		if (StringUtils.isBlank(email) || StringUtils.isBlank(password))
 			throw new InvalidUserInputException("empty fields");
 		Account account = accountDao.findByEmail(email);

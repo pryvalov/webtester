@@ -15,13 +15,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import ua.pri.ent.Account;
 import ua.pri.exceptions.InvalidUserInputException;
 import ua.pri.forms.LoginForm;
+import ua.pri.forms.LoginForm.Roles;
 import ua.pri.services.LoginService;
 import ua.pri.utils.RolesConstants;
 
 @Controller("loginController")
 public class LoginControllerImpl {
 	
-	private static Map<Integer, String> rolesHome = new HashMap<>();
+	private static Map<Roles, String> rolesHome = new HashMap<>();
 	static{
 		rolesHome.put(RolesConstants.ADMIN, "admin/home");
 		rolesHome.put(RolesConstants.STUDENT, "student/home");
@@ -33,21 +34,34 @@ public class LoginControllerImpl {
 	@Autowired
 	LoginService loginService;
 	
+	@ModelAttribute("roleList")
+	public Roles[] getRoles(){
+		return Roles.values();
+	}
+	
+	@ModelAttribute("loginForm")
+	public LoginForm getLoginForm(){
+		return new LoginForm();
+	}
+	
 	
 	@RequestMapping(value="/login", method=RequestMethod.GET)
-	public String getLoginForm(){
+	public String getLoginForm(Model model){
+		//model.addAttribute("loginForm", new LoginForm());
 		return "login";
 	}
 	@RequestMapping(value="/login", method=RequestMethod.POST)
 	public String proceedLogin(@ModelAttribute("loginForm") LoginForm loginForm, Model model, HttpSession session) throws InvalidUserInputException{
 		Account acc = null;
-		try{
+		
+	try{
 		acc = loginService.login(loginForm.getEmail(), loginForm.getPassword(), loginForm.getRole());
 		session.setAttribute("account", acc);
+		session.setAttribute("_role", loginForm.getRole());
 		session.setAttribute("role", rolesHome.get(loginForm.getRole()));
 		return "redirect:"+rolesHome.get(loginForm.getRole());
 		}catch(Exception e){
-			session.setAttribute("error", e.getMessage());
+			model.addAttribute("error", e.getMessage());
 			return "error";
 		}
 		

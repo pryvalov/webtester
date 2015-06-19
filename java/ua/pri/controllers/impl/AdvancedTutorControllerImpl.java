@@ -9,13 +9,14 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
+
 import ua.pri.ent.Account;
-import ua.pri.ent.Answer;
 import ua.pri.ent.Question;
 import ua.pri.ent.Test;
 import ua.pri.services.TutorService;
@@ -28,8 +29,6 @@ public class AdvancedTutorControllerImpl {
 	
 	@Autowired
 	TutorService tutorService;
-	
-
 	
 	@RequestMapping(value="/home", method=RequestMethod.GET)
 	public String getTutorHome(HttpSession session){
@@ -131,16 +130,16 @@ public class AdvancedTutorControllerImpl {
 	
 	@RequestMapping(value="/save", method=RequestMethod.POST)
 	public String saveTest(@RequestParam() Map<String, String> params, HttpSession session){
-		for(Map.Entry<String, String> entry : params.entrySet())
-			LOGGER.info(entry.getKey()+" "+ entry.getValue());
+//		for(Map.Entry<String, String> entry : params.entrySet())
+			//LOGGER.info(entry.getKey()+" "+ entry.getValue());
 		
 		if(session.getAttribute("account")!=null){
 
 		Test test = (Test)session.getAttribute("test");
 
-		LOGGER.info(test.getQuestions().size()+ " < questions,  "+params.get("name") +" "+ params.get("subj")+" "+ params.get("time"));
+		//LOGGER.info(test.getQuestions().size()+ " < questions,  "+params.get("name") +" "+ params.get("subj")+" "+ params.get("time"));
 		test = tutorService.createTest(test, params.get("name"), params.get("subj"), params.get("time"), (Account)session.getAttribute("account"));
-		LOGGER.info(test.getQuestions().size()+ " < questions,  "+test.getAuthor().getFirstName() +" "+ test.getName());
+		//LOGGER.info(test.getQuestions().size()+ " < questions,  "+test.getAuthor().getFirstName() +" "+ test.getName());
 		int id = test.getIdTest();
 		if(id == 0)
 		tutorService.saveTest(test);
@@ -152,30 +151,34 @@ public class AdvancedTutorControllerImpl {
 		return "error";
 	}
 	
-	@RequestMapping(value="savequestion", method=RequestMethod.POST)
-	public String saveQuestion(@RequestParam Map<String, String> params, HttpSession session){
-/*		for(Map.Entry<String, String> entry: params.entrySet())
-			LOGGER.info(entry.getKey()+" ====== "+entry.getValue());
-*/		Question question = (Question) session.getAttribute("question");
+	@RequestMapping(value="/savequestion", method=RequestMethod.POST)
+	public String saveQuestion(@RequestParam Map<String, String> params, Model model, HttpSession session){
+
+		Question question = (Question) session.getAttribute("question");
 		Test test = (Test) session.getAttribute("test");
-		question = tutorService.updateQuestion(question, params);
-		LOGGER.info("changed text of question = "+question.getQuestionText());
-			for(Answer ans : question.getAnswers())
-				LOGGER.info("answer id: "+ans.getIdAnswer()+"  answer text: "+ans.getAnswerText()+" correct" + ans.isCorrect() );
-		test.getQuestions().remove(question);
-		test.getQuestions().add(question);
+		session.setAttribute("test", null);
+	
+			
+		
+		
+		question = tutorService.updateQuestion(test, question, params);
+		LOGGER.info("QUESTION AFTER updateQuestion method = "+question.getQuestionText());
+		
+
+		tutorService.updateTest(test);
 		session.setAttribute("test", test);
 		session.setAttribute("question", null);
 		return "advanced_tutor/editor";
 		
 	}
-	@RequestMapping(value="delete", method=RequestMethod.GET)
+	@RequestMapping(value="/delete", method=RequestMethod.GET)
 	public String removeQuestion(@RequestParam("idQuestion")String idQuestion, HttpSession session){
 		Test test = (Test) session.getAttribute("test");
 		test.getQuestions().remove(tutorService.findQuestion(idQuestion));
 		session.setAttribute("test", test);
-		return "tutor/editor";
+		return "advanced_tutor/editor";
 		
 	}
+	
 
 }

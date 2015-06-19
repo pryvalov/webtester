@@ -91,12 +91,12 @@
 	</c:if>
 
 	</form>
-		<c:if test="${question!=null}">
+	<c:if test="${question!=null}">
 	<form action="savequestion" method="post">
 	<div class="editor-block" id="question">
 	<table id="editor_table">
 	<tr>
-	<td><a class="common-button" style="float: left;" onclick="addEditorField()"><span style="color: lime; font-size: 28px;">+</span></a></td>
+	<td><a class="common-button" style="float: left;  border: inset; border-color: #93DF5E; background:none; padding-bottom: 3px;" onclick="addEditorField()"><span style="color: #93DF5E; font-size: 28px;">+</span></a></td>
 	<td>	</td>
 	<td><input type="submit" class="common-button" style="float: right;" value="Save"/></td>
 	</tr>

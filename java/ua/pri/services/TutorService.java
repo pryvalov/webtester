@@ -43,9 +43,11 @@ public interface TutorService {
 	
 	public abstract void updateTest(Map<String, String> params, Account author);
 	
-	public abstract Question updateQuestion(Question question, Map<String, String> params);
+	public abstract Question updateQuestion(Test test, Question question, Map<String, String> params);
 	
 	public abstract Question findQuestion(String id_question);
+	
+	public abstract Test substituteQuestion(Test test, Question new_question) throws Exception;
 	
 
 }

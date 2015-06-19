@@ -3,18 +3,20 @@ package ua.pri.utils;
 import java.util.Arrays;
 import java.util.List;
 
+import ua.pri.forms.LoginForm.Roles;
+
 
 public interface RolesConstants {
 
-	public final static int ADMIN = 0;
+	public final static Roles ADMIN = Roles.Administrator;
 	
-	public final static int STUDENT = 1;
+	public final static Roles STUDENT = Roles.Student;
 	
-	public final static int TUTOR = 2;
+	public final static Roles TUTOR = Roles.Tutor;
 	
-	public final static int ADVANCED_TUTOR = 3;
+	public final static Roles ADVANCED_TUTOR = Roles.Advanced_tutor;
 	
-	public static List<Integer> roles = Arrays.asList(ADMIN, ADVANCED_TUTOR, STUDENT, TUTOR);
+	public static List<Roles> roles = Arrays.asList(ADMIN, ADVANCED_TUTOR, STUDENT, TUTOR);
 	
 	
 

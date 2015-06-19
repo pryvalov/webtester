@@ -17,7 +17,6 @@
 	href="${context}/resources/css/styles.css?v=${CSS_JS_VERSION}" />
 	<link rel="stylesheet" type="text/css"
 	href="${context}/resources/css/styles-plus.css?v=${CSS_JS_VERSION}" />
-<%-- <link rel="stylesheet" href="${context}/resources/css/screen.css" type="text/css" media="screen" title="default" /> --%>
 <spring:url value="/resources/JS/scripts.js" var="script" />
 <script type="text/javascript" src="${script}"></script>
 </head>
@@ -33,7 +32,8 @@
 		<a href="" class="navbutton">Profile</a>
 		<c:if test="${role=='tutor/home'}"><a class="navbutton" href="create">Create test</a></c:if>
 		<c:if test="${role=='admin/home'}"><a class="navbutton" href="/wtapp/signup">Create user</a></c:if>
-		<div id="overhead">Open source online testing platform.</div>
+		<c:if test="${role=='student/home'}"><a class="navbutton" href="/wtapp/student/results">Results</a></c:if>
+		<!-- <div id="overhead">Open source online testing platform.</div> -->
 		</div>
 		<div id="content">
 		<c:if test=""></c:if>
@@ -42,7 +42,7 @@
 		<table>
 			<thead>
 				<tr>
-					<th colspan="2">${role}</th>
+					<th colspan="2">${_role}</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -57,15 +57,11 @@
 				</tr>
 				<tr>
 					<td>
-						<!-- <form action="/wtapp/logout">
-							<input type="submit" value="Logout">
-						</form> -->
+						
 						<a href="/wtapp/logout" class="common-button">Logout</a>
 					</td>
 					<td>
-						<!-- <form action="">
-							<input type="submit" value="My profile">
-						</form> -->
+						
 						<a href="" class="common-button">My profile</a>
 					</td>
 				</tr>

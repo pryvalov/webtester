@@ -15,10 +15,10 @@
 						href="">Name</a></th>
 					<th class="table-header-repeat line-left minwidth-1"><a
 						href="">Subject</a></th>
+						<th class="table-header-repeat line-left"><a
+						href="">Author</a></th>
 					<th class="table-header-repeat line-left"><a
 						href="">Questions</a></th>
-					<th class="table-header-repeat line-left"><a
-						href="">Author</a></th>
 					<th class="table-header-repeat line-left"><a
 						href="">Created</a></th>
 						<th class="table-header-repeat line-left"><a
@@ -32,8 +32,8 @@
 						<td>${test.idTest}	</td>
 						<td>${test.name}</td>
 						<td>${test.subject}</td>
+						<td>${test.author.firstName}&nbsp;${test.author.lastName}</td>
 						<td>N/A</td>
-						<td>${test.author.firstName} ${test.author.lastName}</td>
 						<td>${test.created}</td>
 						<td>${test.time} sec.</td>
 						<td>${test.active}</td>

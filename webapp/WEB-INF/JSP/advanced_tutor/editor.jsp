@@ -2,37 +2,35 @@
 
 
 	<div class="inline-class" id="test-preview">
-	${test.idTest}<br>
-	${test.author.firstName} ${test.author.lastName}<br>
-	${test.subject}<br>
-	${test.name}<br>
-	${test.created}<br>
-	${test.time}<br>
+	Test: <b>${test.name}</b><br>
+	Subject: <b>${test.subject}</b><br>
+	By: <b>${test.author.firstName} ${test.author.lastName}</b><br>
+	Created: <b>${test.created}</b><br>
+	<b>${test.time}</b> sec. per question.<br>
 	<c:forEach items="${test.questions}" var="question">
 	<div class="question">
-		<div class="question-body">${question.questionText} 
+		<div class="question-body"><b>${question.questionText} </b>
 		</div>
 		<table id="answer-tabe">
 		<c:forEach items="${question.answers}" var="answer">
 		<tr>
 		<td>
 		<div class="answer">
+		${answer.correct ? '<font style="color: #93DF5E;">' : ''}
 		${answer.answerText} 
+		${answer.correct ? '</font>' : ''}
 		</div>
 		</td>
 		<td></td>
-		<td> 
-		${answer.correct ? '<span style="color: lime; float: right; font-size: 20px;">V</span>' : ''}
-
-		</td>
+		<td>&nbsp;			</td>
 		</tr>
 	
 		
 		</c:forEach>
 			<tr>
 		<td colspan="2">
-		<a class="common-button" style="float: right; margin-right: 10px;" href="delete?idQuestion=${question.idQuestion}">Delete</a>
-		<a class="common-button" style="float: left; " href="edit?action=update&testId=${test.idTest}&idQuestion=${question.idQuestion}">Edit<!-- <span class="div-link"></span> --></a>
+		<a class="common-button" style="float: right; margin-top: 10px;" href="delete?idQuestion=${question.idQuestion}">Delete</a>
+		<a class="common-button" style="float: left; margin-top: 10px;" href="edit?action=update&testId=${test.idTest}&idQuestion=${question.idQuestion}">Edit<!-- <span class="div-link"></span> --></a>
 			
 		</td>
 		<td></td>
@@ -72,9 +70,11 @@
 	<div class="editor-block" id="question">
 	<table id="editor_table">
 	<tr>
-	<td><a class="common-button" style="float: left;" onclick="addFields();"><span style="color: lime; font-size: 28px;">+</span></a></td>
+	<td><a class="common-button" style="float: left;  border: inset; border-color: #93DF5E; background:none; padding-bottom: 3px;" onclick="addFields();">
+	<span style="color: #93DF5E;  font-size: 28px;">+</span></a></td>
 	<td>
-	<a class="common-button" id="removeButton" hidden=true style="float: left; display: none;" onclick="removeFields();"><span style="color: red; font-size: 28px;">-</span></a>
+	<a class="common-button" id="removeButton" hidden=true style="float: left; border: inset; border-color: #EF5252; padding-bottom: 5px; background: none; 
+	display: none;" onclick="removeFields();"><span style="color: #EF5252; font-size: 28px;">-</span></a>
 
 	<input type="submit" class="common-button" style="float: right;" value="Add"/></td>
 	<td></td>
@@ -91,12 +91,12 @@
 	</c:if>
 
 	</form>
-		<c:if test="${question!=null}">
+	<c:if test="${question!=null}">
 	<form action="savequestion" method="post">
 	<div class="editor-block" id="question">
 	<table id="editor_table">
 	<tr>
-	<td><a class="common-button" style="float: left;" onclick="addEditorField()"><span style="color: lime; font-size: 28px;">+</span></a></td>
+	<td><a class="common-button" style="float: left;  border: inset; border-color: #93DF5E; background:none; padding-bottom: 3px;" onclick="addEditorField()"><span style="color: #93DF5E; font-size: 28px;">+</span></a></td>
 	<td>	</td>
 	<td><input type="submit" class="common-button" style="float: right;" value="Save"/></td>
 	</tr>

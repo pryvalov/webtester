@@ -20,7 +20,7 @@ import ua.pri.services.EmailVerificationService;
 import ua.pri.services.IAccountFactory;
 import ua.pri.services.RegistrationService;
 import ua.pri.services.TutorService;
-import ua.pri.services.impl.ERoles;
+
 import ua.pri.services.impl.EmailVerificationServiceImpl;
 import ua.pri.services.impl.LoginServiceImpl;
 import ua.pri.services.impl.RegistrationServiceImpl;

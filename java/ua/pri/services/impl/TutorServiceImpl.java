@@ -13,6 +13,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import ua.pri.dao.AnswerDao;
 import ua.pri.dao.QuestionDao;
@@ -47,17 +48,17 @@ public class TutorServiceImpl implements TutorService {
 	public List<Test> getAllTests() {
 		return testDao.getList();
 	};
-
+	@Transactional(readOnly=false)
 	public void delete(int id) {
 		testDao.delete(testDao.loadTest(id));
 	}
-
+	@Transactional(readOnly=false)
 	public void activate(int id) {
-		Test toActivate = testDao.loadTest(id);
+		Test toActivate = testDao.findById(id);
 		toActivate.setActive(true);
-		testDao.merge(toActivate);
+		testDao.update(toActivate);
 	}
-
+	@Transactional(readOnly=false)
 	public void deActivate(int id) {
 		Test toDeActivate = testDao.loadTest(id);
 		toDeActivate.setActive(false);
@@ -119,6 +120,7 @@ public class TutorServiceImpl implements TutorService {
 	}
 
 	@Override
+	@Transactional(readOnly=false)
 	public void saveTest(Test test) {
 		LOGGER.info("save service");
 		testDao.save(test);
@@ -130,6 +132,7 @@ public class TutorServiceImpl implements TutorService {
 	}
 
 	@Override
+	@Transactional(readOnly=false)
 	public void updateTest(Test test) {
 		/*
 		 * LOGGER.info("update service"); Test oldTest =
@@ -215,11 +218,13 @@ public class TutorServiceImpl implements TutorService {
 	}
 
 	@Override
+	@Transactional(readOnly=false)
 	public void persistTest(Test test) {
 		testDao.persist(test);
 	}
 
 	@Override
+	@Transactional(readOnly=false)
 	public void mergeTest(Test test) {
 		testDao.merge(test);
 	}
@@ -276,8 +281,10 @@ public class TutorServiceImpl implements TutorService {
 		saveTest(test);
 	}
 	
-	public Question updateQuestion(Question question, Map<String, String> params){
-		question.setQuestionText(params.get("question"));
+	public Question updateQuestion(Test test, Question question, Map<String, String> params){
+		Question updatedQuestion = new Question();
+		updatedQuestion.setTest(test);
+		updatedQuestion.setQuestionText(params.get("question"));
 		
 		List<String> correct = new ArrayList<>();
 		Map<String, Boolean> ansmap = new HashMap<>();
@@ -304,17 +311,30 @@ public class TutorServiceImpl implements TutorService {
 			Answer answer = new Answer();
 			answer.setAnswerText(entry.getKey());
 			answer.setCorrect(entry.getValue());
-			answer.setQuestion(question);
+			answer.setQuestion(updatedQuestion);
 			answers.add(answer);
 		}
-		question.setAnswers(answers);	
+		updatedQuestion.setAnswers(answers);	
 		
-		return question;
+		test.getQuestions().remove(question);
+		test.getQuestions().add(updatedQuestion);
+		
+		return updatedQuestion;
 		
 	}
 	
 	public Question findQuestion(String id_question){
 		return questionDao.findById(Integer.valueOf(id_question));
+	}
+	
+	public Test substituteQuestion(Test test, Question new_question) throws Exception{
+		for(Question que : test.getQuestions()){
+			if(que.getIdQuestion()==new_question.getIdQuestion()){
+				test.getQuestions().remove(que);
+				return test;
+			}
+		}
+		throw new Exception("Test does not contain question");
 	}
 
 }

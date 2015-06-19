@@ -1,11 +1,13 @@
 package ua.pri.ent;
 import java.util.Date;
 
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -24,11 +26,13 @@ public class TestResult extends AbstractEntity{
 	@Column(name="id_test_result")
 	private int idTestResult;
 	
-	@JoinColumn(name="id_test", nullable=false)
-	private int idTest;
+	@ManyToOne(targetEntity=Test.class)
+	@JoinColumn(name="idtest")
+	private Test test;
 	
-	@JoinColumn(name="id_account", nullable=false)
-	private int idAccount;
+	@ManyToOne(targetEntity=Account.class)
+	@JoinColumn(name="idaccount")
+	private Account account;
 	
 	@Temporal(TemporalType.DATE)
 	private Date date;
@@ -46,20 +50,24 @@ public class TestResult extends AbstractEntity{
 		this.idTestResult = idTestResult;
 	}
 
-	public int getIdTest() {
-		return idTest;
+
+
+
+
+	public Test getTest() {
+		return test;
 	}
 
-	public void setIdTest(int idTest) {
-		this.idTest = idTest;
+	public void setTest(Test idTest) {
+		this.test = idTest;
 	}
 
-	public int getIdAccount() {
-		return idAccount;
+	public Account getAccount() {
+		return account;
 	}
 
-	public void setIdAccount(int idAccount) {
-		this.idAccount = idAccount;
+	public void setAccount(Account idAccount) {
+		this.account = idAccount;
 	}
 
 	public Date getDate() {

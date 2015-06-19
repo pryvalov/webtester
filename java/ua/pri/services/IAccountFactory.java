@@ -12,5 +12,7 @@ public interface IAccountFactory {
 			String email, String firstName, String lastName, String middleName);
 
 	public abstract Account saveForm(Account account);
+	
+	public abstract Account newAccount();
 
 }

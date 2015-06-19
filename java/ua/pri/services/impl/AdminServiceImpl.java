@@ -65,7 +65,7 @@ public class AdminServiceImpl implements AdminService {
 		accountDao.update(acc);
 	}
 
-	@Override
+	/*@Override
 	public void addRoles(String login, ERoles role) {
 		Account acc = accountDao.findByLogin(login);
 		switch (role) {
@@ -104,7 +104,7 @@ public class AdminServiceImpl implements AdminService {
 			break;
 		}
 		accountDao.update(acc);
-	}
+	}*/
 	
 	public Account updateUser(Account a, Map<String, String> params){
 		

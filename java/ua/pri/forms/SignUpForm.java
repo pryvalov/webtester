@@ -10,6 +10,28 @@ public class SignUpForm extends AbstractForm{
 	private String firstName;
 	private String lastName;
 	private String middleName;
+	private String password;
+	private String email;
+	private String confirm;
+	
+	public String getConfirm() {
+		return confirm;
+	}
+	public void setConfirm(String confirm) {
+		this.confirm = confirm;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
 	public String getLogin() {
 		return login;
 	}

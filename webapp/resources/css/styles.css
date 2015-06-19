@@ -22,13 +22,13 @@ input{
 }
 
 a {
-	color: #bffff8;
+	color: #bde8e6;
 	text-decoration: none;
 }
 
 a:HOVER {
 	text-decoration: none;
-	color: #a5aeda;
+	color: #d8d8d8;
 }
 
 
@@ -68,7 +68,7 @@ a:HOVER {
 	position: absolute;
 	height: 100px;
 	width: 1366px;
-	border-radius: 10px 10px 10px 10px;
+	border-radius: 5px 5px 5px 5px;
 	margin-top: 3px;
 	height: 100px;
 	padding: 10px;
@@ -88,7 +88,7 @@ a:HOVER {
 	background-color: #224e6b;
 	width: 240px;
 	height: 150px;
-	border-radius: 10px 10px 10px 10px;
+	border-radius: 5px 5px 5px 5px;
 	color: #d8d8d8;
 	position: absolute;
 	top: 130px;
@@ -111,7 +111,7 @@ a:HOVER {
 
 /* end status div */
 #textbody {
-	border-radius: 10px 10px 10px 10px;
+	border-radius: 5px 5px 5px 5px;
 	position: absolute; 
 	top: 130px;
 	left: 350px;
@@ -131,8 +131,8 @@ a:HOVER {
 	display: inline-table;
 	background-color: #224e6b;
 	width: 330px;
-	height: 295px;
-	border-radius: 10px 10px 10px 10px;
+	height: 240px;
+	border-radius: 5px 5px 5px 5px;
 	color: #d8d8d8;
 /* 	margin-left: 5px; */
 	position: absolute;
@@ -155,7 +155,7 @@ a:HOVER {
 
 #signup {
 	background-color: #224e6b;
-	border-radius: 10px 10px 10px 10px;
+	border-radius: 5px 5px 5px 5px;
 	width: 580px;
 	height: 380px;
 	color: #d8d8d8;
@@ -191,7 +191,7 @@ a:HOVER {
 
 #updateuser {
 	background-color: #224e6b;
-	border-radius: 10px 10px 10px 10px;
+	border-radius: 5px 5px 5px 5px;
 	width: 370px;
 	height: 360px;
 	color: #d8d8d8;
@@ -225,7 +225,7 @@ a:HOVER {
 	background-color: #224e6b;
 	width: 300px;
 	height: 160px;
-	border-radius: 10px 10px 10px 10px;
+	border-radius: 5px 5px 5px 5px;
 	color: #d8d8d8;
 	position: absolute;
 	top: 130px;
