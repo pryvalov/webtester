@@ -18,6 +18,8 @@ import org.springframework.stereotype.Service;
 
 
 
+import org.springframework.transaction.annotation.Transactional;
+
 import ua.pri.dao.AnswerDao;
 import ua.pri.dao.TestDao;
 import ua.pri.dao.TestResultDao;
@@ -42,12 +44,14 @@ public class StudentServiceImpl implements StudentService {
 	TestResultDao testResultDao;
 	
 	@Override
+	@Transactional
 	public List<Test> listTests(){
 		
 		return testDao.getList();
 		
 	}
 	@Override
+	@Transactional
 	public List<Test> listTests(int offset, int limit){
 		
 		return testDao.getList(offset, limit);
@@ -55,6 +59,7 @@ public class StudentServiceImpl implements StudentService {
 	}
 	
 	@Override
+	@Transactional
 	public Test loadTest(int id_test){
 		return testDao.loadTest(id_test);
 		
@@ -67,6 +72,7 @@ public class StudentServiceImpl implements StudentService {
 		return testResult;
 	}
 	
+	@Transactional
 	public int checkAnswer(Map<String, String> params){
 		int score = 0;
 		for(Map.Entry<String, String> entry : params.entrySet())
@@ -87,13 +93,15 @@ public class StudentServiceImpl implements StudentService {
 		return score;
 		
 	}
+	
+	@Transactional
 	public void saveResult(TestResult result, int score){
 		result.setDate(new Date());
 		result.setScore(" "+score);
 		testResultDao.save(result);
 	}
 	
-	
+	@Transactional
 	public List<TestResult> getUesrResults(Account account){
 		return testResultDao.getUserReults(account);
 	}

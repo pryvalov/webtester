@@ -21,60 +21,62 @@ import ua.pri.utils.RolesConstants;
 
 @Controller("loginController")
 public class LoginControllerImpl {
-	
+
 	private static Map<Roles, String> rolesHome = new HashMap<>();
-	static{
+	static {
 		rolesHome.put(RolesConstants.ADMIN, "admin/home");
 		rolesHome.put(RolesConstants.STUDENT, "student/home");
 		rolesHome.put(RolesConstants.TUTOR, "tutor/home");
 		rolesHome.put(RolesConstants.ADVANCED_TUTOR, "advanced_tutor/home");
 	}
-	
-	
+
 	@Autowired
 	LoginService loginService;
-	
+
 	@ModelAttribute("roleList")
-	public Roles[] getRoles(){
+	public Roles[] getRoles() {
 		return Roles.values();
 	}
-	
+
 	@ModelAttribute("loginForm")
-	public LoginForm getLoginForm(){
+	public LoginForm getLoginForm() {
 		return new LoginForm();
 	}
-	
-	
-	@RequestMapping(value="/login", method=RequestMethod.GET)
-	public String getLoginForm(Model model){
-		//model.addAttribute("loginForm", new LoginForm());
+
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	public String getLoginForm(Model model) {
+		model.addAttribute("loginForm", new LoginForm());
 		return "login";
 	}
-	@RequestMapping(value="/login", method=RequestMethod.POST)
-	public String proceedLogin(@ModelAttribute("loginForm") LoginForm loginForm, Model model, HttpSession session) throws InvalidUserInputException{
+
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	public String proceedLogin(
+			@ModelAttribute("loginForm") LoginForm loginForm, Model model,
+			HttpSession session) throws InvalidUserInputException {
 		Account acc = null;
-		
-	try{
-		acc = loginService.login(loginForm.getEmail(), loginForm.getPassword(), loginForm.getRole());
-		session.setAttribute("account", acc);
-		session.setAttribute("_role", loginForm.getRole());
-		session.setAttribute("role", rolesHome.get(loginForm.getRole()));
-		return "redirect:"+rolesHome.get(loginForm.getRole());
-		}catch(Exception e){
+
+		try {
+			acc = loginService.login(loginForm.getEmail(),
+					loginForm.getPassword(), loginForm.getRole());
+			session.setAttribute("account", acc);
+			session.setAttribute("_role", loginForm.getRole());
+			session.setAttribute("role", rolesHome.get(loginForm.getRole()));
+			return "redirect:" + rolesHome.get(loginForm.getRole());
+		} catch (Exception e) {
 			model.addAttribute("error", e.getMessage());
 			return "error";
 		}
-		
-		
+
 	}
-	
-	@RequestMapping(value="/logout", method=RequestMethod.GET)
-	public String logout(HttpSession session){
-		session.setAttribute("account", null);
+
+	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+	public String logout(HttpSession session) {
+		session.invalidate();
 		return "redirect:login";
 	}
-	@RequestMapping(value="/home", method=RequestMethod.GET)
-	public String homeLoginButton(){
+
+	@RequestMapping(value = "/home", method = RequestMethod.GET)
+	public String homeLoginButton() {
 		return "login";
 	}
 

@@ -17,30 +17,36 @@ import ua.pri.services.IAccountFactory;
 @Service("accountFactory")
 public class AccountFactory implements IAccountFactory {
 	final static Logger LOGGER = LogManager.getLogger(AccountFactory.class);
-	private static Account account;
+
 	@Autowired
 	@Qualifier("accountDao")
-	private  AccountDao accountDao;// = new AccountDaoImpl();
+	private AccountDao accountDao;
+	
 	@Autowired
 	@Qualifier("roleDao")
-	private RoleDao roleDao; //= new RoleDaoImpl();
+	private RoleDao roleDao;
+
 	public AccountDao getAccountDao() {
 		return accountDao;
 	}
+
 	public void setAccountDao(AccountDao accountDao) {
 		this.accountDao = accountDao;
 	}
+
 	public RoleDao getRoleDao() {
 		return roleDao;
 	}
+
 	public void setRoleDao(RoleDao roleDao) {
 		this.roleDao = roleDao;
 	}
+
 	@Override
 	@Transactional
-	public Account newAccount(String login, String password,
-			String email, String firstName) {
-		account = new Account();
+	public Account newAccount(String login, String password, String email,
+			String firstName) {
+		Account account = new Account();
 		account.setLogin(login);
 		account.setPassword(password);
 		account.setEmail(email);
@@ -54,19 +60,21 @@ public class AccountFactory implements IAccountFactory {
 		return accountDao.findByLogin(login);
 
 	}
+
 	@Override
 	@Transactional
-	public Account newAccount(String login, String password,
-			String email, String firstName, String lastName, String middleName) {
-		account = newAccount(login, password, email, firstName);
+	public Account newAccount(String login, String password, String email,
+			String firstName, String lastName, String middleName) {
+		Account account = newAccount(login, password, email, firstName);
 		account.setLastName(lastName);
 		account.setMiddleName(middleName);
 		accountDao.update(account);
 		return accountDao.findByLogin(login);
 	}
+
 	@Override
 	@Transactional
-	public Account saveForm(Account account){
+	public Account saveForm(Account account) {
 		account.setEmailVerified(false);
 		account.setActive(true);
 		account.setCreated(new Date());
@@ -74,14 +82,14 @@ public class AccountFactory implements IAccountFactory {
 		accountDao.save(account);
 		return accountDao.findByLogin(account.getLogin());
 	}
-	
+
 	public Account newAccount() {
-		account = new Account();
+		Account account = new Account();
 		account.setEmailVerified(false);
 		account.setActive(true);
 		account.setCreated(new Date());
 		account.getAccountRoles().add(roleDao.student());
 		return account;
 	}
-	
+
 }

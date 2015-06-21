@@ -48,17 +48,20 @@ public class TutorServiceImpl implements TutorService {
 	public List<Test> getAllTests() {
 		return testDao.getList();
 	};
-	@Transactional(readOnly=false)
+
+	@Transactional(readOnly = false)
 	public void delete(int id) {
 		testDao.delete(testDao.loadTest(id));
 	}
-	@Transactional(readOnly=false)
+
+	@Transactional(readOnly = false)
 	public void activate(int id) {
 		Test toActivate = testDao.findById(id);
 		toActivate.setActive(true);
 		testDao.update(toActivate);
 	}
-	@Transactional(readOnly=false)
+
+	@Transactional(readOnly = false)
 	public void deActivate(int id) {
 		Test toDeActivate = testDao.loadTest(id);
 		toDeActivate.setActive(false);
@@ -107,6 +110,7 @@ public class TutorServiceImpl implements TutorService {
 	@Override
 	public Test createTest(Test test, String name, String subject, String time,
 			Account author) {
+		LOGGER.debug(author.getFirstName());
 		if (test != null) {
 			Test t = test;
 			t.setAuthor(author);
@@ -120,10 +124,11 @@ public class TutorServiceImpl implements TutorService {
 	}
 
 	@Override
-	@Transactional(readOnly=false)
+	@Transactional(readOnly = false)
 	public void saveTest(Test test) {
 		LOGGER.info("save service");
 		testDao.save(test);
+		LOGGER.debug(test.getAuthor().getFirstName() + " test author");
 		for (Question question : test.getQuestions()) {
 			questionDao.save(question);
 			for (Answer answer : question.getAnswers())
@@ -132,7 +137,7 @@ public class TutorServiceImpl implements TutorService {
 	}
 
 	@Override
-	@Transactional(readOnly=false)
+	@Transactional(readOnly = false)
 	public void updateTest(Test test) {
 		/*
 		 * LOGGER.info("update service"); Test oldTest =
@@ -170,7 +175,7 @@ public class TutorServiceImpl implements TutorService {
 				.retainAll(oldQuestions, questions);
 
 		for (Question questionToUpdate : toUpdate) {
-			
+
 			List<Answer> oldAnswers = beforeUpdate.get(
 					beforeUpdate.indexOf(questionToUpdate)).getAnswers();
 
@@ -204,27 +209,27 @@ public class TutorServiceImpl implements TutorService {
 				answerDao.save(answer);
 
 		}
-		try{
-			
+		try {
+
 			oldTest.setName(test.getName());
 			oldTest.setSubject(test.getSubject());
 			oldTest.setTime(test.getTime());
 
 			testDao.update(oldTest);
-		}catch(Exception e){
-			LOGGER.error(e.getMessage()+" ID TEST: "+ test.getIdTest());
+		} catch (Exception e) {
+			LOGGER.error(e.getMessage() + " ID TEST: " + test.getIdTest());
 		}
 
 	}
 
 	@Override
-	@Transactional(readOnly=false)
+	@Transactional(readOnly = false)
 	public void persistTest(Test test) {
 		testDao.persist(test);
 	}
 
 	@Override
-	@Transactional(readOnly=false)
+	@Transactional(readOnly = false)
 	public void mergeTest(Test test) {
 		testDao.merge(test);
 	}
@@ -258,7 +263,17 @@ public class TutorServiceImpl implements TutorService {
 
 		}
 		question.setAnswers(answers);
+		if (test == null)
+			test = createTest();
 		test.getQuestions().add(question);
+		if (test.getIdTest() != 0) {
+			updateTest(test);// //////////---------------------------------------------------------HERE
+								// NEW
+			LOGGER.info("updated test " + test.getIdTest());
+		} else {
+			saveTest(test);
+			LOGGER.info("saved test " + test.getIdTest());
+		}
 		return test;
 
 	}
@@ -280,61 +295,62 @@ public class TutorServiceImpl implements TutorService {
 		/* persistTest(test); */
 		saveTest(test);
 	}
-	
-	public Question updateQuestion(Test test, Question question, Map<String, String> params){
+
+	public Question updateQuestion(Test test, Question question,
+			Map<String, String> params) {
 		Question updatedQuestion = new Question();
 		updatedQuestion.setTest(test);
 		updatedQuestion.setQuestionText(params.get("question"));
-		
+
 		List<String> correct = new ArrayList<>();
 		Map<String, Boolean> ansmap = new HashMap<>();
 		List<Answer> answers = new ArrayList<>();
-		
-		for(Map.Entry<String, String> entry : params.entrySet())
-			if(entry.getKey().startsWith("cbox"))
+
+		for (Map.Entry<String, String> entry : params.entrySet())
+			if (entry.getKey().startsWith("cbox"))
 				correct.add(entry.getValue().replaceAll("[^0-9]", ""));
-				
-			
-			
-		
-		
-		
-		for(Map.Entry<String, String> entry : params.entrySet())
-			if(entry.getKey().startsWith("answer"))
-				ansmap.put(entry.getValue(), correct.contains(entry.getKey().replaceAll("[^0-9]", "")));
-				
-			
-		
-		
-		
-		for(Map.Entry<String, Boolean> entry : ansmap.entrySet()){
+
+		for (Map.Entry<String, String> entry : params.entrySet())
+			if (entry.getKey().startsWith("answer"))
+				ansmap.put(entry.getValue(), correct.contains(entry.getKey()
+						.replaceAll("[^0-9]", "")));
+
+		for (Map.Entry<String, Boolean> entry : ansmap.entrySet()) {
 			Answer answer = new Answer();
 			answer.setAnswerText(entry.getKey());
 			answer.setCorrect(entry.getValue());
 			answer.setQuestion(updatedQuestion);
 			answers.add(answer);
 		}
-		updatedQuestion.setAnswers(answers);	
-		
+		updatedQuestion.setAnswers(answers);
+
 		test.getQuestions().remove(question);
 		test.getQuestions().add(updatedQuestion);
-		
+
 		return updatedQuestion;
-		
+
 	}
-	
-	public Question findQuestion(String id_question){
+
+	@Transactional
+	public Question findQuestion(Integer id_question) {
 		return questionDao.findById(Integer.valueOf(id_question));
 	}
-	
-	public Test substituteQuestion(Test test, Question new_question) throws Exception{
-		for(Question que : test.getQuestions()){
-			if(que.getIdQuestion()==new_question.getIdQuestion()){
+
+	public Test substituteQuestion(Test test, Question new_question)
+			throws Exception {
+		for (Question que : test.getQuestions()) {
+			if (que.getIdQuestion() == new_question.getIdQuestion()) {
 				test.getQuestions().remove(que);
 				return test;
 			}
 		}
 		throw new Exception("Test does not contain question");
+	}
+
+	public void deleteQuestion(int idQuestion, Test test) {
+		//
+		test.getQuestions().remove(questionDao.findById(idQuestion));
+		questionDao.delete(questionDao.findById(idQuestion));
 	}
 
 }

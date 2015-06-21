@@ -66,13 +66,16 @@ a:HOVER {
 	background-color: #224e6b;
 	/* background-color: #808080; */
 	position: absolute;
-	height: 100px;
 	width: 1366px;
 	border-radius: 5px 5px 5px 5px;
 	margin-top: 3px;
 	height: 100px;
 	padding: 10px;
 	color: #d8d8d8;
+}
+
+#headdiv img {
+	margin-top: 10px;
 }
 
 #overhead {

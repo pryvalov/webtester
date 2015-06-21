@@ -36,7 +36,7 @@
 						<td>${test.name}</td>
 						<td>${test.subject}</td>
 						<td>${test.author.firstName} ${test.author.lastName}</td>
-						<td>N/A</td>
+						<td>${test.questionsSize}</td>
 						<td>${test.created}</td>
 						<td>${test.time} sec.</td>
 						<td><a class="common-button" href="load?testId=${test.idTest}&print=0">Start quiz</a> 

@@ -33,7 +33,7 @@
 						<td>${test.name}</td>
 						<td>${test.subject}</td>
 						<td>${test.author.firstName}&nbsp;${test.author.lastName}</td>
-						<td>N/A</td>
+						<td>${test.questionsSize}</td>
 						<td>${test.created}</td>
 						<td>${test.time} sec.</td>
 						<td>${test.active}</td>

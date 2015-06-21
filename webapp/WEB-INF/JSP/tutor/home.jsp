@@ -30,7 +30,7 @@
 						<td>${test.idTest}	</td>
 						<td>${test.name}</td>
 						<td>${test.subject}</td>
-						<td>N/A</td>
+						<td>${test.questionsSize}</td>
 						<td>${test.created}</td>
 						<td>${test.time} sec.</td>
 						<td>${test.active}</td>

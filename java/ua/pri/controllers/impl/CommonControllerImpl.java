@@ -8,6 +8,6 @@ public class CommonControllerImpl {
 	
 	@RequestMapping("/")
 	public String redirectLoginPage(){
-		return "login";
+		return "redirect:login";
 	}
 }

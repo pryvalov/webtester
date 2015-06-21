@@ -7,6 +7,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import ua.pri.dao.AccountDao;
 import ua.pri.dao.AccountVerificationDao;
@@ -21,7 +22,6 @@ public class EmailVerificationServiceImpl implements EmailVerificationService {
 	protected static final Logger LOGGER = LogManager
 			.getLogger(EmailVerificationServiceImpl.class);
 
-	private String verificationTemplate;
 
 	@Autowired
 	private AccountVerificationDao accountVerificationDao;
@@ -32,14 +32,14 @@ public class EmailVerificationServiceImpl implements EmailVerificationService {
 	@Autowired
 	private AccountDao accountDao;
 
-	private Account account;
 
 	protected AccountVerification accVerify = new AccountVerification();
 
 	@Override
+	@Transactional
 	public void startVerification(Account a) throws EmailException {
 
-		verificationTemplate = "Hello "
+		 String verificationTemplate = "Hello "
 				+ a.getFirstName()
 				+ ",\n You have recieved this email, because it was provided in registration process on our"
 				+ " glorious web testing site. To proceed registration click link below \n";
@@ -62,6 +62,7 @@ public class EmailVerificationServiceImpl implements EmailVerificationService {
 	}
 
 	@Override
+	@Transactional
 	public boolean verifyCode(Account a, Long code) {
 		accVerify = accountVerificationDao.findByAccount(a);
 
@@ -76,7 +77,7 @@ public class EmailVerificationServiceImpl implements EmailVerificationService {
 			return false;
 			// throw new RegistrationException("wrong code");
 		}
-		account = accountDao.findById(a.getAccountId());
+		Account account = accountDao.findById(a.getAccountId());
 		account.setEmailVerified(true);
 		accountDao.update(account);
 		accountVerificationDao.delete(accountVerificationDao.findByAccount(a));
@@ -85,6 +86,7 @@ public class EmailVerificationServiceImpl implements EmailVerificationService {
 	}
 
 	@Override
+	@Transactional
 	public boolean verifyCode(String email, Long code) {
 		Account a = accountDao.findByEmail(email);
 		if (a != null) {
@@ -102,7 +104,7 @@ public class EmailVerificationServiceImpl implements EmailVerificationService {
 				return false;
 				// throw new RegistrationException("wrong code");
 			}
-			account = accountDao.findById(a.getAccountId());
+			Account account = accountDao.findById(a.getAccountId());
 			account.setEmailVerified(true);
 			accountDao.update(account);
 			accountVerificationDao.delete(accountVerificationDao

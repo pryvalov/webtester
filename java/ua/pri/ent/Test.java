@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,6 +15,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 
 @Entity
@@ -53,10 +55,12 @@ public class Test extends AbstractEntity{
 	@OneToMany(mappedBy="test", /*cascade={CascadeType.PERSIST, CascadeType.MERGE},*/ fetch=FetchType.LAZY)
 	private List<Question> questions = new ArrayList<>();
 	
-	
+	@Transient
+	private int questionsSize;
 	
 	
 	public Account getAuthor() {
+		//
 		return author;
 	}
 
@@ -68,6 +72,7 @@ public class Test extends AbstractEntity{
 	
 	
 	public List<Question> getQuestions() {
+		setQuestionsSize(this.questions.size());
 		return questions;
 	}
 
@@ -129,6 +134,14 @@ public class Test extends AbstractEntity{
 
 	public void setTime(String time) {
 		this.time = time;
+	}
+
+	public int getQuestionsSize() {
+		return questionsSize;
+	}
+
+	public void setQuestionsSize(int questionsSize) {
+		this.questionsSize = questionsSize;
 	}
 
 }

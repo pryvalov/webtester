@@ -8,9 +8,8 @@ import org.apache.logging.log4j.Logger;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.context.ApplicationEventPublisherAware;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import ua.pri.dao.AccountDao;
 import ua.pri.dao.RoleDao;
@@ -18,10 +17,9 @@ import ua.pri.ent.Account;
 import ua.pri.ent.Role;
 import ua.pri.exceptions.InvalidUserInputException;
 import ua.pri.forms.LoginForm.Roles;
-import ua.pri.listeners.TestEvent;
 import ua.pri.services.LoginService;
 @Service("loginService")
-public class LoginServiceImpl implements  LoginService, ApplicationEventPublisherAware {
+public class LoginServiceImpl implements  LoginService {
 	protected final static Logger LOGGER = LogManager.getLogger(LoginServiceImpl.class);
 	@Autowired
 	protected AccountDao accountDao;// = new AccountDaoImpl();
@@ -29,9 +27,10 @@ public class LoginServiceImpl implements  LoginService, ApplicationEventPublishe
 	protected RoleDao roleDao;
 
 	
-	private ApplicationEventPublisher publisher;
+
 	
 	@Override
+	@Transactional
 	public Account login(String email, String password, Roles _role)
 			throws InvalidUserInputException {
 		int idRole = 1;
@@ -57,32 +56,18 @@ public class LoginServiceImpl implements  LoginService, ApplicationEventPublishe
 		if (!account.getAccountRoles().contains(role))
 			throw new InvalidUserInputException("access as "
 					+ role.getRoleName() + " prohobited");
-		TestEvent testEvent = new TestEvent(this);
-		publisher.publishEvent(testEvent);
+
 		LOGGER.info(email+" succefully logged in as "+role.getRoleName());
 		return account;
 	}
 	
-//	public static Account loginStatic(String email, String password, Role role){
-//		LoginService loginService = new LoginServiceImpl();
-//		try{
-//		return loginService.login(email, password, role);
-//		}catch(InvalidUserInputException e){
-//			LOGGER.error(e.getMessage());
-//		}
-//		return null;
-//	}
 
 	@Override
+	@Transactional
 	public List<Role> listAllRoles() {
 		return roleDao.getList();
 	}
 
-@Override
-public void setApplicationEventPublisher(
-		ApplicationEventPublisher applicationEventPublisher) {
-	this.publisher = applicationEventPublisher;
-	
-}
+
 
 }

@@ -5,6 +5,7 @@ import java.util.regex.Pattern;
 
 
 
+
 import org.apache.commons.mail.EmailException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -13,6 +14,8 @@ import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
+
+import org.springframework.transaction.annotation.Transactional;
 
 import ua.pri.dao.AccountDao;
 import ua.pri.ent.Account;
@@ -57,7 +60,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 			LOGGER.error(e.getMessage());
 		}
 	}
-
+	@Transactional
 	protected boolean validateInput(String login, String password, String email)
 			throws RegistrationException {
 		if (accountDao.findByLogin(login) != null)
@@ -96,6 +99,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 	}
 
 	@Override
+	@Transactional
 	public Account signUpForm(SignUpForm form) throws RegistrationException {
 		
 		Account newUser = null;
@@ -120,6 +124,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 		return newUser;
 	}
 	
+	@Transactional
 	public void passwordRecovery(String email) throws InvalidUserInputException, EmailException{
 		Account account = accountDao.findByEmail(email);
 			if(account==null)

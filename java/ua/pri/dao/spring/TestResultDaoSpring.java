@@ -23,7 +23,6 @@ public class TestResultDaoSpring extends AbstractDaoSpring<TestResult> implement
 
 
 	protected Class<TestResult> entityClass() {
-		// TODO Auto-generated method stub
 		return TestResult.class;
 	}
 

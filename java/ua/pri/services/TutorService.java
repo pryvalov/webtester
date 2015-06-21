@@ -45,9 +45,11 @@ public interface TutorService {
 	
 	public abstract Question updateQuestion(Test test, Question question, Map<String, String> params);
 	
-	public abstract Question findQuestion(String id_question);
+	public abstract Question findQuestion(Integer id_question);
 	
 	public abstract Test substituteQuestion(Test test, Question new_question) throws Exception;
+	
+	public abstract void deleteQuestion(int idQuestion, Test test);
 	
 
 }

@@ -6,13 +6,12 @@ import org.hibernate.Criteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import ua.pri.dao.AccountDao;
 import ua.pri.ent.Account;
 
 @Repository("accountDao")
-@Transactional(readOnly=false)
+//@Transactional(readOnly=false)
 public class AccountDaoSpring extends AbstractDaoSpring<Account> implements
 		AccountDao {
 
@@ -52,7 +51,6 @@ public class AccountDaoSpring extends AbstractDaoSpring<Account> implements
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Account> getList(int offset, int limit) {
-		// TODO Auto-generated method stub
 		return (List<Account>)getSession().createCriteria("Account")
 				.setFirstResult(offset)
 				.setMaxResults(limit).list();

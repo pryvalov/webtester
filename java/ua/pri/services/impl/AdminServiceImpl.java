@@ -8,6 +8,7 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import ua.pri.dao.AccountDao;
 import ua.pri.dao.AccountVerificationDao;
@@ -46,6 +47,7 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
+	@Transactional
 	public void deactivate(String login) {
 		Account acc = accountDao.findByLogin(login);
 		acc.setActive(false);
@@ -53,12 +55,14 @@ public class AdminServiceImpl implements AdminService {
 	}
 	
 	@Override
+	@Transactional
 	public void delete(String login) {
 		Account acc = accountDao.findByLogin(login);
 		accountDao.delete(acc);
 	}
 
 	@Override
+	@Transactional
 	public void activate(String login) {
 		Account acc = accountDao.findByLogin(login);
 		acc.setActive(true);
@@ -106,6 +110,7 @@ public class AdminServiceImpl implements AdminService {
 		accountDao.update(acc);
 	}*/
 	
+	@Transactional
 	public Account updateUser(Account a, Map<String, String> params){
 		
 		a.setLogin(params.get("login")==null?a.getLogin() : params.get("login"));
@@ -128,20 +133,24 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
+	@Transactional
 	public void updateUser(Account a) {
 		accountDao.update(a);
 	}
 	
 	@Override
+	@Transactional
 	public List<Account> list(){
 		return accountDao.getList();
 	}
 	@Override
+	@Transactional
 	public List<Account> listCustom(int offset,int limit,String orderBy,boolean asc){
 		return accountDao.getList(offset, limit, orderBy, asc);
 	}
 
 	@Override
+	@Transactional
 	public Account getUser(String login) {
 		return accountDao.findByLogin(login);
 	}

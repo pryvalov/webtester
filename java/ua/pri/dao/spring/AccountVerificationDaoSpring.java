@@ -12,7 +12,6 @@ public class AccountVerificationDaoSpring extends AbstractDaoSpring<AccountVerif
 
 	@Override
 	protected Class<AccountVerification> entityClass() {
-		// TODO Auto-generated method stub
 		return AccountVerification.class;
 	}
 	@Override

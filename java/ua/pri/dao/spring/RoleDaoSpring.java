@@ -9,7 +9,6 @@ public class RoleDaoSpring extends AbstractDaoSpring<Role> implements RoleDao {
 
 	@Override
 	protected Class<Role> entityClass() {
-		// TODO Auto-generated method stub
 		return Role.class;
 	}
 

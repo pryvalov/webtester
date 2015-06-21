@@ -12,7 +12,6 @@ public class AccountVerificationDaoImpl extends AbstractDaoImpl<AccountVerificat
 
 	@Override
 	protected Class<AccountVerification> entityClass() {
-		// TODO Auto-generated method stub
 		return AccountVerification.class;
 	}
 	public AccountVerification findByAccount(Account acc){

@@ -57,13 +57,11 @@ public class TestDaoImpl extends AbstractDaoImpl<Test> implements TestDao {
 
 	@Override
 	public List<Test> getList(int offset, int limit) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public List<Test> getList(Account author) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 }
