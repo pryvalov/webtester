@@ -237,6 +237,8 @@ public class TutorServiceImpl implements TutorService {
 	public Test updateTest(Map<String, String> params, Test test) {
 		Question question = new Question();
 		question.setQuestionText(params.get("question"));
+		
+			
 		question.setTest(test);
 		List<Answer> answers = new ArrayList<>();
 		Set<Integer> correctAnswers = new HashSet<Integer>();
@@ -265,6 +267,11 @@ public class TutorServiceImpl implements TutorService {
 		question.setAnswers(answers);
 		if (test == null)
 			test = createTest();
+		
+		test.setName(params.get("name"));
+		test.setSubject(params.get("subj"));
+		test.setTime(params.get("time"));
+		
 		test.getQuestions().add(question);
 		if (test.getIdTest() != 0) {
 			updateTest(test);// //////////---------------------------------------------------------HERE

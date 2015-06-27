@@ -1,6 +1,7 @@
 package ua.pri.services.impl;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
@@ -11,21 +12,32 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.restfb.types.User;
+
 import ua.pri.dao.AccountDao;
 import ua.pri.dao.RoleDao;
 import ua.pri.ent.Account;
 import ua.pri.ent.Role;
 import ua.pri.exceptions.InvalidUserInputException;
+import ua.pri.exceptions.RegistrationException;
+import ua.pri.forms.SignUpForm;
 import ua.pri.forms.LoginForm.Roles;
 import ua.pri.services.LoginService;
+import ua.pri.services.RegistrationService;
+
 @Service("loginService")
 public class LoginServiceImpl implements  LoginService {
+	
 	protected final static Logger LOGGER = LogManager.getLogger(LoginServiceImpl.class);
+	
 	@Autowired
-	protected AccountDao accountDao;// = new AccountDaoImpl();
+	protected AccountDao accountDao;
+	
 	@Autowired
 	protected RoleDao roleDao;
-
+	
+	@Autowired
+	RegistrationService registrationService;
 	
 
 	
@@ -68,6 +80,22 @@ public class LoginServiceImpl implements  LoginService {
 		return roleDao.getList();
 	}
 
+	@Override
+	@Transactional
+	public Account login(User user) throws RegistrationException {
+		Account account = accountDao.findByEmail(user.getEmail());
+		if(account!=null)return account;
+		else{
+			SignUpForm form = new SignUpForm();
+			form.setEmail(user.getEmail());
+			form.setLogin(user.getEmail());
+			form.setFirstName(user.getFirstName());
+			form.setLastName(user.getLastName());
+			UUID pwd = UUID.randomUUID();
+			form.setPassword(pwd.toString());
+			return registrationService.signUpForm(form, false);
+		}
+	}
 
 
 }

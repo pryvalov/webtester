@@ -141,7 +141,7 @@ public class TutorControllerImpl {
 
 	}
 
-	@RequestMapping(value = "/save", method = RequestMethod.POST)
+/*	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public String saveTest(@RequestParam() Map<String, String> params,
 			HttpSession session) {
 
@@ -157,7 +157,7 @@ public class TutorControllerImpl {
 			tutorService.updateTest(test);
 		return "redirect:view";
 
-	}
+	}*/
 
 	@RequestMapping(value = "/savequestion", method = RequestMethod.POST)
 	public String saveQuestion(@RequestParam Map<String, String> params,

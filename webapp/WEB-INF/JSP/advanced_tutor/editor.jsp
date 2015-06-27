@@ -1,11 +1,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-
-<div class="inline-class" id="test-preview">
-	Test: <b>${test.name}</b><br> Subject: <b>${test.subject}</b><br>
+	<div id="test-info">
+	Test: <b>${test.name}</b><br>
+	Subject: <b>${test.subject}</b><br>
 	By: <b>${test.author.firstName} ${test.author.lastName}</b><br>
-	Created: <b>${test.created}</b><br> <b>${test.time}</b> sec. per
-	question.<br>
+	Created: <b>${test.created}</b><br>
+	<b>${test.time}</b> sec. per question.<br>
+	</div>
+<div id="test-preview">
 	<c:forEach items="${test.questions}" var="question">
 		<div class="question">
 			<div class="question-body">
@@ -41,7 +43,7 @@
 
 
 <div id="test-editor" class="inline-class">
-	<form action="save" id="editor_form" method="post">
+	<form action="add" id="editor_form" method="post">
 		<div class="editor-header">
 			<table>
 				<tr>
@@ -57,8 +59,7 @@
 				<tr>
 					<td><b>Time per question </b></td>
 					<td><input type="text" name="time" size="3"
-						value="${test.time}" /> sec. <input type="submit"
-						class="common-button" style="float: right;" value="Save test">
+						value="${test.time}" /> sec. <a class="common-button" style="float: right;" href="home">Finished!</a></td>
 					</td>
 				</tr>
 				<tr>
@@ -68,8 +69,8 @@
 
 			</table>
 		</div>
-	</form>
-	<form action="add" id="editor_form" method="post">
+	<!-- </form>
+	<form action="add" id="editor_form" method="post"> -->
 		<c:if test="${question==null}">
 			<div class="editor-block" id="question">
 				<table id="editor_table">

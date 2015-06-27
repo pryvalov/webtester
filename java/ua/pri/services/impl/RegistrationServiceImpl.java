@@ -124,6 +124,33 @@ public class RegistrationServiceImpl implements RegistrationService {
 		return newUser;
 	}
 	
+	
+	@Override
+	@Transactional
+	public Account signUpForm(SignUpForm form, boolean send_email) throws RegistrationException {
+		if(send_email)
+			return signUpForm(form);
+		Account newUser = null;
+		try {
+			if (validateInput(form.getLogin(), form.getPassword(), form.getEmail())){
+				newUser = accountFactory.newAccount();
+		
+				newUser.setEmail(form.getEmail());
+				newUser.setLogin(form.getLogin());
+				newUser.setFirstName(form.getFirstName());
+				newUser.setLastName(form.getLastName());
+				newUser.setMiddleName(form.getMiddleName());
+				newUser.setPassword(form.getPassword());
+				accountDao.save(newUser);
+			}
+		} catch (Exception e) {
+			LOGGER.warn(e.getMessage());
+			throw new RegistrationException(e);
+		}
+		LOGGER.info("sign up success for "+newUser.getLogin()+" "+newUser.getEmail());
+		return newUser;
+	}
+	
 	@Transactional
 	public void passwordRecovery(String email) throws InvalidUserInputException, EmailException{
 		Account account = accountDao.findByEmail(email);

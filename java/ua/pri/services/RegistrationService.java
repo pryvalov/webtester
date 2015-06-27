@@ -20,5 +20,7 @@ public interface RegistrationService {
 	public abstract void passwordRecovery(String email) throws InvalidUserInputException , EmailException;
 
 	public abstract Account signUpForm(SignUpForm form) throws RegistrationException;
+	
+	public abstract Account signUpForm(SignUpForm form, boolean send_email) throws RegistrationException;
 
 }

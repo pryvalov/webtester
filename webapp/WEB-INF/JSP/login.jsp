@@ -53,6 +53,10 @@
 					<tr>
 						<td colspan="2">Forgot password? <a href="recovery" style="text-decoration: underline;">Recover.</a></td>
 					</tr>
+					<tr>
+					<td colspan="2">
+					<a href="${context }/fbLogin" ><img src="${context}/resources/images/ssfb.png"/></a></td>
+					</tr>
 				</tbody>
 			</table>
 

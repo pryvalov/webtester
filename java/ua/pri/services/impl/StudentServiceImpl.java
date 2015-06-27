@@ -25,6 +25,7 @@ import ua.pri.dao.TestDao;
 import ua.pri.dao.TestResultDao;
 import ua.pri.ent.Account;
 import ua.pri.ent.Answer;
+import ua.pri.ent.Question;
 import ua.pri.ent.Test;
 import ua.pri.ent.TestResult;
 import ua.pri.services.StudentService;
@@ -81,10 +82,10 @@ public class StudentServiceImpl implements StudentService {
 			Answer answer = answerDao.findById(Integer.valueOf(entry.getValue()));
 			if(answer.isCorrect())
 				score++;
-			else
-				score--;
+			/*else*/
+				/*score--;*/
 			}
-			else {score--;}
+			else {/*score--;*/}
 			
 		}
 			
@@ -97,7 +98,16 @@ public class StudentServiceImpl implements StudentService {
 	@Transactional
 	public void saveResult(TestResult result, int score){
 		result.setDate(new Date());
-		result.setScore(" "+score);
+		int maxRightAnswers = 0;
+		for(Question question : testDao.loadTest(result.getTest().getIdTest()).getQuestions())
+			for(Answer answer : question.getAnswers())
+				if(answer.isCorrect())
+					maxRightAnswers++;
+		
+			
+		
+		
+		result.setScore(((int) (score/(Double.valueOf(maxRightAnswers)/100)))+" % "+score+" out of "+maxRightAnswers);
 		testResultDao.save(result);
 	}
 	
