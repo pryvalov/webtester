@@ -46,7 +46,7 @@ public class Account extends AbstractEntity {
 	@Column(name = "middle_name", length = 30)
 	private String middleName;
 
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date created;
 
 	@Temporal(TemporalType.DATE)

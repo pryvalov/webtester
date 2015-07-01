@@ -1,4 +1,4 @@
-.margin-top-15{
+.margin-top-15 {
 	margin-top: 15px;
 }
 
@@ -31,7 +31,25 @@
 	float: right;
 }
 
-#error-block{
+#profile-update {
+	position: absolute;
+	top: 300px;
+	background: #224e6b;
+	width: 500px;
+	color: #eee;
+	border-radius: 5px 5px 5px 5px;
+}
+
+#profile-update table {
+	border-collapse: collapse;
+	border-spacing: 5px;
+}
+
+#profile-update td {
+	padding: 3px;
+}
+
+#error-block {
 	position: absolute;
 	top: 200px;
 	left: 400px;
@@ -40,18 +58,17 @@
 	color: #d8d8d8;
 	width: auto;
 	border-radius: 5px 5px 5px 5px;
-	
 }
-#student-print{
+
+#student-print {
 	padding: 10px 10px 10px 10px;
 	background-color: #bbd7ea;
 	border-radius: 5px 5px 5px 5px;
 	position: absolute;
 	top: 130px;
-	left: 260px;
+	/* left: 260px; */
 	margin-top: 0px;
 	color: #111;
-	
 }
 
 #create-form {
@@ -61,7 +78,7 @@
 	border-radius: 5px 5px 5px 5px;
 	position: absolute;
 	top: 130px;
-	left: 260px;
+	/* left: 260px; */
 	margin-top: 0px;
 	color: #d8d8d8;
 }
@@ -92,12 +109,12 @@
 	position: absolute;
 	top: 290px;
 	left: 10px;
-/* 	margin-left: 15px;
+	/* 	margin-left: 15px;
 	margin-top: 4px; */
 	color: #d8d8d8;
 }
 
-.editor-header td{
+.editor-header td {
 	padding: 3px;
 	border-collapse: collapse;
 }
@@ -111,14 +128,10 @@
 	position: absolute;
 	top: 430px;
 	left: 10px;
-/* 	margin-left: 15px; */
-	margin-top: 15px; 
+	/* 	margin-left: 15px; */
+	margin-top: 15px;
 	color: #d8d8d8;
-	
 }
-
-
-
 
 .editor-block input {
 	margin-top: 4px;
@@ -126,20 +139,20 @@
 	float: right;
 }
 
-.editor-block table{
+.editor-block table {
 	width: 550px;
 }
 
-.editor-block td{
+.editor-block td {
 	padding: 3px;
 	border-collapse: collapse;
 }
 
-#test-info{
+#test-info {
 	background-color: #d4d4d4;
 	position: absolute;
 	top: 130px;
-	left: 260px;
+	/* left: 260px; */
 	border-radius: 5px 5px 5px 5px;
 	height: 150px;
 	width: 340px;
@@ -167,9 +180,10 @@
 	position: relative;
 	background: #eee;
 }
+
 .question {
 	color: #111;
-	background-color:  #eee;/* #224e6b; */
+	background-color: #eee; /* #224e6b; */
 	width: auto;
 	padding: 10px 10px 10px 10px;
 	border-radius: 5px 5px 5px 5px;
@@ -186,7 +200,8 @@
 }
 
 .answer {
-	margin-top: 3px; margin-left : 3px;
+	margin-top: 3px;
+	margin-left: 3px;
 	/* padding: 10px 10px 10px 10px; */
 	color: #111;
 	/* background: #d8d8d8; */
@@ -194,18 +209,15 @@
 	height: auto;
 	border-radius: 5px 5px 5px 5px;
 	margin-left: 3px;
-
 }
 
-
-
-#answer-tabe{
+#answer-tabe {
 	border-spacing: 5px;
 	border-collapse: collapse;
 	width: 100%;
 }
 
-#answer-table tr{
+#answer-table tr {
 	vertical-align: middle;
 }
 
@@ -214,20 +226,19 @@
 	vertical-align: middle;
 }
 
-
-#admin-notifications{
+#admin-notifications {
 	border-radius: 5px 5px 5px 5px;
-	background: #d3d3d3; 
-	width: 1113px; 
-	height: 150px; 
+	background: #d3d3d3;
+	width: 1113px;
+	height: 150px;
 	position: absolute;
 	top: 130px;
-	left: 260px;
+	/* left: 260px; */
 }
 
-#admin-table{
+#admin-table {
 	position: absolute;
-	top: 280px;
+	top: 130px;
 	width: 1346px;
 }
 
@@ -235,46 +246,46 @@
 .common-table {
 	/* 	display: inline-block; */
 	font-size: 14px;
-/* 	border-radius: 5px 5px 5px 5px;
+	/* 	border-radius: 5px 5px 5px 5px;
 	position: absolute;
 	top: 400px; */
 }
-#table-content{
-	
+
+#table-content {
 	
 }
-#tutor-table{
+
+#tutor-table {
 	font-size: 14px;
 	position: absolute;
-	left: 270px;
+	/* left: 270px; */
+	width: 1346px;
 	top: 130px;
-	
 }
 
-
-.quiz{
+.quiz {
 	border-radius: 5px 5px 5px 5px;
 	background: #dddddd;
 }
 
-#quiz-result{
-	position: absolute; 
-	top: 130px; 
-	left: 260px; 
+#quiz-result {
+	position: absolute;
+	top: 130px;
+	/* left: 260px;  */
 	background: #dddddd;
 	border-radius: 5px 5px 5px 5px;
 }
 
-#quiz-result table{
+#quiz-result table {
 	border-collapse: collapse;
 	border-spacing: 3px;
 }
 
-#quiz-result td{
+#quiz-result td {
 	padding: 3px;
 }
 
-#quiz-question{
+#quiz-question {
 	min-width: 600px;
 	min-height: 250px;
 	padding: 5px;
@@ -285,9 +296,11 @@
 	border-collapse: collapse;
 	border-spacing: 5px;
 }
+
 #quiz-question td {
 	padding: 5px;
 }
+
 .common-table	td a {
 	color: #393939;
 }

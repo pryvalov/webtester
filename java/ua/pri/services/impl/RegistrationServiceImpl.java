@@ -1,7 +1,9 @@
 package ua.pri.services.impl;
 
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 
 
 
@@ -47,10 +49,14 @@ public class RegistrationServiceImpl implements RegistrationService {
 	@Autowired
 	private MailingService mailingService;
 	
-	protected boolean validateEmail(String email) {
+	protected void validateEmail(String email) throws RegistrationException {
 		pattern = Pattern.compile(EMAIL_PATTERN);
 		matcher = pattern.matcher(email);
-		return matcher.matches();
+		if(!matcher.matches())
+			throw new RegistrationException("Wrong email format.");
+		if (accountDao.findByEmail(email) != null)
+			throw new RegistrationException("There is account with this email");
+		
 
 	}
 	protected void sendVerificationEmail(Account a){
@@ -64,11 +70,8 @@ public class RegistrationServiceImpl implements RegistrationService {
 	protected boolean validateInput(String login, String password, String email)
 			throws RegistrationException {
 		if (accountDao.findByLogin(login) != null)
-			throw new RegistrationException("login not available");
-		if (!validateEmail(email))
-			throw new RegistrationException("wrong email format");
-		if (accountDao.findByEmail(email) != null)
-			throw new RegistrationException("there is account with this email");
+			throw new RegistrationException("Login not available");
+		validateEmail(email);	
 		if (password.length() < 4)
 			throw new RegistrationException("too weak password");
 		return true;
@@ -163,6 +166,32 @@ public class RegistrationServiceImpl implements RegistrationService {
 			
 		mailingService.sendEmail(account.getEmail(), "Password recovery", message);
 		LOGGER.info("Sent recovery email for "+email);
+	}
+	
+	@Transactional
+	public Account updateProfile(Account account, Map<String, String> params) throws RegistrationException{
+		if(!params.get("email").equals(account.getEmail())){
+			validateEmail(params.get("email"));	
+		}
+		if(!params.get("login").equals(account.getLogin())){
+			if (accountDao.findByLogin(params.get("login")) != null)
+				throw new RegistrationException("Login not available");
+		}
+		if(params.get("password").length()<4){
+			throw new RegistrationException("Weak password: 4 symbols minimum.");
+		}
+		
+		
+			
+		Account original = accountDao.findById(account.getAccountId());
+		original.setEmail(params.get("email"));
+		original.setLogin(params.get("login"));
+		original.setFirstName(params.get("firstName"));
+		original.setLastName(params.get("lastName"));
+		original.setMiddleName(params.get("middleName"));
+		original.setPassword(params.get("password"));
+		return original;
+		
 	}
 
 }

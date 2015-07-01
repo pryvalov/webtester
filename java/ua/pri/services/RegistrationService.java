@@ -1,5 +1,7 @@
 package ua.pri.services;
 
+import java.util.Map;
+
 import org.apache.commons.mail.EmailException;
 
 import ua.pri.ent.Account;
@@ -22,5 +24,7 @@ public interface RegistrationService {
 	public abstract Account signUpForm(SignUpForm form) throws RegistrationException;
 	
 	public abstract Account signUpForm(SignUpForm form, boolean send_email) throws RegistrationException;
+	
+	public abstract Account updateProfile(Account account, Map<String, String> params) throws RegistrationException;
 
 }

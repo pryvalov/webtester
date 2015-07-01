@@ -5,13 +5,15 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="decorator"
 	uri="http://www.opensymphony.com/sitemesh/decorator"%>
+<c:set var="splitRole" value="${fn:split(role,'/')}" />
 
 <!DOCTYPE html>
-<html class="no-js">
+<html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Web tester ${role}</title>
+<link rel="shortcut icon" href="${context}/resources/favicon.ico" type="image/x-icon">
 <link rel="stylesheet" type="text/css"
 	href="${context}/resources/css/normalize.css?v=${CSS_JS_VERSION}" />
 <link rel="stylesheet" type="text/css"
@@ -29,8 +31,11 @@
 			<a href="/wtapp/login"> <img class="inline-class"
 				src="${context}/resources/images/wtlogo3.png"
 				style="float: left; position: absolute; top: 0;" alt="logo" />
-			</a> <a href="/wtapp/${role}" class="navbutton">Home</a> <a href=""
+			</a>
+			<c:if test="${account!=null}">
+			 <a href="/wtapp/${role}" class="navbutton">Home</a> <a href="/wtapp/profile"
 				class="navbutton">Profile</a>
+			</c:if>
 			<c:if test="${role=='tutor/home'||role=='advanced_tutor/home'}">
 				<a class="navbutton" href="create">Create test</a>
 			</c:if>
@@ -40,48 +45,17 @@
 			<c:if test="${role=='student/home'}">
 				<a class="navbutton" href="/wtapp/student/results">Results</a>
 			</c:if>
-			<!-- <div id="overhead">Open source online testing platform.</div> -->
+			<c:if test="${account!=null}">
+			<div id="overhead">
+				Hello, ${account.firstName} ${account.lastName}<br> Access
+				role: ${splitRole[0]}<br> <a href="/wtapp/logout">Logout</a>
+			</div>
+			</c:if>
 		</div>
 		<div id="content">
-			<c:if test=""></c:if>
-			<c:if test="${account!=null}">
-				<div class="status">
-
-					<table>
-						<thead>
-							<tr>
-								<th colspan="2">${_role}</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td colspan="2">Hello, ${account.firstName}
-									${account.lastName}</td>
-							</tr>
-							<tr>
-							<tr>
-								<td>Logged as:</td>
-								<td>${account.login}</td>
-							</tr>
-							<tr>
-								<td><a href="/wtapp/logout" class="common-button">Logout</a>
-								</td>
-								<td><a href="" class="common-button">My profile</a></td>
-							</tr>
-
-						</tbody>
-					</table>
-				</div>
-			</c:if>
 			<decorator:body />
-			<!-- </div> -->
 
 		</div>
-		<!-- <div id="footdiv">Copyright &copy;</div> -->
-
 	</div>
-
-
 </body>
-
 </html>

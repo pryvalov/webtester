@@ -27,7 +27,7 @@ import com.restfb.FacebookClient;
 import com.restfb.types.User;
 
 import ua.pri.ent.Account;
-import ua.pri.forms.LoginForm.Roles;
+import ua.pri.security.SecurityUtils;
 import ua.pri.services.LoginService;
 
 @Controller
@@ -67,8 +67,9 @@ public class FacebookControllerImpl extends AbstractController implements Initia
 		User user = getFbUser(code);
 		Account account = loginService.login(user);
 		session.setAttribute("account", account);
-		session.setAttribute("_role", Roles.Student);
+/*		session.setAttribute("_role", Roles.Student);*/
 		session.setAttribute("role", "student/home");
+		SecurityUtils.autheificate(account);
 		return "redirect:student/home";
 	}
 	

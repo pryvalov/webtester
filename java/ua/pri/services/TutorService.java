@@ -43,7 +43,7 @@ public interface TutorService {
 	
 	public abstract void updateTest(Map<String, String> params, Account author);
 	
-	public abstract Question updateQuestion(Test test, Question question, Map<String, String> params);
+	public abstract Test updateQuestion(Test test, Question question, Map<String, String> params);
 	
 	public abstract Question findQuestion(Integer id_question);
 	

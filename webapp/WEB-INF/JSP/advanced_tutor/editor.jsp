@@ -1,5 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+	<% pageContext.setAttribute("newLineChar", "\n"); %>
+	<%-- <c:set property="newLineChar" value="\n"/> --%>
 	<div id="test-info">
 	Test: <b>${test.name}</b><br>
 	Subject: <b>${test.subject}</b><br>
@@ -11,7 +13,7 @@
 	<c:forEach items="${test.questions}" var="question">
 		<div class="question">
 			<div class="question-body">
-				<b>${question.questionText} </b>
+				<b><%-- ${question.questionText} --%> ${fn:replace(question.questionText, newLineChar, '<br>')}</b>
 			</div>
 			<table id="answer-tabe">
 				<c:forEach items="${question.answers}" var="answer">
@@ -41,9 +43,16 @@
 	</c:forEach>
 </div>
 
+<!--            ////////////////////////////    PREWIEW END        //////////////////////////          PREWIEW END         ////////////////////// -->
+<!--            ////////////////////////////    EDITOR            //////////////////////////          EDITOR              ////////////////////// -->
 
 <div id="test-editor" class="inline-class">
-	<form action="add" id="editor_form" method="post">
+	
+
+	<!-- </form>
+	<form action="add" id="editor_form" method="post"> -->
+		<c:if test="${question==null}">
+			<form action="add" id="editor_form" method="post">
 		<div class="editor-header">
 			<table>
 				<tr>
@@ -59,8 +68,8 @@
 				<tr>
 					<td><b>Time per question </b></td>
 					<td><input type="text" name="time" size="3"
-						value="${test.time}" /> sec. <a class="common-button" style="float: right;" href="home">Finished!</a></td>
-					</td>
+						value="${test.time}" /> sec. <!-- <a class="common-button" style="float: right;" href="home">Finished!</a> --></td>
+					
 				</tr>
 				<tr>
 					<td></td>
@@ -69,9 +78,6 @@
 
 			</table>
 		</div>
-	<!-- </form>
-	<form action="add" id="editor_form" method="post"> -->
-		<c:if test="${question==null}">
 			<div class="editor-block" id="question">
 				<table id="editor_table">
 					<tr>
@@ -90,17 +96,43 @@
 
 					<tr>
 						<td>Question</td>
-						<td><input type="text" name="question" size="45" /></td>
+						<td><!-- <input type="text" name="question" size="45" /> --><textarea rows="5" cols="45" form="editor_form" name="question" style="color: #111;"></textarea></td>
 						<td></td>
 					</tr>
 
 				</table>
 			</div>
+			</form>
 		</c:if>
 
-	</form>
+	
 	<c:if test="${question!=null}">
-		<form action="savequestion" method="post">
+		<form action="savequestion" id="edit_existing" method="post">
+		<div class="editor-header">
+			<table>
+				<tr>
+					<td><b>Name of test</b></td>
+					<td><input type="text" name="name" size="45"
+						value="${test.name}" /></td>
+				</tr>
+				<tr>
+					<td><b>Subject </b></td>
+					<td><input type="text" name="subj" size="45"
+						value="${test.subject}" /></td>
+				</tr>
+				<tr>
+					<td><b>Time per question </b></td>
+					<td><input type="text" name="time" size="3"
+						value="${test.time}" /> sec. <!-- <input type="submit" class="common-button" style="float: right;" value="Done"> --></td>
+					
+				</tr>
+				<tr>
+					<td></td>
+					<td></td>
+				</tr>
+
+			</table>
+		</div>
 			<div class="editor-block" id="question">
 				<table id="editor_table">
 					<tr>
@@ -114,8 +146,10 @@
 					</tr>
 
 					<tr>
-						<td><input type="text" name="question" size="45"
-							value="${question.questionText}" /></td>
+						<td><%-- <input type="text" name="question" size="45"
+							value="${question.questionText}" /> --%>
+							<textarea rows="5" cols="45" form="edit_existing" name="question" style="color: #111;">${question.questionText}</textarea>
+							</td>
 						<td></td>
 						<td></td>
 					</tr>

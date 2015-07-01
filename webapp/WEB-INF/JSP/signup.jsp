@@ -1,4 +1,5 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 	<script type="text/javascript">
 	function checkPass()
 	{
@@ -10,7 +11,7 @@
 	    if(pass1.value == pass2.value){
 	        pass2.style.backgroundColor = goodColor;
 	        message.style.color = goodColor;
-	        message.innerHTML = "Passwords mtch!"
+	        message.innerHTML = "Passwords match!"
 	        document.getElementById('subm').disabled = false;
 	    }else{
 	        pass2.style.backgroundColor = badColor;
@@ -54,8 +55,8 @@
 	<form:form modelAttribute="signUpForm" onsubmit="return checkFields()" name="regform">
 		<table id="regtable">
 			<thead>
-				<tr>
-					<th colspan="2">Fill the registration form</th>
+				<tr><c:if test="${role=='admin/home'}"><th colspan="2">Create new user</th></c:if>
+					<c:if test="${role!='admin/home'}"><th colspan="2">Fill the registration form</th></c:if>
 				</tr>
 			</thead>
 			<tbody>
@@ -106,8 +107,8 @@
 
 				</tr>
 				<tr>
-					<td colspan="2">have an account? <a href="login">Login
-							Here</a></td>
+					<td colspan="2"><c:if test="${role!='admin/home'}">have an account? <a href="login">Login
+							Here</a></c:if></td>
 				</tr>
 			</tbody>
 		</table>

@@ -5,7 +5,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
-//import org.apache.catalina.tribes.tipis.AbstractReplicatedMap.MapEntry;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +31,9 @@ public class TutorControllerImpl {
 
 	@RequestMapping("view")
 	public String view(Model model, HttpSession session) {
-		List<Test> tests = tutorService.getUserTests((Account)session.getAttribute("account"));
+		Account account = (Account) session.getAttribute("account");
+		List<Test> tests = tutorService.getUserTests(account);
+
 		model.addAttribute("tests", tests);
 		return "tutor/home";
 	}
@@ -42,28 +43,18 @@ public class TutorControllerImpl {
 		Test test = (Test) session.getAttribute("test");
 
 		test = tutorService.loadTest(test.getIdTest());
-		model.addAttribute("test", test);
+		session.setAttribute("test", test);
 		return "tutor/editor";
 	}
 
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
-	public String getTutorHome(HttpSession session) {
-		Account a = (Account) session.getAttribute("account");
-		if (a == null) {
-			session.setAttribute("error", "you are not logged in!"); // TODO to
-																		// be
-																		// replaced
-																		// by
-																		// spring
-																		// security!
-			return "error";
-		}
-		List<Test> tests = tutorService.getAllTests();
-		session.setAttribute("tests", tests);
+	public String getTutorHome(Model model, HttpSession session) {
+/*		List<Test> tests = tutorService.getAllTests();
+		
+		model.addAttribute("tests", tests);*/
 		session.setAttribute("test", null);
 		session.setAttribute("question", null);
-		session.setAttribute("answer", null);
-
+		//session.setAttribute("answer", null);
 		return "redirect:view";
 	}
 
@@ -110,9 +101,11 @@ public class TutorControllerImpl {
 
 	}
 
+
+
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public String createTest(HttpSession session) {
-		Test test = tutorService.createTest(); // TODO testing
+		Test test = tutorService.createTest(); 
 		test.setAuthor((Account) session.getAttribute("account"));
 		tutorService.saveTest(test);
 		LOGGER.debug(test.getIdTest() + " id created test");
@@ -123,41 +116,14 @@ public class TutorControllerImpl {
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public String createTest(@RequestParam Map<String, String> params,
 			HttpSession session) {
+
 		Test test = (Test) session.getAttribute("test");
 		test = tutorService.updateTest(params, test);
 		session.setAttribute("test", test);
-		return "redirect:view_editor";
+		return "redirect:view_editor"; 
 
 	}
 
-	@RequestMapping(value = "/create", method = RequestMethod.POST)
-	public String addQuestions(@RequestParam() Map<String, String> params,
-			HttpSession session) {
-		Test test = tutorService.createTest(params.get("name"),
-				params.get("subj"), params.get("time"),
-				(Account) session.getAttribute("account"));
-		session.setAttribute("test", test);
-		return "redirect:view_editor";
-
-	}
-
-/*	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public String saveTest(@RequestParam() Map<String, String> params,
-			HttpSession session) {
-
-		Test test = (Test) session.getAttribute("test");
-
-		test = tutorService.createTest(test, params.get("name"),
-				params.get("subj"), params.get("time"),
-				(Account) session.getAttribute("account"));
-		int id = test.getIdTest();
-		if (id == 0)
-			tutorService.saveTest(test);
-		else
-			tutorService.updateTest(test);
-		return "redirect:view";
-
-	}*/
 
 	@RequestMapping(value = "/savequestion", method = RequestMethod.POST)
 	public String saveQuestion(@RequestParam Map<String, String> params,
@@ -165,13 +131,11 @@ public class TutorControllerImpl {
 
 		Question question = (Question) session.getAttribute("question");
 		Test test = (Test) session.getAttribute("test");
-		session.setAttribute("test", null);
+		//session.setAttribute("test", null);
 
-		question = tutorService.updateQuestion(test, question, params);
-		LOGGER.info("QUESTION AFTER updateQuestion method = "
-				+ question.getQuestionText());
+		test = tutorService.updateQuestion(test, question, params);
 
-		tutorService.updateTest(test);
+		//tutorService.updateTest(params, test);
 
 		session.setAttribute("test", test);
 		session.setAttribute("question", null);

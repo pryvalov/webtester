@@ -1,11 +1,16 @@
 package ua.pri.services.impl;
 
+import java.util.Date;
+import java.util.List;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.mail.EmailException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,9 +36,16 @@ public class EmailVerificationServiceImpl implements EmailVerificationService {
 
 	@Autowired
 	private AccountDao accountDao;
-
-
+	
+	@Value("${facebook.callback}")
+	private String hostName;
+	
 	protected AccountVerification accVerify = new AccountVerification();
+	
+	private long getDateDiff(Date date1, Date date2, TimeUnit timeUnit) {
+	    long diffInMillies = date2.getTime() - date1.getTime();
+	    return timeUnit.convert(diffInMillies,TimeUnit.MILLISECONDS);
+	}
 
 	@Override
 	@Transactional
@@ -50,7 +62,7 @@ public class EmailVerificationServiceImpl implements EmailVerificationService {
 		accVerify.setCode(code);
 		accountVerificationDao.save(accVerify);
 		String mailBody = verificationTemplate
-				+ " http://localhost:8080/wtapp/verifyemail?email=" + mail
+				+ " http://"+hostName+"/verifyemail?email=" + mail
 				+ "&code=" + code;
 		try{
 		mailingService.sendEmail(mail,"Account verification for webtester project", mailBody);
@@ -113,6 +125,19 @@ public class EmailVerificationServiceImpl implements EmailVerificationService {
 			return true;
 		}
 		return false;
+	}
+	@Scheduled(cron="0 0 0/4 1/1 * ?")
+	public void cleanExpired(){
+		List<AccountVerification> averifs = accountVerificationDao.getList();
+		for(AccountVerification aver : averifs){
+			Account account = aver.getAccount();
+			if(getDateDiff(account.getCreated(), new Date(), TimeUnit.HOURS)>24){
+				accountVerificationDao.delete(aver);
+				accountDao.delete(account);
+				LOGGER.info("Scheduled check deleted unverified account "+account.getAccountId()+" email: "
+				+account.getEmail());
+			}
+		}
 	}
 
 }

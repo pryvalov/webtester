@@ -3,7 +3,7 @@
 
 
 	<!--  start table-content  -->
-	<div class="inline-class" id="admin-notifications" ></div>
+	<!-- <div class="inline-class" id="admin-notifications" ></div> -->
 	<div id="table-content" class="margin-top-15">
 	<table class="common-table" id="admin-table">
 				<tr>

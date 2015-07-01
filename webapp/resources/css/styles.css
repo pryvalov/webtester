@@ -79,7 +79,9 @@ a:HOVER {
 }
 
 #overhead {
-	float:right;
+	position: absolute;
+	top: 10px;
+	left: 1060px;
 }
 
 /* end main divs */
@@ -117,7 +119,7 @@ a:HOVER {
 	border-radius: 5px 5px 5px 5px;
 	position: absolute; 
 	top: 130px;
-	left: 350px;
+	/* left: 350px; */
 	background: #dfdfdf;
 	padding: 3px 3px 3px 10px;
 	/* margin-top: 20px;  */
@@ -200,7 +202,7 @@ a:HOVER {
 	color: #d8d8d8;
 	position: absolute;
 	top: 130px;
-	left: 270px;
+	/* left: 270px; */
 	/* margin-top: 4px; */
 /* 	padding: 3px; */
 }
@@ -301,7 +303,7 @@ a:HOVER {
 	font-weight: 700;
 	text-align: center;
 	/* 	margin-top: 7 px; */
-	margin-top: 30px;
+	margin-top: 65px;
 	margin-left: 10px;
 	text-decoration: none;
 	/* 	padding: 8px 0 0 0; */

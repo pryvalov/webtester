@@ -28,7 +28,7 @@ public class AdminControllerImpl {
 	
 	private static final Logger LOGGER = LogManager.getLogger(AdminControllerImpl.class);
 	
-	private static boolean flag = true;
+	private /*static*/ boolean flag = true; //TODO: check
 	@Autowired
 	protected AdminService adminService;
 	

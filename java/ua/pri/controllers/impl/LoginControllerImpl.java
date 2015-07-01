@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,72 +13,49 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import ua.pri.ent.Account;
-import ua.pri.exceptions.InvalidUserInputException;
-import ua.pri.forms.LoginForm;
-import ua.pri.forms.LoginForm.Roles;
+import ua.pri.ent.Role;
 import ua.pri.services.LoginService;
 import ua.pri.utils.RolesConstants;
 
 @Controller("loginController")
-public class LoginControllerImpl {
+public class LoginControllerImpl implements InitializingBean {
 
-	private static Map<Roles, String> rolesHome = new HashMap<>();
-	static {
-		rolesHome.put(RolesConstants.ADMIN, "admin/home");
-		rolesHome.put(RolesConstants.STUDENT, "student/home");
-		rolesHome.put(RolesConstants.TUTOR, "tutor/home");
-		rolesHome.put(RolesConstants.ADVANCED_TUTOR, "advanced_tutor/home");
+	private static Map<Integer, String> rolesHome = new HashMap<>();
+
+	@Override
+	public void afterPropertiesSet() throws Exception {
+		rolesHome.put(RolesConstants.ADMIN_ROLE_ID, "admin/home");
+		rolesHome.put(RolesConstants.STUDENT_ROLE_ID, "student/home");
+		rolesHome.put(RolesConstants.TUTOR_ROLE_ID, "tutor/home");
+		rolesHome.put(RolesConstants.ADVANCED_TUTOR_ROLE_ID,
+				"advanced_tutor/home");
+
 	}
 
 	@Autowired
 	LoginService loginService;
 
-	@ModelAttribute("roleList")
-	public Roles[] getRoles() {
-		return Roles.values();
+	@ModelAttribute("roles")
+	protected Role[] getRoles() {
+		return loginService.listAllRoles().toArray(
+				new Role[loginService.listAllRoles().size()]);
 	}
 
-	@ModelAttribute("loginForm")
-	public LoginForm getLoginForm() {
-		return new LoginForm();
-	}
 
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	@RequestMapping(value = { "/login", "/loginFailed" }, method = RequestMethod.GET)
 	public String getLoginForm(Model model) {
-		model.addAttribute("loginForm", new LoginForm());
+		// model.addAttribute("loginForm", new LoginForm());
 		return "login";
 	}
 
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String proceedLogin(
-			@ModelAttribute("loginForm") LoginForm loginForm, Model model,
-			HttpSession session) throws InvalidUserInputException {
-		Account acc = null;
 
-		try {
-			acc = loginService.login(loginForm.getEmail(),
-					loginForm.getPassword(), loginForm.getRole());
-			session.setAttribute("account", acc);
-			session.setAttribute("_role", loginForm.getRole());
-			session.setAttribute("role", rolesHome.get(loginForm.getRole()));
-			return "redirect:" + rolesHome.get(loginForm.getRole());
-		} catch (Exception e) {
-			model.addAttribute("error", e.getMessage());
-			return "error";
-		}
-
-	}
-
-	@RequestMapping(value = "/logout", method = RequestMethod.GET)
-	public String logout(HttpSession session) {
-		session.invalidate();
-		return "redirect:login";
-	}
-
-	@RequestMapping(value = "/home", method = RequestMethod.GET)
-	public String homeLoginButton() {
-		return "login";
+	@RequestMapping(value = { "/home" }, method = RequestMethod.GET)
+	public String myInfo(Model model, HttpSession session) {
+		//CurrentAccount currentAccount = SecurityUtils.getCurrentAccount();
+//		Account account  = loginService.loadAccount(currentAccount.getUsername());
+//		session.setAttribute("account", account);
+//		session.setAttribute("role", rolesHome.get(currentAccount.getRole()));
+		return "redirect:" + session.getAttribute("role");//rolesHome.get(currentAccount.getRole());
 	}
 
 }

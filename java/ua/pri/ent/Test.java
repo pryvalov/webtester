@@ -20,6 +20,11 @@ import javax.persistence.Transient;
 
 @Entity
 public class Test extends AbstractEntity{
+	
+	public Test(){
+		this.questionsSize=this.questions.size();
+	}
+	
 	/**
 	 * 
 	 */
@@ -137,7 +142,7 @@ public class Test extends AbstractEntity{
 	}
 
 	public int getQuestionsSize() {
-		return questionsSize;
+		return this.questionsSize;
 	}
 
 	public void setQuestionsSize(int questionsSize) {

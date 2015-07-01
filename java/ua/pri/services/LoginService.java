@@ -3,6 +3,7 @@ package ua.pri.services;
 import java.util.List;
 
 
+
 import com.restfb.types.User;
 
 import ua.pri.ent.Account;
@@ -18,6 +19,7 @@ public interface LoginService {
 
 	public abstract List<Role> listAllRoles();
 	
+	public abstract Account loadAccount(String email);
 	
 	public abstract Account login(User user) throws RegistrationException;
 

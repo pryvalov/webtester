@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -237,8 +238,7 @@ public class TutorServiceImpl implements TutorService {
 	public Test updateTest(Map<String, String> params, Test test) {
 		Question question = new Question();
 		question.setQuestionText(params.get("question"));
-		
-			
+
 		question.setTest(test);
 		List<Answer> answers = new ArrayList<>();
 		Set<Integer> correctAnswers = new HashSet<Integer>();
@@ -267,11 +267,11 @@ public class TutorServiceImpl implements TutorService {
 		question.setAnswers(answers);
 		if (test == null)
 			test = createTest();
-		
+
 		test.setName(params.get("name"));
 		test.setSubject(params.get("subj"));
 		test.setTime(params.get("time"));
-		
+
 		test.getQuestions().add(question);
 		if (test.getIdTest() != 0) {
 			updateTest(test);// //////////---------------------------------------------------------HERE
@@ -303,38 +303,45 @@ public class TutorServiceImpl implements TutorService {
 		saveTest(test);
 	}
 
-	public Question updateQuestion(Test test, Question question,
+	public Test updateQuestion(Test test, Question question,
 			Map<String, String> params) {
-		Question updatedQuestion = new Question();
-		updatedQuestion.setTest(test);
-		updatedQuestion.setQuestionText(params.get("question"));
+		if (!StringUtils.isBlank(params.get("question"))) {
+			Question updatedQuestion = new Question();
+			updatedQuestion.setTest(test);
+			updatedQuestion.setQuestionText(params.get("question"));
 
-		List<String> correct = new ArrayList<>();
-		Map<String, Boolean> ansmap = new HashMap<>();
-		List<Answer> answers = new ArrayList<>();
+			List<String> correct = new ArrayList<>();
+			Map<String, Boolean> ansmap = new HashMap<>();
+			List<Answer> answers = new ArrayList<>();
 
-		for (Map.Entry<String, String> entry : params.entrySet())
-			if (entry.getKey().startsWith("cbox"))
-				correct.add(entry.getValue().replaceAll("[^0-9]", ""));
+			for (Map.Entry<String, String> entry : params.entrySet())
+				if (entry.getKey().startsWith("cbox"))
+					correct.add(entry.getValue().replaceAll("[^0-9]", ""));
 
-		for (Map.Entry<String, String> entry : params.entrySet())
-			if (entry.getKey().startsWith("answer"))
-				ansmap.put(entry.getValue(), correct.contains(entry.getKey()
-						.replaceAll("[^0-9]", "")));
+			for (Map.Entry<String, String> entry : params.entrySet())
+				if (entry.getKey().startsWith("answer"))
+					ansmap.put(
+							entry.getValue(),
+							correct.contains(entry.getKey().replaceAll(
+									"[^0-9]", "")));
 
-		for (Map.Entry<String, Boolean> entry : ansmap.entrySet()) {
-			Answer answer = new Answer();
-			answer.setAnswerText(entry.getKey());
-			answer.setCorrect(entry.getValue());
-			answer.setQuestion(updatedQuestion);
-			answers.add(answer);
+			for (Map.Entry<String, Boolean> entry : ansmap.entrySet()) {
+				Answer answer = new Answer();
+				answer.setAnswerText(entry.getKey());
+				answer.setCorrect(entry.getValue());
+				answer.setQuestion(updatedQuestion);
+				answers.add(answer);
+			}
+			updatedQuestion.setAnswers(answers);
+
+			test.getQuestions().remove(question);
+			test.getQuestions().add(updatedQuestion);
 		}
-		updatedQuestion.setAnswers(answers);
-
-		test.getQuestions().remove(question);
-		test.getQuestions().add(updatedQuestion);
-
-		return updatedQuestion;
+		test.setName(params.get("name"));
+		test.setSubject(params.get("subj"));
+		test.setTime(params.get("time"));
+		updateTest(test);
+		return test;
 
 	}
 

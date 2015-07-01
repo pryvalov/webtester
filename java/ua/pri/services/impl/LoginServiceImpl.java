@@ -39,6 +39,11 @@ public class LoginServiceImpl implements  LoginService {
 	@Autowired
 	RegistrationService registrationService;
 	
+	@Override
+	@Transactional
+	public Account loadAccount(String email){
+		return accountDao.findByEmail(email);
+	}
 
 	
 	@Override
