@@ -41,7 +41,7 @@ public class FacebookControllerImpl extends AbstractController implements Initia
 	@Value("${facebook.secretKey}")
 	private String facebookKey;
 	
-	@Value("${facebook.callback}")
+	@Value("${host.uri}")
 	private String applicationHost;
 	
 	@Autowired

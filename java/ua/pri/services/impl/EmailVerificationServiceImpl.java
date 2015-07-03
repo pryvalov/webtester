@@ -37,7 +37,7 @@ public class EmailVerificationServiceImpl implements EmailVerificationService {
 	@Autowired
 	private AccountDao accountDao;
 	
-	@Value("${facebook.callback}")
+	@Value("${host.uri}")
 	private String hostName;
 	
 	protected AccountVerification accVerify = new AccountVerification();

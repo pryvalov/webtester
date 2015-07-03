@@ -16,7 +16,7 @@ import ua.pri.dao.RoleDao;
 import ua.pri.ent.Account;
 import ua.pri.ent.Role;
 import ua.pri.services.AdminService;
-import ua.pri.services.IAccountFactory;
+import ua.pri.utils.IAccountFactory;
 
 //import ua.pri.ent.Role;
 /*

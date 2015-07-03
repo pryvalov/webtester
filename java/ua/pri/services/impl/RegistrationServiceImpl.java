@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 
 
 
+
 import org.apache.commons.mail.EmailException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -25,9 +26,9 @@ import ua.pri.exceptions.InvalidUserInputException;
 import ua.pri.exceptions.RegistrationException;
 import ua.pri.forms.SignUpForm;
 import ua.pri.services.EmailVerificationService;
-import ua.pri.services.IAccountFactory;
 import ua.pri.services.MailingService;
 import ua.pri.services.RegistrationService;
+import ua.pri.utils.IAccountFactory;
 
 @Service("registrationService")
 @Scope(ConfigurableBeanFactory.SCOPE_SINGLETON)

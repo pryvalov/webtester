@@ -1,6 +1,9 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+
+
+
 <c:if test="${account==null}">
 	<div id="divlogin">
 
@@ -49,13 +52,15 @@
 					</tr>
 				<tr>
 					<td colspan="2"><a href="fbLogin"> <img alt="fbLogin"
-							src="${context}/resources/images/ssfb.png" />
-					</a></td>
+							src="${context}/resources/images/fbs.png" /></a></td>
 				</tr>
+				<tr><td colspan="2"><a href="vklogin"> <img alt="vklogin"
+							src="${context}/resources/images/vk.png" /></a> </td></tr>
 			</table>
 		</form>
 	</div>
 </c:if>
+
 <div id="textbody" class="inline-class"
 	style="${account==null ? 'left: 350px;' : ''}">
 	<div class="article">
