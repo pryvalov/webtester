@@ -39,16 +39,16 @@
 				<c:forEach items="${question.answers}" var="answer"
 					varStatus="answerStatus">
 					<tr>
-						<td><input type="checkbox" name="selected"
-							value="${answer.idAnswer}"></td>
-						<td># ${answerStatus.index + 1} ${answer.answerText}</td>
+						<td colspan="2"><input type="checkbox" name="selected"
+							value="${answer.idAnswer}">
+						 ${answerStatus.index + 1}. ${answer.answerText}</td>
 						
 					</tr>
 
 				</c:forEach>
 				<tr>
-					<td><input type="checkbox" name="selected" value="-1"></td>
-					<td>Dont know right answer.</td>
+					<td colspan="2"><input type="checkbox" name="selected" value="-1">
+					Dont know right answer.</td>
 					
 				</tr>
 

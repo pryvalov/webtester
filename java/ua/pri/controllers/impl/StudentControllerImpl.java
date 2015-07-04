@@ -6,8 +6,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,7 +25,7 @@ public class StudentControllerImpl {
 	private Iterator<Question> iter ;
 	
 
-	private static final Logger LOGGER = LogManager.getLogger(StudentControllerImpl.class);
+	//private static final Logger LOGGER = LogManager.getLogger(StudentControllerImpl.class);
 	@Autowired
 	StudentService studentService;
 
@@ -63,8 +61,6 @@ public class StudentControllerImpl {
 		Account student = (Account) session.getAttribute("account");
 		int score = session.getAttribute("score")==null? 0 : (int) session.getAttribute("score"); 
 		
-		for(Map.Entry<String, String> entry : params.entrySet())
-			LOGGER.info(entry.getKey()+" ======== "+entry.getValue());
 		
 		
 		if(session.getAttribute("iterator")==null){
