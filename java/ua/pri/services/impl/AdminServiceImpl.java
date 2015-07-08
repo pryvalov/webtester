@@ -125,7 +125,7 @@ public class AdminServiceImpl implements AdminService {
 		
 		Set<Role> rolesSet = new HashSet<Role>();
 		for(int i = 0; i<roles.size(); i++){
-			if(roles.get(i)!=null&&roles.get(i)!="")
+			if(roles.get(i)!=null&&roles.get(i).isEmpty()/*!=null&&roles.get(i).equals("")*/)
 				rolesSet.add(roleDao.findById(Integer.parseInt(roles.get(i))));
 		}
 		a.setAccountRoles(rolesSet);

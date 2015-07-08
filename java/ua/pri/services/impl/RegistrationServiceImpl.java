@@ -39,10 +39,10 @@ public class RegistrationServiceImpl implements RegistrationService {
 	private Matcher matcher;
 	
 	@Autowired
-	private AccountDao accountDao;// = new AccountDaoImpl();
+	private AccountDao accountDao;
 	
 	@Autowired
-	private EmailVerificationService emailVerificationService;// = new EmailVerificationServiceImpl();
+	private EmailVerificationService emailVerificationService;
 	
 	@Autowired
 	private IAccountFactory accountFactory;
@@ -118,13 +118,14 @@ public class RegistrationServiceImpl implements RegistrationService {
 				newUser.setMiddleName(form.getMiddleName());
 				newUser.setPassword(form.getPassword());
 				accountDao.save(newUser);
+				LOGGER.info("sign up success for "+newUser.getLogin()+" "+newUser.getEmail());
 			sendVerificationEmail(newUser);
 			}
 		} catch (Exception e) {
 			LOGGER.warn(e.getMessage());
 			throw new RegistrationException(e);
 		}
-		LOGGER.info("sign up success for "+newUser.getLogin()+" "+newUser.getEmail());
+		
 		return newUser;
 	}
 	
@@ -145,13 +146,15 @@ public class RegistrationServiceImpl implements RegistrationService {
 				newUser.setLastName(form.getLastName());
 				newUser.setMiddleName(form.getMiddleName());
 				newUser.setPassword(form.getPassword());
+				LOGGER.debug("New user before save first name: "+newUser.getFirstName()+" last name: "+newUser.getLastName());
 				accountDao.save(newUser);
+				LOGGER.info("sign up success for "+newUser.getLogin()+" "+newUser.getEmail());
 			}
 		} catch (Exception e) {
 			LOGGER.warn(e.getMessage());
 			throw new RegistrationException(e);
 		}
-		LOGGER.info("sign up success for "+newUser.getLogin()+" "+newUser.getEmail());
+		
 		return newUser;
 	}
 	

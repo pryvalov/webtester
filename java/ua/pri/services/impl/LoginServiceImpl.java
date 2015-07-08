@@ -115,13 +115,15 @@ public class LoginServiceImpl implements LoginService {
 		
 
 		assert(parsed2.get("first_name")==null); //Test for null
-		
+		/*byte[] fnBytes = ((String)parsed2.get("first_name")).getBytes("UTF-8");
+		String fn = new String(fnBytes, "UTF-16");*/
 		
 		SignUpForm form = new SignUpForm();
 		form.setEmail(email);
 		form.setLogin(email);
 		form.setFirstName(""+parsed2.get("first_name"));
 		form.setLastName(""+parsed2.get("last_name"));
+		LOGGER.debug("first name: "+form.getFirstName()+" last name: "+form.getLastName());
 		UUID pwd = UUID.randomUUID();
 		form.setPassword(pwd.toString());
 		return registrationService.signUpForm(form, false);

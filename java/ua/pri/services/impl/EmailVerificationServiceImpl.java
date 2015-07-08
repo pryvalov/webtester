@@ -50,13 +50,13 @@ public class EmailVerificationServiceImpl implements EmailVerificationService {
 	@Override
 	@Transactional
 	public void startVerification(Account a) throws EmailException {
-
+		Random rand = new Random();
 		 String verificationTemplate = "Hello "
 				+ a.getFirstName()
 				+ ",\n You have recieved this email, because it was provided in registration process on our"
 				+ " glorious web testing site. To proceed registration click link below \n";
 
-		long code = Math.abs(new Random().nextLong());
+		long code = (long) Math.abs(rand.nextLong()*0.99);
 		String mail = a.getEmail();
 		accVerify.setAccount(a);
 		accVerify.setCode(code);

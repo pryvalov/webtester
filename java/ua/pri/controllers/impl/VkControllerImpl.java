@@ -40,7 +40,7 @@ public class VkControllerImpl {
 	private String getToken(String code) {
 		Client client = Client.create();
 		WebResource service = client
-				.resource("https://oauth.vk.com/access_token?client_id=4981194&client_secret=Bk58frNYvITRYMexCfKX&"
+				.resource("https://oauth.vk.com/access_token?client_id=4987458&client_secret=z0cLILogFSPeSiyjkTKZ&"
 						+ "code="
 						+ code
 						+ "&redirect_uri=http://"
@@ -64,43 +64,8 @@ public class VkControllerImpl {
 					.type(MediaType.APPLICATION_FORM_URLENCODED_TYPE);
 			ClientResponse response = requestBuilder.get(ClientResponse.class);
 			String resp = response.getEntity(String.class);
-			//JSONObject preTest = (JSONObject) new JSONParser().parse(resp);
-			//LOGGER.debug(preTest);
-			//if (!preTest.containsKey("error")) {
-				//LOGGER.debug("details : 200");
-				return resp;
-			/*} else {
-				
-				/////////////////// USELESS CODE ----- ERROR CAN NOT BE RESOLVED////////////////////////
-				
-				//LOGGER.debug("error in json ");
+			return resp;
 
-				// String errorMsg = response.getEntity(String.class);
-				// LOGGER.debug("error msg: "+errorMsg);
-				// JSONObject errorJson = (JSONObject)new
-				// JSONParser().parse(errorMsg);
-				// LOGGER.debug("error json: "+errorJson);
-				JSONObject error = (JSONObject) preTest.get("error");
-				//LOGGER.debug("error retrieved from json: " + error);
-				String redirectUri = (String) error.get("redirect_uri");
-				//LOGGER.debug(redirectUri);
-				service = client.resource(redirectUri);
-				requestBuilder = service
-						.type(MediaType.APPLICATION_FORM_URLENCODED_TYPE);
-				LOGGER.debug(requestBuilder.get(ClientResponse.class)
-						.getEntity(String.class));
-				LOGGER.debug("trying to re-take details");
-				service = client
-						.resource("https://api.vk.com/method/users.get?user_id="
-								+ user_id + "&v=5.34&access_token=" + token);
-				requestBuilder = service
-						.type(MediaType.APPLICATION_FORM_URLENCODED_TYPE);
-				String answer = requestBuilder.get(ClientResponse.class)
-						.getEntity(String.class);
-				LOGGER.debug(answer);
-				return answer;
-
-			}*/
 		} catch (Exception e) {
 			LOGGER.error(" error " + e.getMessage());
 			return null;
@@ -109,8 +74,7 @@ public class VkControllerImpl {
 
 	@RequestMapping(value = "/vklogin", method = RequestMethod.GET)
 	public String vklogin() {
-		//LOGGER.debug("vklogin host:" + host);
-		return "redirect:https://oauth.vk.com/authorize?client_id=4981194&scope=email&redirect_uri=http://"
+		return "redirect:https://oauth.vk.com/authorize?client_id=4987458 &scope=email&redirect_uri=http://"
 				+ host + "/fromvk&display=page&v=5.34&response_type=code";
 	}
 
@@ -118,24 +82,15 @@ public class VkControllerImpl {
 	public String fromvk(HttpServletRequest request, HttpSession session,
 			Model model, @RequestParam(required = false) String code) {
 
-	//	LOGGER.debug("In FROMVK code" + code);
-		// for(Map.Entry<String, String[]> entries :
-		// request.getParameterMap().entrySet())
-		// LOGGER.debug(entries.getKey()+" "+(entries.getValue().length==1 ?
-		// entries.getValue()[0] : entries.getValue().length==2 ?
-		// entries.getValue()[0]+" "+
-		// entries.getValue()[1] :
-		// entries.getValue()[0]+" "+entries.getValue()[1]+" "+entries.getValue()[2]));
 		if (code != null) {
 			String token = getToken(code);
-			//LOGGER.debug("token: " + token);
 			JSONObject parsedToken;
 			String details;
 			try {
 				parsedToken = (JSONObject) new JSONParser().parse(token);
 				details = getDetails((String) parsedToken.get("access_token"),
 						"" + parsedToken.get("user_id"));
-				//LOGGER.debug("details: " + details);
+				LOGGER.debug("details: " + details);
 
 				Account account = loginService.login(
 						(String) parsedToken.get("email"), details);
