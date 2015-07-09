@@ -41,11 +41,13 @@ public class TutorServiceImpl implements TutorService {
 	private AnswerDao answerDao;
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<Test> getUserTests(Account account) {
 		return testDao.getList(account);
 	};
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<Test> getAllTests() {
 		return testDao.getList();
 	};
@@ -70,28 +72,31 @@ public class TutorServiceImpl implements TutorService {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<Test> getAllTests(int offset, int limit) {
 		return testDao.getList(offset, limit);
 	};
 
 	@Override
+	@Transactional(readOnly = true)
 	public Test loadTest(int id_test) {
 		return testDao.loadTest(id_test);
 	}
 
 	@Override
-	public Test createTest() {
+	public Test createTest(Account account) {
 		Test t = new Test();
 		t.setActive(true);
 		t.setCreated(new Date());
+		t.setAuthor(account);
+		saveTest(t);
 
 		return t;
 	}
 
 	@Override
 	public Test createTest(String name, String subject, Account author) {
-		Test t = createTest();
-		t.setAuthor(author);
+		Test t = createTest(author);
 		t.setSubject(subject);
 		t.setName(name);
 		return t;
@@ -100,8 +105,7 @@ public class TutorServiceImpl implements TutorService {
 	@Override
 	public Test createTest(String name, String subject, String time,
 			Account author) {
-		Test t = createTest();
-		t.setAuthor(author);
+		Test t = createTest(author);
 		t.setSubject(subject);
 		t.setName(name);
 		t.setTime(time);
@@ -127,7 +131,12 @@ public class TutorServiceImpl implements TutorService {
 	@Override
 	@Transactional(readOnly = false)
 	public void saveTest(Test test) {
-		LOGGER.info("save service");
+	/*	LOGGER.info("save service");
+		test.setQuestionsSize(""+(test.getQuestions().size()+1));
+		LOGGER.debug("testing size: "+test.getQuestions().size());
+		int i=1;
+		for(Question q: test.getQuestions())
+			LOGGER.debug(" == "+(++i));*/
 		testDao.save(test);
 		LOGGER.debug(test.getAuthor().getFirstName() + " test author");
 		for (Question question : test.getQuestions()) {
@@ -140,23 +149,9 @@ public class TutorServiceImpl implements TutorService {
 	@Override
 	@Transactional(readOnly = false)
 	public void updateTest(Test test) {
-		/*
-		 * LOGGER.info("update service"); Test oldTest =
-		 * testDao.loadTest(test.getIdTest()); List<Question> oldQuestionsList =
-		 * oldTest.getQuestions(); int index = 0; Question oldQuestion; for
-		 * (Question question : test.getQuestions()) { if
-		 * (oldQuestionsList.contains(question)) { questionDao.update(question);
-		 * index = oldQuestionsList.indexOf(question); oldQuestion =
-		 * oldQuestionsList.get(index); for (Answer answer :
-		 * question.getAnswers()){ if(oldQuestion.getAnswers().contains(answer))
-		 * answerDao.update(answer); else answerDao.save(answer); } }
-		 * 
-		 * 
-		 * else { questionDao.save(question); for(Answer answer :
-		 * question.getAnswers()) answerDao.save(answer); } }
-		 * testDao.update(test);
-		 */
-
+		
+		
+		
 		Test oldTest = testDao.loadTest(test.getIdTest());
 
 		List<Question> questions = test.getQuestions();
@@ -215,7 +210,11 @@ public class TutorServiceImpl implements TutorService {
 			oldTest.setName(test.getName());
 			oldTest.setSubject(test.getSubject());
 			oldTest.setTime(test.getTime());
-
+			/*oldTest.setQuestionsSize(""+oldTest.getQuestions().size());
+			LOGGER.debug("testing size upd: "+(oldTest.getQuestions().size()+1));
+			int i=1;
+			for(Question q: test.getQuestions()) ////////////////////////////////////////////////////
+				LOGGER.debug(" == "+(++i));*/
 			testDao.update(oldTest);
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage() + " ID TEST: " + test.getIdTest());
@@ -265,8 +264,8 @@ public class TutorServiceImpl implements TutorService {
 
 		}
 		question.setAnswers(answers);
-		if (test == null)
-			test = createTest();
+		//if (test == null)
+			//test = createTest(null);//TODO: ???? wat?
 
 		test.setName(params.get("name"));
 		test.setSubject(params.get("subj"));
@@ -285,23 +284,7 @@ public class TutorServiceImpl implements TutorService {
 
 	}
 
-	public void updateTest(Map<String, String> params, Account author) {
-		Test test = createTest(params.get("name"), params.get("subj"), author);
-		List<Question> questions = new ArrayList<>();
-		for (Map.Entry<String, String> entry : params.entrySet()) {
-			if (entry.getKey().startsWith("ques")) {
-				Question question = new Question();
-				question.setQuestionText(entry.getValue());
-				question.setTest(test);
-				questions.add(question);
-
-			}
-
-		}
-		test.setQuestions(questions);
-		/* persistTest(test); */
-		saveTest(test);
-	}
+	
 
 	public Test updateQuestion(Test test, Question question,
 			Map<String, String> params) {
@@ -345,21 +328,12 @@ public class TutorServiceImpl implements TutorService {
 
 	}
 
-	@Transactional
+	@Transactional(readOnly = true)
 	public Question findQuestion(Integer id_question) {
 		return questionDao.findById(Integer.valueOf(id_question));
 	}
 
-	public Test substituteQuestion(Test test, Question new_question)
-			throws Exception {
-		for (Question que : test.getQuestions()) {
-			if (que.getIdQuestion() == new_question.getIdQuestion()) {
-				test.getQuestions().remove(que);
-				return test;
-			}
-		}
-		throw new Exception("Test does not contain question");
-	}
+
 
 	public void deleteQuestion(int idQuestion, Test test) {
 		//

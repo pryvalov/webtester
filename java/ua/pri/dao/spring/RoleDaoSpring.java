@@ -4,6 +4,7 @@ import org.springframework.stereotype.Repository;
 
 import ua.pri.dao.RoleDao;
 import ua.pri.ent.Role;
+
 @Repository("roleDao")
 public class RoleDaoSpring extends AbstractDaoSpring<Role> implements RoleDao {
 
@@ -13,16 +14,19 @@ public class RoleDaoSpring extends AbstractDaoSpring<Role> implements RoleDao {
 	}
 
 	@Override
-	public Role student(){
+	public Role student() {
 		return (Role) getSession().get(Role.class, 1);
 	}
-	public Role admin(){
+
+	public Role admin() {
 		return (Role) getSession().get(Role.class, 0);
 	}
-	public Role tutor(){
+
+	public Role tutor() {
 		return (Role) getSession().get(Role.class, 2);
 	}
-	public Role advancedTutor(){
+
+	public Role advancedTutor() {
 		return (Role) getSession().get(Role.class, 3);
 	}
 

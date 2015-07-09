@@ -33,7 +33,7 @@ public class MailingServiceImpl implements MailingService {
 		email.setAuthenticator(new DefaultAuthenticator(
 				fromAddress, password));
 		email.setSSLOnConnect(true);
-		email.setFrom(fromAddress);
+		email.setFrom(fromAddress, "WT: Email validation");
 		email.setSubject(subj);
 		email.setMsg(text);
 		email.addTo(address);

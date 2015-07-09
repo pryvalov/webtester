@@ -11,16 +11,16 @@ import ua.pri.services.ConfigApplicationService;
 @Service
 public class ConfigApplicationServiceImpl implements ConfigApplicationService {
 
-	@Value("${ua.pri.supportEmailAddress}")
-	private String supportEmailAddress;
+/*	@Value("${ua.pri.supportEmailAddress}")
+	private String supportEmailAddress;*/
 	
 	@Value("${ua.pri.cssJsVersion}")
 	private String cssJsVersion;
 	
-	@Override
+/*	@Override
 	public String getSupportEmailAddress() {
 		return supportEmailAddress;
-	}
+	}*/
 
 	@Override
 	public String getCssJsVersion() {

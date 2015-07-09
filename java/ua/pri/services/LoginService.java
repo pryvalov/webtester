@@ -17,15 +17,12 @@ import ua.pri.exceptions.RegistrationException;
 
 public interface LoginService {
 
-/*	public abstract Account login(String email, String password, Roles _role)
-			throws InvalidUserInputException;*/
-
 	public abstract List<Role> listAllRoles();
 	
 	public abstract Account loadAccount(String email);
 	
 	public abstract Account login(User user) throws RegistrationException;
 	
-	public abstract Account login(String email, String details_json) throws Exception;
+	public abstract Account login(String code) throws Exception;
 
 }

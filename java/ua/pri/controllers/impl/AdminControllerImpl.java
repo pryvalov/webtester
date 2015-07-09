@@ -28,7 +28,7 @@ public class AdminControllerImpl {
 	
 	private static final Logger LOGGER = LogManager.getLogger(AdminControllerImpl.class);
 	
-	private /*static*/ boolean flag = true; //TODO: check
+	private boolean flag = true; 
 	@Autowired
 	protected AdminService adminService;
 	
@@ -66,7 +66,7 @@ public class AdminControllerImpl {
 
 		return "redirect:home";
 	}
-	@RequestMapping(value="update", method=RequestMethod.POST)
+	@RequestMapping(value="/update", method=RequestMethod.POST)
 	public String update(@RequestParam Map<String,String> params, HttpSession session){
 		Account a = (Account)session.getAttribute("user");
 		if(a==null){
@@ -75,7 +75,6 @@ public class AdminControllerImpl {
 		}
 		a = adminService.updateUser(a, params);
 	
-		adminService.updateUser(a);
 		return "redirect:home";
 	}
 }

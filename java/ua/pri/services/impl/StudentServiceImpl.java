@@ -9,15 +9,6 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
-
-
-
-
-
-
-
-
 import org.springframework.transaction.annotation.Transactional;
 
 import ua.pri.dao.AnswerDao;
@@ -32,89 +23,88 @@ import ua.pri.services.StudentService;
 
 @Service("studentService")
 public class StudentServiceImpl implements StudentService {
-	
+
 	@SuppressWarnings("unused")
-	private static final Logger LOGGER = LogManager.getLogger(StudentServiceImpl.class);
+	private static final Logger LOGGER = LogManager
+			.getLogger(StudentServiceImpl.class);
 	@Autowired
 	TestDao testDao;
-	
+
 	@Autowired
 	AnswerDao answerDao;
-	
+
 	@Autowired
 	TestResultDao testResultDao;
-	
+
 	@Override
-	@Transactional
-	public List<Test> listTests(){
-		
+	@Transactional(readOnly = true)
+	public List<Test> listTests() {
+
 		return testDao.getList();
-		
+
 	}
+
 	@Override
-	@Transactional
-	public List<Test> listTests(int offset, int limit){
-		
+	@Transactional(readOnly = true)
+	public List<Test> listTests(int offset, int limit) {
+
 		return testDao.getList(offset, limit);
-		
+
 	}
-	
+
 	@Override
-	@Transactional
-	public Test loadTest(int id_test){
+	@Transactional(readOnly = true)
+	public Test loadTest(int id_test) {
 		return testDao.loadTest(id_test);
-		
+
 	}
-	
-	public TestResult makeTestResult(Account student, Test test){
+
+	public TestResult makeTestResult(Account student, Test test) {
 		TestResult testResult = new TestResult();
-		testResult.setAccount(student);;
+		testResult.setAccount(student);
+		;
 		testResult.setTest(test);
 		return testResult;
 	}
-	
+
 	@Transactional
-	public int checkAnswer(Map<String, String> params){
+	public int checkAnswer(Map<String, String> params) {
 		int score = 0;
-		for(Map.Entry<String, String> entry : params.entrySet())
-		{
-			if(!entry.getValue().equals("-1")){
-			Answer answer = answerDao.findById(Integer.valueOf(entry.getValue()));
-			if(answer.isCorrect())
-				score++;
-			/*else*/
-				/*score--;*/
+		for (Map.Entry<String, String> entry : params.entrySet()) {
+			if (!entry.getValue().equals("-1")) {
+				Answer answer = answerDao.findById(Integer.valueOf(entry
+						.getValue()));
+				if (answer.isCorrect())
+					score++;
+				/* else */
+				/* score--; */
+			} else {/* score--; */
 			}
-			else {/*score--;*/}
-			
+
 		}
-			
-		
-		
+
 		return score;
-		
+
 	}
-	
+
 	@Transactional
-	public void saveResult(TestResult result, int score){
+	public void saveResult(TestResult result, int score) {
 		result.setDate(new Date());
 		int maxRightAnswers = 0;
-		for(Question question : testDao.loadTest(result.getTest().getIdTest()).getQuestions())
-			for(Answer answer : question.getAnswers())
-				if(answer.isCorrect())
+		for (Question question : testDao.loadTest(result.getTest().getIdTest())
+				.getQuestions())
+			for (Answer answer : question.getAnswers())
+				if (answer.isCorrect())
 					maxRightAnswers++;
-		
-			
-		
-		
-		result.setScore(((int) (score/(Double.valueOf(maxRightAnswers)/100)))+" % "+score+" out of "+maxRightAnswers);
+
+		result.setScore(((int) (score / (Double.valueOf(maxRightAnswers) / 100)))
+				+ " % " + score + " out of " + maxRightAnswers);
 		testResultDao.save(result);
 	}
-	
-	@Transactional
-	public List<TestResult> getUesrResults(Account account){
+
+	@Transactional(readOnly = true)
+	public List<TestResult> getUesrResults(Account account) {
 		return testResultDao.getUserReults(account);
 	}
-	
-	
+
 }

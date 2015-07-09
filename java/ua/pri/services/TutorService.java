@@ -17,7 +17,7 @@ public interface TutorService {
 
 	public abstract Test loadTest(int id_test);
 
-	public abstract Test createTest();
+	public abstract Test createTest(Account account);
 	
 	public abstract void delete(int id);
 	
@@ -41,13 +41,13 @@ public interface TutorService {
 
 	public abstract void mergeTest(Test test);
 	
-	public abstract void updateTest(Map<String, String> params, Account author);
+//	public abstract void updateTest(Map<String, String> params, Account author);
 	
 	public abstract Test updateQuestion(Test test, Question question, Map<String, String> params);
 	
 	public abstract Question findQuestion(Integer id_question);
 	
-	public abstract Test substituteQuestion(Test test, Question new_question) throws Exception;
+//	public abstract Test substituteQuestion(Test test, Question new_question) throws Exception;
 	
 	public abstract void deleteQuestion(int idQuestion, Test test);
 	

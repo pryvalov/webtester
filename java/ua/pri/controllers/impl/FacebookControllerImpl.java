@@ -7,7 +7,6 @@ import java.net.URLConnection;
 import java.util.Scanner;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.logging.log4j.LogManager;
@@ -19,8 +18,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.AbstractController;
 
 import com.restfb.DefaultFacebookClient;
 import com.restfb.FacebookClient;
@@ -31,7 +28,7 @@ import ua.pri.security.SecurityUtils;
 import ua.pri.services.LoginService;
 
 @Controller
-public class FacebookControllerImpl extends AbstractController implements InitializingBean{
+public class FacebookControllerImpl implements InitializingBean{
 	
 	private static final Logger LOGGER = LogManager.getLogger(FacebookControllerImpl.class);
 	
@@ -67,7 +64,6 @@ public class FacebookControllerImpl extends AbstractController implements Initia
 		User user = getFbUser(code);
 		Account account = loginService.login(user);
 		session.setAttribute("account", account);
-/*		session.setAttribute("_role", Roles.Student);*/
 		session.setAttribute("role", "student/home");
 		SecurityUtils.autheificate(account);
 		return "redirect:student/home";
@@ -100,11 +96,5 @@ public class FacebookControllerImpl extends AbstractController implements Initia
         }
 	}
 
-	@Override
-	protected ModelAndView handleRequestInternal(HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	
 }

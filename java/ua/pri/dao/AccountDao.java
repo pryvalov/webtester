@@ -13,9 +13,9 @@ public interface AccountDao extends AbstractDao<Account>{
 
 	public abstract Account findByEmail(String _email);
 
-	public abstract void setActive(int id);
+	//public abstract void setActive(int id);
 
-	public abstract void setEmailVerified(int id);
+	//public abstract void setEmailVerified(int id);
 
 	public abstract List<Account> getList(int offset, int limit);
 

@@ -49,12 +49,10 @@ public class TutorControllerImpl {
 
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public String getTutorHome(Model model, HttpSession session) {
-/*		List<Test> tests = tutorService.getAllTests();
-		
-		model.addAttribute("tests", tests);*/
+
+
 		session.setAttribute("test", null);
 		session.setAttribute("question", null);
-		//session.setAttribute("answer", null);
 		return "redirect:view";
 	}
 
@@ -105,9 +103,7 @@ public class TutorControllerImpl {
 
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public String createTest(HttpSession session) {
-		Test test = tutorService.createTest(); 
-		test.setAuthor((Account) session.getAttribute("account"));
-		tutorService.saveTest(test);
+		Test test = tutorService.createTest((Account) session.getAttribute("account"));
 		LOGGER.debug(test.getIdTest() + " id created test");
 		session.setAttribute("test", test);
 		return "redirect:view_editor";
@@ -131,11 +127,8 @@ public class TutorControllerImpl {
 
 		Question question = (Question) session.getAttribute("question");
 		Test test = (Test) session.getAttribute("test");
-		//session.setAttribute("test", null);
 
 		test = tutorService.updateQuestion(test, question, params);
-
-		//tutorService.updateTest(params, test);
 
 		session.setAttribute("test", test);
 		session.setAttribute("question", null);

@@ -13,14 +13,13 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import ua.pri.dao.AbstractDao;
-import ua.pri.dao.impl.AbstractDaoImpl;
 
 @Repository
 @Transactional
 public abstract class AbstractDaoSpring<T> implements AbstractDao<T> {
-	protected static final Logger logger = LogManager.getLogger(AbstractDaoImpl.class);
+	protected static final Logger logger = LogManager.getLogger(AbstractDaoSpring.class);
 	@Autowired
-	protected SessionFactory sessionFactory;// = SFactory.getSessionFactory();
+	protected SessionFactory sessionFactory;
 	
 	
 	protected Session getSession(){

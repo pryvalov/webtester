@@ -15,15 +15,13 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
+
 
 
 @Entity
 public class Test extends AbstractEntity{
 	
-	public Test(){
-		this.questionsSize=this.questions.size();
-	}
+
 	
 	/**
 	 * 
@@ -36,8 +34,7 @@ public class Test extends AbstractEntity{
 	@Column(name="id_test")
 	private int idTest;
 	
-//	@JoinColumn(name="id_account", nullable=false)
-//	private int idAccountAuthor;
+
 	@ManyToOne
 	private Account author;
 	
@@ -60,8 +57,8 @@ public class Test extends AbstractEntity{
 	@OneToMany(mappedBy="test", /*cascade={CascadeType.PERSIST, CascadeType.MERGE},*/ fetch=FetchType.LAZY)
 	private List<Question> questions = new ArrayList<>();
 	
-	@Transient
-	private int questionsSize;
+	@Column(name="questions_qty")
+	private Integer questionsSize;
 	
 	
 	public Account getAuthor() {
@@ -77,7 +74,6 @@ public class Test extends AbstractEntity{
 	
 	
 	public List<Question> getQuestions() {
-		setQuestionsSize(this.questions.size());
 		return questions;
 	}
 
@@ -141,11 +137,11 @@ public class Test extends AbstractEntity{
 		this.time = time;
 	}
 
-	public int getQuestionsSize() {
+	public Integer getQuestionsSize() {
 		return this.questionsSize;
 	}
 
-	public void setQuestionsSize(int questionsSize) {
+	public void setQuestionsSize(Integer questionsSize) {
 		this.questionsSize = questionsSize;
 	}
 

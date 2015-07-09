@@ -41,21 +41,14 @@ public class LoginControllerImpl implements InitializingBean {
 				new Role[loginService.listAllRoles().size()]);
 	}
 
-
 	@RequestMapping(value = { "/login", "/loginFailed" }, method = RequestMethod.GET)
 	public String getLoginForm(Model model) {
-		// model.addAttribute("loginForm", new LoginForm());
 		return "login";
 	}
 
-
 	@RequestMapping(value = { "/home" }, method = RequestMethod.GET)
 	public String myInfo(Model model, HttpSession session) {
-		//CurrentAccount currentAccount = SecurityUtils.getCurrentAccount();
-//		Account account  = loginService.loadAccount(currentAccount.getUsername());
-//		session.setAttribute("account", account);
-//		session.setAttribute("role", rolesHome.get(currentAccount.getRole()));
-		return "redirect:" + session.getAttribute("role");//rolesHome.get(currentAccount.getRole());
+		return "redirect:" + session.getAttribute("role");
 	}
 
 }

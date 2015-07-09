@@ -1,43 +1,37 @@
 package ua.pri.services.impl;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import ua.pri.components.IAccountFactory;
 import ua.pri.dao.AccountDao;
 import ua.pri.dao.AccountVerificationDao;
 import ua.pri.dao.RoleDao;
 import ua.pri.ent.Account;
 import ua.pri.ent.Role;
 import ua.pri.services.AdminService;
-import ua.pri.utils.IAccountFactory;
 
-//import ua.pri.ent.Role;
-/*
- * Simple service for administration purposes
- * allows to manage users
- * activate/deactivate
- * add/remove user roles
- * update info(no realization yet)
- */
 @Service("adminService")
 public class AdminServiceImpl implements AdminService {
-	
+
 	@Autowired
-	protected AccountDao accountDao;// = new AccountDaoImpl();
-	
+	protected AccountDao accountDao;
+
 	@Autowired
-	protected RoleDao roleDao;// = new RoleDaoImpl();
-	
+	protected RoleDao roleDao;
+
 	@Autowired
-	protected AccountVerificationDao accountVerificationDao;// = new AccountVerificationDaoImpl();
-	
+	protected AccountVerificationDao accountVerificationDao;
+
 	@Autowired
 	protected IAccountFactory accountFactory;
 
@@ -53,7 +47,7 @@ public class AdminServiceImpl implements AdminService {
 		acc.setActive(false);
 		accountDao.update(acc);
 	}
-	
+
 	@Override
 	@Transactional
 	public void delete(String login) {
@@ -69,98 +63,69 @@ public class AdminServiceImpl implements AdminService {
 		accountDao.update(acc);
 	}
 
-	/*@Override
-	public void addRoles(String login, ERoles role) {
-		Account acc = accountDao.findByLogin(login);
-		switch (role) {
-		case ADMIN:
-			acc.getAccountRoles().add(roleDao.findById(0));
-			break;
-		case TUTOR:
-			acc.getAccountRoles().add(roleDao.findById(2));
-			break;
-		case ADVANCED_TUTOR:
-			acc.getAccountRoles().add(roleDao.findById(3));
-			break;
-		case STUDENT:
-			acc.getAccountRoles().add(roleDao.student());
-			break;
-		}
-		accountDao.update(acc);
-
-	}
-
-	@Override
-	public void removeRoles(String login, ERoles role) {
-		Account acc = accountDao.findByLogin(login);
-		switch (role) {
-		case ADMIN:
-			acc.getAccountRoles().remove(roleDao.findById(0));
-			break;
-		case TUTOR:
-			acc.getAccountRoles().remove(roleDao.findById(2));
-			break;
-		case ADVANCED_TUTOR:
-			acc.getAccountRoles().remove(roleDao.findById(3));
-			break;
-		case STUDENT:
-			acc.getAccountRoles().remove(roleDao.student());
-			break;
-		}
-		accountDao.update(acc);
-	}*/
-	
 	@Transactional
-	public Account updateUser(Account a, Map<String, String> params){
-		
-		a.setLogin(params.get("login")==null?a.getLogin() : params.get("login"));
-		a.setEmail(params.get("email")==null?a.getEmail() : params.get("email"));
-		a.setFirstName(params.get("firstName")==null?a.getFirstName() : params.get("firstName"));
-		a.setLastName(params.get("lastName")==null?a.getLastName() : params.get("lastName"));
-		a.setMiddleName(params.get("middleName")==null?a.getFirstName() : params.get("middleName"));
-		
+	public Account updateUser(Account a, Map<String, String> params) {
 
-		
-		List<String> roles = Arrays.asList(params.get("adminRole"),params.get("studentRole"),params.get("tutorRole"),params.get("advancedTutorRole"));
-		
+		a.setLogin(params.get("login") == null ? a.getLogin() : params
+				.get("login"));
+		a.setEmail(params.get("email") == null ? a.getEmail() : params
+				.get("email"));
+		a.setFirstName(params.get("firstName") == null ? a.getFirstName()
+				: params.get("firstName"));
+		a.setLastName(params.get("lastName") == null ? a.getLastName() : params
+				.get("lastName"));
+		a.setMiddleName(params.get("middleName") == null ? a.getFirstName()
+				: params.get("middleName"));
+
+		List<String> roles = Arrays.asList(params.get("adminRole"),
+				params.get("studentRole"), params.get("tutorRole"),
+				params.get("advancedTutorRole"));
+
 		Set<Role> rolesSet = new HashSet<Role>();
-		for(int i = 0; i<roles.size(); i++){
-			if(roles.get(i)!=null&&roles.get(i).isEmpty()/*!=null&&roles.get(i).equals("")*/)
-				rolesSet.add(roleDao.findById(Integer.parseInt(roles.get(i))));
+		for (int i = 0; i < roles.size(); i++) {
+			if (!StringUtils.isBlank(roles.get(i)))
+				rolesSet.add(roleDao.findById(i));
 		}
+		if (rolesSet.size() == 0)
+			rolesSet.add(roleDao.student());
+		if (rolesSet.contains(roleDao.findById(3)))
+			rolesSet.add(roleDao.findById(2));
 		a.setAccountRoles(rolesSet);
+		updateUser(a);
 		return a;
 	}
 
 	@Override
 	@Transactional
 	public void updateUser(Account a) {
+		a.setUpdated(new Date());
 		accountDao.update(a);
 	}
 	
 	@Override
-	@Transactional
-	public List<Account> list(){
+	public void saveUser(Account a) {
+		accountFactory.saveForm(a);
+	}
+
+	@Override
+	@Transactional(readOnly=true)
+	public List<Account> list() {
 		return accountDao.getList();
 	}
+
 	@Override
-	@Transactional
-	public List<Account> listCustom(int offset,int limit,String orderBy,boolean asc){
+	@Transactional(readOnly=true)
+	public List<Account> listCustom(int offset, int limit, String orderBy,
+			boolean asc) {
 		return accountDao.getList(offset, limit, orderBy, asc);
 	}
 
 	@Override
-	@Transactional
+	@Transactional(readOnly=true)
 	public Account getUser(String login) {
 		return accountDao.findByLogin(login);
 	}
-	@Override
-	public  Account createUser(){
-		return new Account();
-	}
-	@Override
-	public void saveUser (Account a){
-		accountFactory.saveForm(a);
-	}
+
+	
 
 }

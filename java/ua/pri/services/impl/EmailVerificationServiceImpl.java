@@ -73,7 +73,7 @@ public class EmailVerificationServiceImpl implements EmailVerificationService {
 		}
 	}
 
-	@Override
+	/*@Override
 	@Transactional
 	public boolean verifyCode(Account a, Long code) {
 		accVerify = accountVerificationDao.findByAccount(a);
@@ -95,7 +95,7 @@ public class EmailVerificationServiceImpl implements EmailVerificationService {
 		accountVerificationDao.delete(accountVerificationDao.findByAccount(a));
 		LOGGER.info("Succesfully validated " + account.getEmail());
 		return true;
-	}
+	}*/
 
 	@Override
 	@Transactional

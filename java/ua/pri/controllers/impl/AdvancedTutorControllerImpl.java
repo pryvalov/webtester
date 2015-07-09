@@ -48,12 +48,8 @@ public class AdvancedTutorControllerImpl {
 
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public String getTutorHome(Model model, HttpSession session) {
-/*		List<Test> tests = tutorService.getAllTests();
-		
-		model.addAttribute("tests", tests);*/
 		session.setAttribute("test", null);
 		session.setAttribute("question", null);
-		//session.setAttribute("answer", null);
 		return "redirect:view";
 	}
 
@@ -100,13 +96,9 @@ public class AdvancedTutorControllerImpl {
 
 	}
 
-
-
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public String createTest(HttpSession session) {
-		Test test = tutorService.createTest(); 
-		test.setAuthor((Account) session.getAttribute("account"));
-		tutorService.saveTest(test);
+		Test test = tutorService.createTest((Account) session.getAttribute("account"));
 		LOGGER.debug(test.getIdTest() + " id created test");
 		session.setAttribute("test", test);
 		return "redirect:view_editor";
@@ -119,35 +111,9 @@ public class AdvancedTutorControllerImpl {
 		Test test = (Test) session.getAttribute("test");
 		test = tutorService.updateTest(params, test);
 		session.setAttribute("test", test);
-		return "redirect:view_editor"; 
+		return "redirect:view_editor";
 
 	}
-
-/*	@RequestMapping(value = "/create", method = RequestMethod.POST)
-	public String addQuestions(@RequestParam() Map<String, String> params,
-			HttpSession session) {
-		Test test = tutorService.createTest(params.get("name"),
-				params.get("subj"), params.get("time"),
-				(Account) session.getAttribute("account"));
-		session.setAttribute("test", test);
-		return "redirect:view_editor";
-	}*/
-
-/*	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public String saveTest(@RequestParam() Map<String, String> params,
-			HttpSession session) {
-		Test test = (Test) session.getAttribute("test");
-		test = tutorService.createTest(test, params.get("name"),
-				params.get("subj"), params.get("time"),
-				(Account) session.getAttribute("account"));
-		int id = test.getIdTest();
-		if (id == 0)
-			tutorService.saveTest(test);
-		else
-			tutorService.updateTest(test); 
-											
-		return "redirect:view";
-	}*/
 
 	@RequestMapping(value = "/savequestion", method = RequestMethod.POST)
 	public String saveQuestion(@RequestParam Map<String, String> params,
@@ -155,11 +121,8 @@ public class AdvancedTutorControllerImpl {
 
 		Question question = (Question) session.getAttribute("question");
 		Test test = (Test) session.getAttribute("test");
-		//session.setAttribute("test", null);
 
 		test = tutorService.updateQuestion(test, question, params);
-
-		//tutorService.updateTest(params, test);
 
 		session.setAttribute("test", test);
 		session.setAttribute("question", null);

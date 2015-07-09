@@ -11,7 +11,6 @@ import ua.pri.dao.AccountDao;
 import ua.pri.ent.Account;
 
 @Repository("accountDao")
-//@Transactional(readOnly=false)
 public class AccountDaoSpring extends AbstractDaoSpring<Account> implements
 		AccountDao {
 
@@ -28,7 +27,7 @@ public class AccountDaoSpring extends AbstractDaoSpring<Account> implements
 		return (Account) getSession().createCriteria(entityClass()).add(Restrictions.eq("email", _email)).uniqueResult();
 	}
 
-	@Override
+/*	@Override
 	public void setActive(int id) {
 		((Account)getSession().get(Account.class, id)).setActive(true);
 	}
@@ -36,6 +35,11 @@ public class AccountDaoSpring extends AbstractDaoSpring<Account> implements
 	@Override
 	public void setEmailVerified(int id) {
 		((Account)getSession().get(Account.class, id)).setEmailVerified(true);
+	}*/
+	
+	@Override
+	public void update(Account account) {
+		getSession().update(account);
 	}
 	
 	

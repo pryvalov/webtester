@@ -22,8 +22,6 @@ public interface AdminService {
 	
 	public abstract Account getUser(String login);
 	
-	public abstract Account createUser();
-	
 	public abstract Account updateUser(Account a, Map<String, String> params);
 
 	public abstract List<Account> list();
